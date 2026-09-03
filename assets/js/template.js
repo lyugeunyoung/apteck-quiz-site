@@ -129,10 +129,10 @@
       '<meta name="twitter:card" content="summary_large_image">\n' +
       '<link rel="preconnect" href="https://fonts.googleapis.com">\n' +
       '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n' +
-      '<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@500;700;800;900&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">\n' +
+      '<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@500;700;900&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">\n' +
       '<link rel="stylesheet" href="' + opts.cssPath + '">\n' +
       '<link rel="manifest" href="' + bp + 'manifest.json">\n' +
-      '<meta name="theme-color" content="#0E7C55">\n' +
+      '<meta name="theme-color" content="#2F5CFF">\n' +
       '<link rel="apple-touch-icon" href="' + bp + 'assets/img/icon-180.png">\n' +
       '<link rel="icon" type="image/png" sizes="192x192" href="' + bp + 'assets/img/icon-192.png">\n' +
       '<meta name="apple-mobile-web-app-capable" content="yes">\n' +

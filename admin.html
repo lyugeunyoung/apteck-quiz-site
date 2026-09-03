@@ -7,7 +7,7 @@
 <meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@500;700;800;900&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@500;700;900&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="admin-body">
@@ -54,8 +54,29 @@
     <div class="status-line" id="connect-status"></div>
   </section>
 
+  <section class="admin-card" id="card-sheet" style="display:none;">
+    <h2>2. 구글 시트에서 자동 불러오기 (선택)</h2>
+    <p class="admin-card__hint">
+      문제·정답·해설을 구글 시트에 미리 정리해두면, 앱을 고를 때 오늘 날짜에 맞는 행을 자동으로 찾아 폼에 채워줍니다.
+      시트 첫 줄은 헤더로 <code>date, app_id, question, choice1, choice2, choice3, choice4, answer, explanation, image_url</code>
+      열을 사용하세요 (순서는 상관없고, choice·image_url은 비워도 됩니다). <code>app_id</code>는 아래 앱 목록에서 각 앱을
+      선택했을 때 URL이나 페이지 소스에서 확인할 수 있는 영문 ID와 정확히 같아야 합니다.
+    </p>
+    <p class="admin-card__hint">
+      시트를 만든 뒤 <strong>파일 → 공유 → 공유</strong>에서 "링크가 있는 모든 사용자 – 뷰어"로 설정하고,
+      아래 CSV 주소 형식을 사용하세요:<br>
+      <code>https://docs.google.com/spreadsheets/d/시트ID/export?format=csv&amp;gid=시트탭ID</code>
+    </p>
+    <div class="field">
+      <label for="f-sheet-url">시트 CSV 주소</label>
+      <input id="f-sheet-url" type="text" placeholder="https://docs.google.com/spreadsheets/d/.../export?format=csv&gid=0" autocomplete="off">
+    </div>
+    <button class="btn btn--ghost btn--small" id="btn-sheet-load" type="button">시트 불러오기</button>
+    <div class="status-line" id="sheet-status"></div>
+  </section>
+
   <section class="admin-card" id="card-apps" style="display:none;">
-    <h2>2. 퀴즈 앱 목록</h2>
+    <h2>3. 퀴즈 앱 목록</h2>
     <p class="admin-card__hint">수정할 앱을 탭하면 아래 입력 폼에 불러옵니다. 🟢 점은 오늘 이미 갱신된 앱입니다.</p>
     <div class="field" style="margin-bottom:10px;">
       <input id="app-search" type="text" placeholder="앱 이름으로 검색... (예: 토스, 카카오)" autocomplete="off">
@@ -67,8 +88,10 @@
   </section>
 
   <section class="admin-card" id="card-form" style="display:none;">
-    <h2 id="form-title">3. 오늘의 퀴즈 입력</h2>
+    <h2 id="form-title">4. 오늘의 퀴즈 입력</h2>
     <p class="admin-card__hint">저장하면 <code>data/quizzes.json</code>, 해당 앱의 상세 페이지, 홈 화면(<code>index.html</code>)이 한 번에 갱신되어 커밋됩니다.</p>
+
+    <div id="sheet-match" class="status-line status-line--busy" style="display:none;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;"></div>
 
     <div id="new-app-fields" style="display:none;">
       <div class="field-row">

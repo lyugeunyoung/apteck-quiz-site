@@ -3,35 +3,39 @@
    ========================================================================== */
 
 :root {
-  /* ---- color: light (default) ---- */
-  --bg: #F4F6F5;
+  /* ---- color: light (default) — "네오뱅크 블루" ---- */
+  --bg: #F3F6FF;
   --bg-raised: #FFFFFF;
   --surface: #FFFFFF;
-  --surface-sunken: #ECF1EE;
-  --ink: #131A17;
-  --ink-muted: #5B6B63;
-  --ink-faint: #8B9990;
-  --border: #E1E7E3;
-  --border-strong: #CBD6D0;
+  --surface-sunken: #EAEFFC;
+  --ink: #0E1530;
+  --ink-muted: #66708F;
+  --ink-faint: #99A2C2;
+  --border: #E1E7FA;
+  --border-strong: #C6D0F2;
 
-  --accent: #0E7C55;       /* emerald — brand / links / primary CTA */
+  --accent: #2F5CFF;       /* confident blue — brand / links / primary CTA */
   --accent-ink: #FFFFFF;
-  --accent-soft: #E4F2EB;  /* tint for badges/backgrounds */
-  --accent-strong: #0A5F41;
+  --accent-soft: #E4EBFF;  /* tint for badges/backgrounds */
+  --accent-strong: #1E44DB;
+
+  --success: #00A388;      /* semantic "fresh / correct" — separate from brand blue */
+  --success-soft: #DFF7F0;
+  --success-ink: #0B6B57;
 
   --gold: #C98A25;         /* coin gold — reward highlight, used sparingly */
   --gold-soft: #FBF0DC;
   --gold-ink: #6B4A0F;
 
-  --danger: #B3411F;
-  --danger-soft: #FBEAE3;
+  --danger: #C23B3B;
+  --danger-soft: #FBEAEA;
 
-  --shadow-sm: 0 1px 2px rgba(19, 26, 23, 0.06);
-  --shadow-md: 0 6px 20px rgba(19, 26, 23, 0.08);
-  --shadow-lg: 0 16px 40px rgba(19, 26, 23, 0.14);
+  --shadow-sm: 0 1px 2px rgba(14, 21, 48, 0.06);
+  --shadow-md: 0 6px 20px rgba(14, 21, 48, 0.09);
+  --shadow-lg: 0 16px 40px rgba(14, 21, 48, 0.16);
 
   /* ---- type ---- */
-  --font-display: "Gothic A1", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-display: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   --font-body: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   --font-mono: "IBM Plex Mono", "Noto Sans KR", ui-monospace, monospace;
 
@@ -45,27 +49,31 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0E1512;
-    --bg-raised: #111A15;
-    --surface: #16201B;
-    --surface-sunken: #101813;
-    --ink: #EDF3EF;
-    --ink-muted: #9DB0A6;
-    --ink-faint: #66766D;
-    --border: #253028;
-    --border-strong: #34423A;
+    --bg: #0B0E1A;
+    --bg-raised: #111527;
+    --surface: #141931;
+    --surface-sunken: #0F1326;
+    --ink: #EAEDFB;
+    --ink-muted: #8E97BE;
+    --ink-faint: #5C6489;
+    --border: #232B4A;
+    --border-strong: #323C63;
 
-    --accent: #35C48A;
-    --accent-ink: #08150F;
-    --accent-soft: #16281F;
-    --accent-strong: #57D6A3;
+    --accent: #5B84FF;
+    --accent-ink: #0B0E1A;
+    --accent-soft: #1B2547;
+    --accent-strong: #8FACFF;
+
+    --success: #3FD9B9;
+    --success-soft: #12332C;
+    --success-ink: #7CEBD2;
 
     --gold: #F0BB5E;
     --gold-soft: #2B2314;
     --gold-ink: #F3D093;
 
-    --danger: #E58B6C;
-    --danger-soft: #2E1810;
+    --danger: #E56B6B;
+    --danger-soft: #33191C;
 
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
     --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.35);
@@ -74,27 +82,31 @@
 }
 
 :root[data-theme="dark"] {
-  --bg: #0E1512;
-  --bg-raised: #111A15;
-  --surface: #16201B;
-  --surface-sunken: #101813;
-  --ink: #EDF3EF;
-  --ink-muted: #9DB0A6;
-  --ink-faint: #66766D;
-  --border: #253028;
-  --border-strong: #34423A;
+  --bg: #0B0E1A;
+  --bg-raised: #111527;
+  --surface: #141931;
+  --surface-sunken: #0F1326;
+  --ink: #EAEDFB;
+  --ink-muted: #8E97BE;
+  --ink-faint: #5C6489;
+  --border: #232B4A;
+  --border-strong: #323C63;
 
-  --accent: #35C48A;
-  --accent-ink: #08150F;
-  --accent-soft: #16281F;
-  --accent-strong: #57D6A3;
+  --accent: #5B84FF;
+  --accent-ink: #0B0E1A;
+  --accent-soft: #1B2547;
+  --accent-strong: #8FACFF;
+
+  --success: #3FD9B9;
+  --success-soft: #12332C;
+  --success-ink: #7CEBD2;
 
   --gold: #F0BB5E;
   --gold-soft: #2B2314;
   --gold-ink: #F3D093;
 
-  --danger: #E58B6C;
-  --danger-soft: #2E1810;
+  --danger: #E56B6B;
+  --danger-soft: #33191C;
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.35);
@@ -230,9 +242,9 @@ ul { margin: 0; padding: 0; list-style: none; }
   transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 .chip[aria-pressed="true"] {
-  background: var(--ink);
-  border-color: var(--ink);
-  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
 }
 
 /* ---- quiz card list ---- */
@@ -285,6 +297,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .quiz-card__name {
   display: block;
+  font-family: var(--font-display);
   font-weight: 700;
   font-size: 15.5px;
   white-space: nowrap;
@@ -317,7 +330,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   padding: 5px 9px;
   border-radius: var(--radius-pill);
 }
-.status-pill--fresh { background: var(--accent-soft); color: var(--accent-strong); }
+.status-pill--fresh { background: var(--success-soft); color: var(--success-ink); }
 .status-pill--stale { background: var(--gold-soft); color: var(--gold-ink); }
 .status-pill__dot {
   width: 6px; height: 6px; border-radius: 50%; background: currentColor;
@@ -405,6 +418,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   display: flex;
   align-items: center;
   gap: 8px;
+  font-family: var(--font-display);
   font-size: 12px;
   font-weight: 800;
   color: var(--ink-faint);
@@ -460,6 +474,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   padding: 16px;
   background: var(--gold-soft);
   color: var(--gold-ink);
+  font-family: var(--font-display);
   font-weight: 800;
   font-size: 15px;
   cursor: pointer;
@@ -474,8 +489,9 @@ ul { margin: 0; padding: 0; list-style: none; }
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--accent);
+  background: var(--success);
   color: var(--accent-ink);
+  font-family: var(--font-display);
   font-weight: 800;
   font-size: 15px;
   padding: 9px 16px;
@@ -501,8 +517,9 @@ ul { margin: 0; padding: 0; list-style: none; }
   width: 100%;
   padding: 15px;
   border-radius: var(--radius-sm);
-  background: var(--ink);
-  color: var(--bg);
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-family: var(--font-display);
   font-weight: 700;
   font-size: 15px;
   box-shadow: var(--shadow-sm);
@@ -786,6 +803,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   gap: 8px;
   padding: 12px 18px;
   border-radius: var(--radius-sm);
+  font-family: var(--font-display);
   font-weight: 700;
   font-size: 14.5px;
   border: 1px solid transparent;
@@ -804,7 +822,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   display: none;
 }
 .status-line.show { display: block; }
-.status-line--ok { background: var(--accent-soft); color: var(--accent-strong); }
+.status-line--ok { background: var(--success-soft); color: var(--success-ink); }
 .status-line--err { background: var(--danger-soft); color: var(--danger); }
 .status-line--busy { background: var(--surface-sunken); color: var(--ink-muted); }
 

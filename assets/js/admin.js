@@ -11,13 +11,16 @@
     data: null,        // parsed quizzes.json
     dataSha: null,      // current sha of data/quizzes.json
     selectedId: null,   // app id currently loaded in the form, or null = new app
+    sheetUrl: "",
+    sheetRows: [],       // parsed rows from the Google Sheet CSV, if loaded
   };
 
   var el = {};
   [
     "f-owner", "f-repo", "f-branch", "f-token", "f-remember", "btn-connect", "connect-status",
+    "card-sheet", "f-sheet-url", "btn-sheet-load", "sheet-status",
     "card-apps", "app-table", "app-search", "btn-new-app",
-    "card-form", "form-title", "new-app-fields", "f-selected-id", "category-options",
+    "card-form", "form-title", "sheet-match", "new-app-fields", "f-selected-id", "category-options",
     "f-id", "f-emoji", "f-category", "f-schedule", "f-name", "f-reward", "f-deeplink", "f-path",
     "f-date", "f-question", "f-image", "btn-convert-drive", "image-preview",
     "choices-editor", "btn-add-choice", "f-answer", "f-explanation",
@@ -143,11 +146,134 @@
       persistConnectionIfRequested();
       setStatus(el["connect-status"], "연결됨 · 앱 " + state.data.apps.length + "개 불러옴", "ok");
       renderAppTable();
+      el["card-sheet"].style.display = "";
       el["card-apps"].style.display = "";
     } catch (e) {
       setStatus(el["connect-status"], e.message || String(e), "err");
     }
   });
+
+  // ------------------------------------------------------ google sheets
+
+  var SHEET_LS_KEY = "apteck-admin-sheet-url";
+
+  // Minimal RFC 4180 CSV parser — handles quoted fields, embedded commas/
+  // newlines, and "" escaped quotes, which a naive split(",") would break on
+  // (해설 text routinely contains commas).
+  function parseCsv(text) {
+    var rows = [];
+    var row = [];
+    var field = "";
+    var inQuotes = false;
+    for (var i = 0; i < text.length; i++) {
+      var c = text[i], next = text[i + 1];
+      if (inQuotes) {
+        if (c === '"' && next === '"') { field += '"'; i++; }
+        else if (c === '"') { inQuotes = false; }
+        else { field += c; }
+      } else if (c === '"') {
+        inQuotes = true;
+      } else if (c === ",") {
+        row.push(field); field = "";
+      } else if (c === "\r") {
+        // skip
+      } else if (c === "\n") {
+        row.push(field); rows.push(row); row = []; field = "";
+      } else {
+        field += c;
+      }
+    }
+    if (field.length || row.length) { row.push(field); rows.push(row); }
+    return rows;
+  }
+
+  function csvToObjects(text) {
+    var rows = parseCsv(text).filter(function (r) { return r.some(function (c) { return c.trim() !== ""; }); });
+    if (!rows.length) return [];
+    var headers = rows[0].map(function (h) { return h.trim().toLowerCase(); });
+    return rows.slice(1).map(function (r) {
+      var obj = {};
+      headers.forEach(function (h, i) { obj[h] = (r[i] || "").trim(); });
+      return obj;
+    });
+  }
+
+  function sheetAppId(row) { return row.app_id || row.id || row.appid || ""; }
+
+  function findSheetRow(appId, date) {
+    return state.sheetRows.filter(function (r) { return sheetAppId(r) === appId && r.date === date; })[0] || null;
+  }
+  function findLatestSheetRow(appId) {
+    var rows = state.sheetRows.filter(function (r) { return sheetAppId(r) === appId; });
+    rows.sort(function (a, b) { return (b.date || "").localeCompare(a.date || ""); });
+    return rows[0] || null;
+  }
+
+  (function loadSavedSheetUrl() {
+    try { el["f-sheet-url"].value = localStorage.getItem(SHEET_LS_KEY) || ""; } catch (e) {}
+  })();
+
+  el["btn-sheet-load"].addEventListener("click", async function () {
+    var url = el["f-sheet-url"].value.trim();
+    if (!url) {
+      setStatus(el["sheet-status"], "시트 CSV 주소를 입력해 주세요.", "err");
+      return;
+    }
+    setStatus(el["sheet-status"], "시트 불러오는 중...", "busy");
+    try {
+      var res = await fetch(url);
+      if (!res.ok) throw new Error("시트를 불러오지 못했습니다 (" + res.status + "). 공유 설정과 주소를 확인해 주세요.");
+      var text = await res.text();
+      var rows = csvToObjects(text);
+      if (!rows.length) throw new Error("시트에서 데이터를 찾지 못했습니다. 첫 줄이 헤더(date, app_id, question...)인지 확인해 주세요.");
+      state.sheetRows = rows;
+      try { localStorage.setItem(SHEET_LS_KEY, url); } catch (e) {}
+      var todayCount = rows.filter(function (r) { return r.date === todayISO(); }).length;
+      setStatus(el["sheet-status"], "✅ " + rows.length + "개 행 불러옴 (오늘 날짜 행 " + todayCount + "개). 이제 아래에서 앱을 선택하면 자동으로 매칭됩니다.", "ok");
+      updateSheetMatchBanner();
+    } catch (e) {
+      setStatus(el["sheet-status"], e.message || String(e), "err");
+    }
+  });
+
+  function updateSheetMatchBanner() {
+    if (!el["sheet-match"]) return;
+    if (!state.sheetRows.length || state.selectedId === null) {
+      el["sheet-match"].style.display = "none";
+      return;
+    }
+    var todayRow = findSheetRow(state.selectedId, el["f-date"].value || todayISO());
+    var latestRow = todayRow || findLatestSheetRow(state.selectedId);
+    if (!latestRow) {
+      el["sheet-match"].style.display = "none";
+      return;
+    }
+    var label = todayRow
+      ? "📄 시트에서 오늘(" + latestRow.date + ") 행을 찾았습니다."
+      : "📄 시트에 오늘 날짜 행은 없지만, 가장 최근(" + latestRow.date + ") 행을 찾았습니다.";
+    el["sheet-match"].style.display = "flex";
+    el["sheet-match"].innerHTML =
+      "<span>" + escapeText(label) + "</span>" +
+      '<button type="button" class="btn btn--primary btn--small" id="sheet-apply-btn" style="width:auto;">이 값으로 채우기</button>';
+    document.getElementById("sheet-apply-btn").addEventListener("click", function () {
+      applySheetRow(latestRow);
+    });
+  }
+
+  function applySheetRow(row) {
+    el["f-question"].value = row.question || "";
+    var choices = [row.choice1, row.choice2, row.choice3, row.choice4].filter(function (c) { return c && c.trim(); });
+    renderChoicesEditor(choices);
+    el["f-answer"].value = row.answer || "";
+    el["f-explanation"].value = row.explanation || "";
+    if (row.image_url || row.image || row.imageurl) {
+      el["f-image"].value = row.image_url || row.image || row.imageurl;
+      updateImagePreview();
+    }
+    if (row.date) el["f-date"].value = row.date;
+    updatePreview();
+    el["sheet-match"].style.display = "none";
+  }
 
   // ---------------------------------------------------------- app table
 
@@ -186,7 +312,7 @@
     state.selectedId = id;
     var isNew = id === null;
     el["new-app-fields"].style.display = isNew ? "" : "none";
-    el["form-title"].textContent = isNew ? "3. 새 퀴즈 앱 추가" : "3. 오늘의 퀴즈 입력 — " + appById(id).name;
+    el["form-title"].textContent = isNew ? "4. 새 퀴즈 앱 추가" : "4. 오늘의 퀴즈 입력 — " + appById(id).name;
 
     var app = isNew ? {} : appById(id);
     var today = (app && app.today) || {};
@@ -215,6 +341,7 @@
     clearStatus(el["save-status"]);
     el["card-form"].scrollIntoView({ behavior: "smooth", block: "start" });
     updatePreview();
+    updateSheetMatchBanner();
   }
 
   function appById(id) {
@@ -335,6 +462,7 @@
    "f-date", "f-question", "f-answer", "f-explanation"].forEach(function (id) {
     el[id].addEventListener("input", updatePreview);
   });
+  el["f-date"].addEventListener("input", updateSheetMatchBanner);
 
   // -------------------------------------------------------------- save
 
