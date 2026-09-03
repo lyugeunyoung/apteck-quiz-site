@@ -1,0 +1,41 @@
+name: Sync Google Sheet
+
+# 매 20분마다 자동 실행 + 저장소 Actions 탭에서 "Run workflow"로 언제든 즉시 실행 가능.
+# data/quizzes.json 의 site.sheetUrl 이 비어 있으면 sync-sheet.js가 아무것도 하지 않고
+# 종료하므로, 관리자 페이지에서 "자동 동기화 켜기"를 누르기 전까지는 이 워크플로가
+# 실행되어도 아무 변화가 없습니다(정상).
+on:
+  schedule:
+    - cron: "7,27,47 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: 구글 시트에서 오늘의 문제·정답·해설 읽어오기
+        run: node scripts/sync-sheet.js
+
+      - name: 사이트 페이지 재생성
+        run: node scripts/build.js
+
+      - name: 변경사항 있으면 커밋 & 푸시
+        run: |
+          git config user.name "apteck-sheet-sync"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "변경 없음 — 커밋하지 않음."
+          else
+            git commit -m "chore: 구글 시트 자동 동기화"
+            git push
+          fi

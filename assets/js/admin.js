@@ -19,7 +19,7 @@
   var el = {};
   [
     "f-owner", "f-repo", "f-branch", "f-token", "f-remember", "btn-connect", "connect-status",
-    "card-sheet", "f-sheet-url", "btn-sheet-load", "sheet-status",
+    "card-sheet", "f-sheet-url", "btn-sheet-load", "sheet-status", "btn-sheet-enable-auto", "sheet-auto-status",
     "card-apps", "app-table", "app-search", "btn-new-app",
     "card-form", "form-title", "sheet-match", "new-app-fields", "f-selected-id", "category-options",
     "f-id", "f-emoji", "f-category", "f-schedule", "f-name", "f-reward", "f-deeplink", "f-path",
@@ -159,48 +159,11 @@
 
   var SHEET_LS_KEY = "apteck-admin-sheet-url";
 
-  // Minimal RFC 4180 CSV parser — handles quoted fields, embedded commas/
-  // newlines, and "" escaped quotes, which a naive split(",") would break on
-  // (해설 text routinely contains commas).
-  function parseCsv(text) {
-    var rows = [];
-    var row = [];
-    var field = "";
-    var inQuotes = false;
-    for (var i = 0; i < text.length; i++) {
-      var c = text[i], next = text[i + 1];
-      if (inQuotes) {
-        if (c === '"' && next === '"') { field += '"'; i++; }
-        else if (c === '"') { inQuotes = false; }
-        else { field += c; }
-      } else if (c === '"') {
-        inQuotes = true;
-      } else if (c === ",") {
-        row.push(field); field = "";
-      } else if (c === "\r") {
-        // skip
-      } else if (c === "\n") {
-        row.push(field); rows.push(row); row = []; field = "";
-      } else {
-        field += c;
-      }
-    }
-    if (field.length || row.length) { row.push(field); rows.push(row); }
-    return rows;
-  }
-
-  function csvToObjects(text) {
-    var rows = parseCsv(text).filter(function (r) { return r.some(function (c) { return c.trim() !== ""; }); });
-    if (!rows.length) return [];
-    var headers = rows[0].map(function (h) { return h.trim().toLowerCase(); });
-    return rows.slice(1).map(function (r) {
-      var obj = {};
-      headers.forEach(function (h, i) { obj[h] = (r[i] || "").trim(); });
-      return obj;
-    });
-  }
-
-  function sheetAppId(row) { return row.app_id || row.id || row.appid || ""; }
+  // CSV parsing lives in template.js (QuizTemplates.parseCsv/csvToObjects/
+  // sheetAppId) so this browser tool and scripts/sync-sheet.js's automatic
+  // GitHub Actions sync read a sheet identically.
+  var csvToObjects = QuizTemplates.csvToObjects;
+  var sheetAppId = QuizTemplates.sheetAppId;
 
   function findSheetRow(appId, date) {
     return state.sheetRows.filter(function (r) { return sheetAppId(r) === appId && r.date === date; })[0] || null;
@@ -235,6 +198,32 @@
       updateSheetMatchBanner();
     } catch (e) {
       setStatus(el["sheet-status"], e.message || String(e), "err");
+    }
+  });
+
+  // Registers the sheet URL in data/quizzes.json (site.sheetUrl) so the
+  // scheduled GitHub Actions workflow (scripts/sync-sheet.js) can read the
+  // same sheet on its own, without anyone opening this admin page — this is
+  // the one-time step that turns "load manually" into "always in sync".
+  el["btn-sheet-enable-auto"].addEventListener("click", async function () {
+    var url = el["f-sheet-url"].value.trim();
+    if (!url) {
+      setStatus(el["sheet-auto-status"], "먼저 시트 CSV 주소를 입력해 주세요.", "err");
+      return;
+    }
+    el["btn-sheet-enable-auto"].disabled = true;
+    setStatus(el["sheet-auto-status"], "data/quizzes.json에 시트 주소 저장 중...", "busy");
+    try {
+      var latest = await ghGetFile("data/quizzes.json");
+      var data = JSON.parse(latest.text);
+      data.site.sheetUrl = url;
+      await ghPutFile("data/quizzes.json", JSON.stringify(data, null, 2), latest.sha, "chore: 구글 시트 자동 동기화 주소 등록");
+      state.data = data;
+      setStatus(el["sheet-auto-status"], "✅ 자동 동기화가 켜졌습니다. 저장소의 Actions 탭에서 \"Sync Google Sheet\" 워크플로가 약 20분마다(또는 지금 바로 수동 실행) 이 시트를 읽어 사이트에 반영합니다.", "ok");
+    } catch (e) {
+      setStatus(el["sheet-auto-status"], e.message || String(e), "err");
+    } finally {
+      el["btn-sheet-enable-auto"].disabled = false;
     }
   });
 

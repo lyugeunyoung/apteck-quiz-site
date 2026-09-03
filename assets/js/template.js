@@ -15,6 +15,51 @@
 
   var HISTORY_LIMIT = 14;
 
+  // Minimal RFC 4180 CSV parser — handles quoted fields, embedded commas/
+  // newlines, and "" escaped quotes, which a naive split(",") would break on
+  // (해설 text routinely contains commas). Shared by admin.js (browser, the
+  // manual "시트 불러오기" button) and scripts/sync-sheet.js (Node, the
+  // scheduled GitHub Actions auto-sync) so both read a sheet identically.
+  function parseCsv(text) {
+    var rows = [];
+    var row = [];
+    var field = "";
+    var inQuotes = false;
+    for (var i = 0; i < text.length; i++) {
+      var c = text[i], next = text[i + 1];
+      if (inQuotes) {
+        if (c === '"' && next === '"') { field += '"'; i++; }
+        else if (c === '"') { inQuotes = false; }
+        else { field += c; }
+      } else if (c === '"') {
+        inQuotes = true;
+      } else if (c === ",") {
+        row.push(field); field = "";
+      } else if (c === "\r") {
+        // skip
+      } else if (c === "\n") {
+        row.push(field); rows.push(row); row = []; field = "";
+      } else {
+        field += c;
+      }
+    }
+    if (field.length || row.length) { row.push(field); rows.push(row); }
+    return rows;
+  }
+
+  function csvToObjects(text) {
+    var rows = parseCsv(text).filter(function (r) { return r.some(function (c) { return c.trim() !== ""; }); });
+    if (!rows.length) return [];
+    var headers = rows[0].map(function (h) { return h.trim().toLowerCase(); });
+    return rows.slice(1).map(function (r) {
+      var obj = {};
+      headers.forEach(function (h, i) { obj[h] = (r[i] || "").trim(); });
+      return obj;
+    });
+  }
+
+  function sheetAppId(row) { return row.app_id || row.id || row.appid || ""; }
+
   function escapeHtml(str) {
     return String(str == null ? "" : str).replace(/[&<>"']/g, function (c) {
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
@@ -576,6 +621,9 @@
   }
 
   return {
+    parseCsv: parseCsv,
+    csvToObjects: csvToObjects,
+    sheetAppId: sheetAppId,
     escapeHtml: escapeHtml,
     nl2p: nl2p,
     todayKST: todayKST,

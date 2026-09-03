@@ -55,12 +55,19 @@
   </section>
 
   <section class="admin-card" id="card-sheet" style="display:none;">
-    <h2>2. 구글 시트에서 자동 불러오기 (선택)</h2>
+    <h2>2. 구글 시트 연동</h2>
     <p class="admin-card__hint">
-      문제·정답·해설을 구글 시트에 미리 정리해두면, 앱을 고를 때 오늘 날짜에 맞는 행을 자동으로 찾아 폼에 채워줍니다.
+      문제·정답·해설을 구글 시트에 정리해두면 두 가지 방식으로 쓸 수 있습니다.
+      <strong>① 자동 동기화</strong> — 아래 "자동 동기화 켜기"를 한 번 눌러두면, 이후로는 시트에 값만 입력해도
+      약 20분마다 GitHub Actions가 자동으로 읽어와 사이트에 반영합니다(관리자 페이지를 열 필요 없음).
+      <strong>② 수동 불러오기</strong> — "시트 불러오기"를 누르면 지금 이 화면에서 바로 미리 채워볼 수 있습니다.
+    </p>
+    <p class="admin-card__hint">
       시트 첫 줄은 헤더로 <code>date, app_id, question, choice1, choice2, choice3, choice4, answer, explanation, image_url</code>
       열을 사용하세요 (순서는 상관없고, choice·image_url은 비워도 됩니다). <code>app_id</code>는 아래 앱 목록에서 각 앱을
-      선택했을 때 URL이나 페이지 소스에서 확인할 수 있는 영문 ID와 정확히 같아야 합니다.
+      선택했을 때 URL이나 페이지 소스에서 확인할 수 있는 영문 ID와 정확히 같아야 합니다. 카카오뱅크 AI 이모지 퀴즈처럼
+      회차가 있는 앱은 <code>round_time</code> 열에 <code>08:00</code>/<code>12:00</code>/<code>20:00</code> 중 해당 회차를
+      추가로 적어주세요 — 자동 동기화만 회차별 데이터를 지원합니다(수동 불러오기는 회차 없는 일반 앱만 지원).
     </p>
     <p class="admin-card__hint">
       시트를 만든 뒤 <strong>파일 → 공유 → 공유</strong>에서 "링크가 있는 모든 사용자 – 뷰어"로 설정하고,
@@ -71,8 +78,12 @@
       <label for="f-sheet-url">시트 CSV 주소</label>
       <input id="f-sheet-url" type="text" placeholder="https://docs.google.com/spreadsheets/d/.../export?format=csv&gid=0" autocomplete="off">
     </div>
-    <button class="btn btn--ghost btn--small" id="btn-sheet-load" type="button">시트 불러오기</button>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn btn--ghost btn--small" id="btn-sheet-load" type="button">시트 불러오기 (수동 미리보기)</button>
+      <button class="btn btn--primary btn--small" id="btn-sheet-enable-auto" type="button" style="width:auto;">🔁 자동 동기화 켜기</button>
+    </div>
     <div class="status-line" id="sheet-status"></div>
+    <div class="status-line" id="sheet-auto-status"></div>
   </section>
 
   <section class="admin-card" id="card-apps" style="display:none;">

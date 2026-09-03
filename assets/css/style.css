@@ -47,71 +47,12 @@
   --radius-pill: 999px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0B0E1A;
-    --bg-raised: #111527;
-    --surface: #141931;
-    --surface-sunken: #0F1326;
-    --ink: #EAEDFB;
-    --ink-muted: #8E97BE;
-    --ink-faint: #5C6489;
-    --border: #232B4A;
-    --border-strong: #323C63;
-
-    --accent: #5B84FF;
-    --accent-ink: #0B0E1A;
-    --accent-soft: #1B2547;
-    --accent-strong: #8FACFF;
-
-    --success: #3FD9B9;
-    --success-soft: #12332C;
-    --success-ink: #7CEBD2;
-
-    --gold: #F0BB5E;
-    --gold-soft: #2B2314;
-    --gold-ink: #F3D093;
-
-    --danger: #E56B6B;
-    --danger-soft: #33191C;
-
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.35);
-    --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
-  }
-}
-
-:root[data-theme="dark"] {
-  --bg: #0B0E1A;
-  --bg-raised: #111527;
-  --surface: #141931;
-  --surface-sunken: #0F1326;
-  --ink: #EAEDFB;
-  --ink-muted: #8E97BE;
-  --ink-faint: #5C6489;
-  --border: #232B4A;
-  --border-strong: #323C63;
-
-  --accent: #5B84FF;
-  --accent-ink: #0B0E1A;
-  --accent-soft: #1B2547;
-  --accent-strong: #8FACFF;
-
-  --success: #3FD9B9;
-  --success-soft: #12332C;
-  --success-ink: #7CEBD2;
-
-  --gold: #F0BB5E;
-  --gold-soft: #2B2314;
-  --gold-ink: #F3D093;
-
-  --danger: #E56B6B;
-  --danger-soft: #33191C;
-
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.35);
-  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
-}
+/*
+ * This site intentionally stays on the one "네오뱅크 블루" light palette
+ * defined above, regardless of the visitor's OS/browser color-scheme
+ * setting — matching the approved mockup exactly rather than silently
+ * switching to an invented dark variant. No dark-mode block on purpose.
+ */
 
 /* ---- reset ---- */
 *, *::before, *::after { box-sizing: border-box; }
