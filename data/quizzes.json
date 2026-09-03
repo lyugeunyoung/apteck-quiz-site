@@ -21,7 +21,19 @@
       "participatePath": "카카오뱅크 앱 > 하단 혜택 > 바로 받아요 > AI가 생각하는 퀴즈",
       "appDeeplink": "https://www.kakaobank.com/",
       "updatedAt": "2000-01-01",
-      "today": { "date": "2000-01-01", "imageUrl": "", "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.", "choices": ["① 예시 보기 1", "② 예시 보기 2"], "answer": "예시 정답", "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다." },
+      "roundSchedule": [
+        { "time": "08:00", "label": "오전 8시" },
+        { "time": "12:00", "label": "오후 12시" },
+        { "time": "20:00", "label": "오후 8시" }
+      ],
+      "today": {
+        "date": "2000-01-01",
+        "rounds": [
+          { "time": "08:00", "label": "오전 8시", "imageUrl": "", "question": "예시 문제입니다. 관리자 페이지에서 이 회차의 실제 문제로 교체해 주세요.", "choices": [], "answer": "예시 정답", "explanation": "관리자 페이지에서 회차별 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다." },
+          { "time": "12:00", "label": "오후 12시", "imageUrl": "", "question": "예시 문제입니다. 관리자 페이지에서 이 회차의 실제 문제로 교체해 주세요.", "choices": [], "answer": "예시 정답", "explanation": "관리자 페이지에서 회차별 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다." },
+          { "time": "20:00", "label": "오후 8시", "imageUrl": "", "question": "예시 문제입니다. 관리자 페이지에서 이 회차의 실제 문제로 교체해 주세요.", "choices": [], "answer": "예시 정답", "explanation": "관리자 페이지에서 회차별 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다." }
+        ]
+      },
       "history": []
     },
     {

@@ -138,40 +138,46 @@
     <input type="hidden" id="f-selected-id">
 
     <div class="field">
-      <label for="f-date">문제 날짜</label>
-      <input id="f-date" type="date">
+      <label>문제 날짜</label>
+      <input id="f-date" type="text" readonly style="background:var(--surface-sunken);color:var(--ink-muted);cursor:not-allowed;">
+      <p class="admin-card__hint" style="margin:6px 0 0;">항상 저장하는 날 기준 당일 날짜로 자동 등록됩니다 (직접 바꿀 수 없음).</p>
     </div>
-    <div class="field">
-      <label for="f-question">오늘의 문제</label>
-      <textarea id="f-question" placeholder="문제 내용을 입력하세요"></textarea>
-    </div>
-    <div class="field">
-      <label for="f-image">문제 이미지 URL (선택 — 구글 드라이브 공유 링크 붙여넣기 가능)</label>
-      <div class="choices-editor__row">
-        <input id="f-image" type="text" placeholder="https://drive.google.com/file/d/.../view?usp=sharing">
-        <button class="btn btn--ghost btn--small" id="btn-convert-drive" type="button" style="flex:none;width:auto;padding:0 12px;">변환</button>
+
+    <div id="single-round-fields">
+      <div class="field">
+        <label for="f-question">오늘의 문제</label>
+        <textarea id="f-question" placeholder="문제 내용을 입력하세요"></textarea>
       </div>
-      <p class="admin-card__hint" style="margin:8px 0 0;">
-        드라이브 파일을 <strong>"링크가 있는 모든 사용자 – 뷰어"</strong>로 공유한 뒤 그 링크를 붙여넣고 [변환]을 누르면
-        바로 표시 가능한 이미지 주소로 자동 변환됩니다. 구글 드라이브는 트래픽이 몰리면 이미지가 일시적으로 안 뜰 수 있어,
-        중요한 이미지는 저장소의 <code>assets/img/</code> 폴더에 직접 올려 <code>../assets/img/파일명.jpg</code> 형태로
-        넣는 것이 더 안정적입니다.
-      </p>
-      <img id="image-preview" alt="이미지 미리보기" style="display:none;max-width:220px;margin-top:10px;border-radius:10px;border:1px solid var(--border);">
+      <div class="field">
+        <label for="f-image">문제 이미지 URL (선택 — 구글 드라이브 공유 링크 붙여넣기 가능)</label>
+        <div class="choices-editor__row">
+          <input id="f-image" type="text" placeholder="https://drive.google.com/file/d/.../view?usp=sharing">
+          <button class="btn btn--ghost btn--small" id="btn-convert-drive" type="button" style="flex:none;width:auto;padding:0 12px;">변환</button>
+        </div>
+        <p class="admin-card__hint" style="margin:8px 0 0;">
+          드라이브 파일을 <strong>"링크가 있는 모든 사용자 – 뷰어"</strong>로 공유한 뒤 그 링크를 붙여넣고 [변환]을 누르면
+          바로 표시 가능한 이미지 주소로 자동 변환됩니다. 구글 드라이브는 트래픽이 몰리면 이미지가 일시적으로 안 뜰 수 있어,
+          중요한 이미지는 저장소의 <code>assets/img/</code> 폴더에 직접 올려 <code>../assets/img/파일명.jpg</code> 형태로
+          넣는 것이 더 안정적입니다.
+        </p>
+        <img id="image-preview" alt="이미지 미리보기" style="display:none;max-width:220px;margin-top:10px;border-radius:10px;border:1px solid var(--border);">
+      </div>
+      <div class="field">
+        <label>보기 (선택 사항 — 객관식이 아니면 비워두세요)</label>
+        <div class="choices-editor" id="choices-editor"></div>
+        <button class="btn btn--ghost btn--small" id="btn-add-choice" type="button" style="margin-top:8px;">+ 보기 추가</button>
+      </div>
+      <div class="field">
+        <label for="f-answer">정답</label>
+        <input id="f-answer" type="text" placeholder="예: ② 서울">
+      </div>
+      <div class="field">
+        <label for="f-explanation">정답 해설</label>
+        <textarea id="f-explanation" placeholder="왜 이 답이 맞는지 설명해 주세요"></textarea>
+      </div>
     </div>
-    <div class="field">
-      <label>보기 (선택 사항 — 객관식이 아니면 비워두세요)</label>
-      <div class="choices-editor" id="choices-editor"></div>
-      <button class="btn btn--ghost btn--small" id="btn-add-choice" type="button" style="margin-top:8px;">+ 보기 추가</button>
-    </div>
-    <div class="field">
-      <label for="f-answer">정답</label>
-      <input id="f-answer" type="text" placeholder="예: ② 서울">
-    </div>
-    <div class="field">
-      <label for="f-explanation">정답 해설</label>
-      <textarea id="f-explanation" placeholder="왜 이 답이 맞는지 설명해 주세요"></textarea>
-    </div>
+
+    <div id="multi-round-fields" style="display:none;"></div>
 
     <button class="btn btn--primary" id="btn-save" type="button">GitHub에 저장 &amp; 게시</button>
     <div class="status-line" id="save-status"></div>

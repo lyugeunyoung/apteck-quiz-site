@@ -13,6 +13,7 @@
     selectedId: null,   // app id currently loaded in the form, or null = new app
     sheetUrl: "",
     sheetRows: [],       // parsed rows from the Google Sheet CSV, if loaded
+    multiRoundApp: null, // the selected app object when it has a roundSchedule, else null
   };
 
   var el = {};
@@ -22,7 +23,8 @@
     "card-apps", "app-table", "app-search", "btn-new-app",
     "card-form", "form-title", "sheet-match", "new-app-fields", "f-selected-id", "category-options",
     "f-id", "f-emoji", "f-category", "f-schedule", "f-name", "f-reward", "f-deeplink", "f-path",
-    "f-date", "f-question", "f-image", "btn-convert-drive", "image-preview",
+    "f-date", "single-round-fields", "multi-round-fields",
+    "f-question", "f-image", "btn-convert-drive", "image-preview",
     "choices-editor", "btn-add-choice", "f-answer", "f-explanation",
     "btn-save", "save-status", "card-preview", "preview-frame"
   ].forEach(function (id) { el[id] = document.getElementById(id); });
@@ -238,11 +240,17 @@
 
   function updateSheetMatchBanner() {
     if (!el["sheet-match"]) return;
+    if (state.multiRoundApp) {
+      // The CSV format is one question/answer per row — it doesn't model
+      // the 3-round shape, so sheet import only applies to single-round apps.
+      el["sheet-match"].style.display = "none";
+      return;
+    }
     if (!state.sheetRows.length || state.selectedId === null) {
       el["sheet-match"].style.display = "none";
       return;
     }
-    var todayRow = findSheetRow(state.selectedId, el["f-date"].value || todayISO());
+    var todayRow = findSheetRow(state.selectedId, todayISO());
     var latestRow = todayRow || findLatestSheetRow(state.selectedId);
     if (!latestRow) {
       el["sheet-match"].style.display = "none";
@@ -270,7 +278,8 @@
       el["f-image"].value = row.image_url || row.image || row.imageurl;
       updateImagePreview();
     }
-    if (row.date) el["f-date"].value = row.date;
+    // The row's own "date" column is only used to pick which row matches —
+    // the saved date is always today's date regardless (see f-date).
     updatePreview();
     el["sheet-match"].style.display = "none";
   }
@@ -311,10 +320,13 @@
   function loadAppIntoForm(id) {
     state.selectedId = id;
     var isNew = id === null;
-    el["new-app-fields"].style.display = isNew ? "" : "none";
-    el["form-title"].textContent = isNew ? "4. 새 퀴즈 앱 추가" : "4. 오늘의 퀴즈 입력 — " + appById(id).name;
-
     var app = isNew ? {} : appById(id);
+    var isMultiRound = !isNew && !!(app.roundSchedule && app.roundSchedule.length);
+    state.multiRoundApp = isMultiRound ? app : null;
+
+    el["new-app-fields"].style.display = isNew ? "" : "none";
+    el["form-title"].textContent = isNew ? "4. 새 퀴즈 앱 추가" : "4. 오늘의 퀴즈 입력 — " + app.name;
+
     var today = (app && app.today) || {};
 
     el["f-selected-id"].value = id || "";
@@ -328,13 +340,24 @@
     el["f-path"].value = app.participatePath || "";
 
     el["f-date"].value = todayISO();
-    el["f-question"].value = isNew ? "" : (today.question || "");
-    el["f-answer"].value = isNew ? "" : (today.answer || "");
-    el["f-explanation"].value = isNew ? "" : (today.explanation || "");
-    el["f-image"].value = isNew ? "" : (today.imageUrl || "");
-    updateImagePreview();
 
-    renderChoicesEditor((today.choices || []).slice());
+    if (isMultiRound) {
+      el["single-round-fields"].style.display = "none";
+      el["multi-round-fields"].style.display = "";
+      el["multi-round-fields"].innerHTML = renderMultiRoundFieldsHTML(app);
+      wireMultiRoundFields(app);
+      fillMultiRoundFields(app);
+    } else {
+      el["single-round-fields"].style.display = "";
+      el["multi-round-fields"].style.display = "none";
+      el["multi-round-fields"].innerHTML = "";
+      el["f-question"].value = isNew ? "" : (today.question || "");
+      el["f-answer"].value = isNew ? "" : (today.answer || "");
+      el["f-explanation"].value = isNew ? "" : (today.explanation || "");
+      el["f-image"].value = isNew ? "" : (today.imageUrl || "");
+      updateImagePreview();
+      renderChoicesEditor((today.choices || []).slice());
+    }
 
     el["card-form"].style.display = "";
     el["card-preview"].style.display = "";
@@ -342,6 +365,91 @@
     el["card-form"].scrollIntoView({ behavior: "smooth", block: "start" });
     updatePreview();
     updateSheetMatchBanner();
+  }
+
+  // -------------------------------------------------------- multi-round
+  // (앱마다 오전/오후/저녁처럼 하루 여러 회차를 갖는 경우, 예: 카카오뱅크 AI
+  // 이모지 퀴즈. app.roundSchedule 이 있으면 자동으로 이 UI가 뜬다.)
+
+  function roundFieldId(idx, name) { return "f-round-" + idx + "-" + name; }
+
+  function renderMultiRoundFieldsHTML(app) {
+    return app.roundSchedule.map(function (sched, idx) {
+      return (
+        '<div class="admin-card" style="margin:0 0 14px;box-shadow:none;">' +
+        '<h2 style="font-size:14px;color:var(--accent-strong);">🕐 ' + escapeText(sched.label) + " 회차</h2>" +
+        '<div class="field"><label for="' + roundFieldId(idx, "question") + '">문제</label>' +
+        '<textarea id="' + roundFieldId(idx, "question") + '" placeholder="' + escapeText(sched.label) + ' 문제를 입력하세요"></textarea></div>' +
+        '<div class="field"><label for="' + roundFieldId(idx, "image") + '">문제 이미지 URL (선택)</label>' +
+        '<div class="choices-editor__row">' +
+        '<input id="' + roundFieldId(idx, "image") + '" type="text" placeholder="https://drive.google.com/...">' +
+        '<button class="btn btn--ghost btn--small" type="button" data-round-convert="' + idx + '" style="flex:none;width:auto;padding:0 12px;">변환</button>' +
+        "</div>" +
+        '<img id="' + roundFieldId(idx, "image-preview") + '" alt="이미지 미리보기" style="display:none;max-width:180px;margin-top:8px;border-radius:8px;border:1px solid var(--border);">' +
+        "</div>" +
+        '<div class="field"><label for="' + roundFieldId(idx, "choices") + '">보기 (쉼표로 구분 — 객관식이 아니면 비워두세요)</label>' +
+        '<input id="' + roundFieldId(idx, "choices") + '" type="text" placeholder="① 서울, ② 부산"></div>' +
+        '<div class="field"><label for="' + roundFieldId(idx, "answer") + '">정답</label>' +
+        '<input id="' + roundFieldId(idx, "answer") + '" type="text" placeholder="예: ② 부산"></div>' +
+        '<div class="field" style="margin-bottom:0;"><label for="' + roundFieldId(idx, "explanation") + '">정답 해설</label>' +
+        '<textarea id="' + roundFieldId(idx, "explanation") + '" placeholder="왜 이 답이 맞는지 설명해 주세요"></textarea></div>' +
+        "</div>"
+      );
+    }).join("");
+  }
+
+  function wireMultiRoundFields(app) {
+    app.roundSchedule.forEach(function (sched, idx) {
+      var img = document.getElementById(roundFieldId(idx, "image"));
+      var preview = document.getElementById(roundFieldId(idx, "image-preview"));
+      var convertBtn = document.querySelector('[data-round-convert="' + idx + '"]');
+
+      function refreshPreview() {
+        var url = img.value.trim() ? QuizTemplates.convertDriveLink(img.value.trim()) : "";
+        if (url) { preview.src = url; preview.style.display = ""; } else { preview.style.display = "none"; }
+      }
+      img.addEventListener("input", function () { refreshPreview(); updatePreview(); });
+      convertBtn.addEventListener("click", function () {
+        img.value = QuizTemplates.convertDriveLink(img.value.trim());
+        refreshPreview();
+        updatePreview();
+      });
+      ["question", "choices", "answer", "explanation"].forEach(function (name) {
+        document.getElementById(roundFieldId(idx, name)).addEventListener("input", updatePreview);
+      });
+    });
+  }
+
+  function fillMultiRoundFields(app) {
+    // Only prefill from rounds already saved TODAY. If the app's stored
+    // "today" is actually yesterday (or older) — i.e. nobody has saved
+    // anything for this new day yet — every round starts blank instead of
+    // silently carrying forward an answer that hasn't been asked yet today.
+    var isToday = !!(app.today && app.today.date === todayISO());
+    var todayRounds = isToday ? (app.today.rounds || []) : [];
+    app.roundSchedule.forEach(function (sched, idx) {
+      var match = todayRounds.filter(function (r) { return r.time === sched.time; })[0] || {};
+      document.getElementById(roundFieldId(idx, "question")).value = match.question || "";
+      document.getElementById(roundFieldId(idx, "image")).value = match.imageUrl || "";
+      document.getElementById(roundFieldId(idx, "choices")).value = (match.choices || []).join(", ");
+      document.getElementById(roundFieldId(idx, "answer")).value = match.answer || "";
+      document.getElementById(roundFieldId(idx, "explanation")).value = match.explanation || "";
+      document.getElementById(roundFieldId(idx, "image")).dispatchEvent(new Event("input"));
+    });
+  }
+
+  function buildRoundsFromForm(roundSchedule) {
+    return roundSchedule.map(function (sched, idx) {
+      return {
+        time: sched.time,
+        label: sched.label,
+        question: document.getElementById(roundFieldId(idx, "question")).value.trim(),
+        imageUrl: QuizTemplates.convertDriveLink(document.getElementById(roundFieldId(idx, "image")).value.trim()),
+        choices: document.getElementById(roundFieldId(idx, "choices")).value.split(",").map(function (s) { return s.trim(); }).filter(Boolean),
+        answer: document.getElementById(roundFieldId(idx, "answer")).value.trim(),
+        explanation: document.getElementById(roundFieldId(idx, "explanation")).value.trim()
+      };
+    });
   }
 
   function appById(id) {
@@ -416,30 +524,40 @@
     base.appDeeplink = el["f-deeplink"].value.trim() || "#";
     base.participatePath = el["f-path"].value.trim();
 
-    var date = el["f-date"].value || todayISO();
-
-    // Archive the previous day's Q&A before overwriting "today" so the
-    // page's "지난 정답 모음" section (and long-tail date searches) keep
-    // building up instead of losing yesterday's answer on every save.
-    if (previousApp && previousApp.today && previousApp.today.date && previousApp.today.date !== date && previousApp.today.question) {
-      base.history.unshift({
-        date: previousApp.today.date,
-        question: previousApp.today.question,
-        answer: previousApp.today.answer,
-        explanation: previousApp.today.explanation
-      });
-      base.history = base.history.slice(0, QuizTemplates.HISTORY_LIMIT);
-    }
-
+    // Always the day this is actually saved on — never editable, never a
+    // stale value from a form left open across midnight.
+    var date = todayISO();
     base.updatedAt = date;
-    base.today = {
-      date: date,
-      imageUrl: QuizTemplates.convertDriveLink(el["f-image"].value.trim()),
-      question: el["f-question"].value.trim(),
-      choices: currentChoices(),
-      answer: el["f-answer"].value.trim(),
-      explanation: el["f-explanation"].value.trim()
-    };
+
+    if (state.multiRoundApp) {
+      // Archive yesterday's full round set (오전/오후/저녁) before overwriting.
+      if (previousApp && previousApp.today && previousApp.today.date && previousApp.today.date !== date && previousApp.today.rounds && previousApp.today.rounds.length) {
+        base.history.unshift({ date: previousApp.today.date, rounds: previousApp.today.rounds });
+        base.history = base.history.slice(0, QuizTemplates.HISTORY_LIMIT);
+      }
+      base.today = { date: date, rounds: buildRoundsFromForm(base.roundSchedule) };
+    } else {
+      // Archive the previous day's Q&A before overwriting "today" so the
+      // page's "지난 정답 모음" section (and long-tail date searches) keep
+      // building up instead of losing yesterday's answer on every save.
+      if (previousApp && previousApp.today && previousApp.today.date && previousApp.today.date !== date && previousApp.today.question) {
+        base.history.unshift({
+          date: previousApp.today.date,
+          question: previousApp.today.question,
+          answer: previousApp.today.answer,
+          explanation: previousApp.today.explanation
+        });
+        base.history = base.history.slice(0, QuizTemplates.HISTORY_LIMIT);
+      }
+      base.today = {
+        date: date,
+        imageUrl: QuizTemplates.convertDriveLink(el["f-image"].value.trim()),
+        question: el["f-question"].value.trim(),
+        choices: currentChoices(),
+        answer: el["f-answer"].value.trim(),
+        explanation: el["f-explanation"].value.trim()
+      };
+    }
     return base;
   }
 
@@ -459,10 +577,9 @@
   }
 
   ["f-emoji", "f-category", "f-schedule", "f-name", "f-reward", "f-deeplink", "f-path",
-   "f-date", "f-question", "f-answer", "f-explanation"].forEach(function (id) {
+   "f-question", "f-answer", "f-explanation"].forEach(function (id) {
     el[id].addEventListener("input", updatePreview);
   });
-  el["f-date"].addEventListener("input", updateSheetMatchBanner);
 
   // -------------------------------------------------------------- save
 
@@ -480,8 +597,12 @@
         return;
       }
     }
-    if (!el["f-name"].value.trim() || !el["f-question"].value.trim() || !el["f-answer"].value.trim()) {
-      setStatus(el["save-status"], "앱 이름, 문제, 정답은 필수입니다.", "err");
+    if (!el["f-name"].value.trim()) {
+      setStatus(el["save-status"], "앱 이름은 필수입니다.", "err");
+      return;
+    }
+    if (!state.multiRoundApp && (!el["f-question"].value.trim() || !el["f-answer"].value.trim())) {
+      setStatus(el["save-status"], "문제와 정답은 필수입니다.", "err");
       return;
     }
 

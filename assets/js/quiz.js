@@ -1,15 +1,17 @@
 (function () {
   "use strict";
 
-  var revealBtn = document.getElementById("reveal-btn");
-  var reveal = document.getElementById("reveal");
-  if (revealBtn && reveal) {
+  // Class-based (not id-based) so a multi-round page — several .reveal
+  // blocks, one per time slot — works the same as a single-round page.
+  document.querySelectorAll(".reveal").forEach(function (reveal) {
+    var revealBtn = reveal.querySelector(".reveal__button");
+    if (!revealBtn) return;
     revealBtn.addEventListener("click", function () {
       reveal.classList.add("is-open");
       var content = reveal.querySelector(".reveal__content");
       if (content) content.scrollIntoView({ behavior: "smooth", block: "nearest" });
     });
-  }
+  });
 
   var shareRow = document.querySelector(".share-row");
   if (shareRow) {

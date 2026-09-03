@@ -45,6 +45,17 @@
     return parseInt(parts[1], 10) + "." + parseInt(parts[2], 10);
   }
 
+  // "9월 4일" — no year. Matches how real top-ranking pages (위키트리,
+  // 게임톡 등) title these "오늘의 정답" articles; a search for "정답 9월4일"
+  // or "정답 오늘" never includes the year, so keeping it out saves title
+  // characters without losing any match value.
+  function formatDateMD(dateStr) {
+    if (!dateStr) return "";
+    var parts = String(dateStr).split("-");
+    if (parts.length !== 3) return dateStr;
+    return parseInt(parts[1], 10) + "월 " + parseInt(parts[2], 10) + "일";
+  }
+
   function isFresh(app) {
     return !!(app.today && app.today.date === todayKST());
   }
@@ -116,6 +127,7 @@
       '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n' +
       "<title>" + escapeHtml(opts.title) + "</title>\n" +
       '<meta name="description" content="' + escapeHtml(opts.description) + '">\n' +
+      (opts.keywords ? '<meta name="keywords" content="' + escapeHtml(opts.keywords) + '">\n' : "") +
       '<meta name="robots" content="index, follow, max-image-preview:large">\n' +
       '<link rel="canonical" href="' + escapeHtml(opts.canonical) + '">\n' +
       verifyTags +
@@ -245,6 +257,7 @@
       headBlock({
         title: site.name + " | " + site.tagline,
         description: apps.length + "개 앱테크 퀴즈의 오늘의 문제·정답·해설을 한 곳에서 확인하세요. " + site.tagline,
+        keywords: apps.slice(0, 12).map(function (a) { return a.name + " 정답"; }).join(", "),
         canonical: site.baseUrl + "/",
         siteName: site.name,
         adsensePubId: site.adsensePubId,
@@ -284,6 +297,18 @@
     var hist = (app.history || []).slice(0, HISTORY_LIMIT);
     if (!hist.length) return "";
     var rows = hist.map(function (h) {
+      if (h.rounds && h.rounds.length) {
+        var roundSummary = h.rounds.map(function (r) {
+          return escapeHtml(r.label || "") + " " + escapeHtml(r.answer || "미등록");
+        }).join(" · ");
+        return (
+          '<div class="archive-row">' +
+          '<span class="archive-row__date">' + escapeHtml(formatDateShort(h.date)) + "</span>" +
+          '<span class="archive-row__q">' + roundSummary + "</span>" +
+          '<span class="archive-row__a"></span>' +
+          "</div>"
+        );
+      }
       return (
         '<div class="archive-row">' +
         '<span class="archive-row__date">' + escapeHtml(formatDateShort(h.date)) + "</span>" +
@@ -300,37 +325,97 @@
     );
   }
 
+  // One "문제 → 정답/해설" card for a single time slot of a multi-round app
+  // (예: 카카오뱅크 AI 이모지 퀴즈의 오전 8시/오후 12시/오후 8시 회차).
+  function renderRoundBlock(app, round) {
+    var choices = (round.choices || []).filter(Boolean);
+    var choicesHTML = choices.length
+      ? '<ul class="choice-list">' + choices.map(function (c) { return "<li>" + escapeHtml(c) + "</li>"; }).join("") + "</ul>"
+      : "";
+    var imageUrl = convertDriveLink(round.imageUrl);
+    var imageHTML = imageUrl
+      ? '<figure class="q-image"><img src="' + escapeHtml(imageUrl) + '" alt="' + escapeHtml(app.name + " " + round.label + " 문제 이미지") + '" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>' +
+        (isDriveLink(round.imageUrl) ? '<p class="q-image__hint">※ 이미지가 보이지 않으면 구글드라이브 공유 설정이 "링크가 있는 모든 사용자"인지 확인해 주세요.</p>' : "")
+      : "";
+    return (
+      '<div class="round-block">' +
+      '<span class="round-block__time">🕐 ' + escapeHtml(round.label || "") + " 회차</span>" +
+      '<div class="panel">' + imageHTML + '<p class="q-text">' + nl2p(round.question || "아직 등록된 문제가 없습니다. 관리자 페이지에서 이 회차의 문제를 입력해 주세요.") + "</p>" + choicesHTML + "</div>" +
+      '<div class="reveal">' +
+      '<button class="reveal__button" type="button">🔒 ' + escapeHtml(round.label || "") + ' 정답 확인하기</button>' +
+      '<div class="reveal__content">' +
+      '<span class="answer-badge">✅ 정답 · ' + escapeHtml(round.answer || "미등록") + "</span>" +
+      '<p class="explain-text">' + nl2p(round.explanation || "해설이 아직 등록되지 않았습니다.") + "</p>" +
+      "</div></div>" +
+      "</div>"
+    );
+  }
+
   function renderAppPage(app, data) {
     var site = data.site;
     var apps = data.apps || [];
     var fresh = isFresh(app);
     var today = app.today || {};
-    var choices = (today.choices || []).filter(Boolean);
     var related = pickRelated(app, apps, 3);
     var canonical = site.baseUrl + "/pages/" + app.page;
-    var title = "[" + app.name + " 정답] " + formatDateKo(today.date) + " 오늘의 문제와 정답";
-    var description = (app.name + " 오늘의 퀴즈 문제, 정답, 해설을 확인하세요. " + (today.question || "")).slice(0, 150);
-    var imageUrl = convertDriveLink(today.imageUrl);
-    var ogImage = imageUrl || (site.ogImage && site.ogImage.indexOf("http") === 0 ? site.ogImage : site.baseUrl + "/" + (site.ogImage || "assets/img/og-default.png"));
+    var dateLabel = formatDateMD(today.date);
 
+    var isMultiRound = !!(app.roundSchedule && app.roundSchedule.length);
+    var roundsMerged = isMultiRound
+      ? app.roundSchedule.map(function (sched) {
+          var match = (today.rounds || []).filter(function (r) { return r.time === sched.time; })[0];
+          return Object.assign({ time: sched.time, label: sched.label }, match || {});
+        })
+      : [];
+
+    var title, description, keywords, ogImage;
+
+    if (isMultiRound) {
+      var roundLabels = app.roundSchedule.map(function (s) { return s.label; }).join("·");
+      title = app.name + " 정답 (" + dateLabel + ") " + roundLabels + " 회차 | " + site.name;
+      var answerSummary = roundsMerged.map(function (r) { return r.label + " " + (r.answer || "미등록"); }).join(" · ");
+      description = (app.name + " 정답 (" + dateLabel + ") — " + answerSummary + ". 회차별 문제와 해설을 확인하세요.").slice(0, 155);
+      keywords = [app.name + " 정답", app.name + " 정답 오늘", app.name + " 회차", app.name + " " + dateLabel, site.name].join(", ");
+      var firstRoundImage = roundsMerged.map(function (r) { return convertDriveLink(r.imageUrl); }).filter(Boolean)[0];
+      ogImage = firstRoundImage || (site.ogImage && site.ogImage.indexOf("http") === 0 ? site.ogImage : site.baseUrl + "/" + (site.ogImage || "assets/img/og-default.png"));
+    } else {
+      title = app.name + " 정답 (" + dateLabel + ") | " + site.name;
+      var answerPart = today.answer ? "정답은 '" + today.answer + "'. " : "";
+      description = (app.name + " 정답 (" + dateLabel + "): " + answerPart + (today.question || "")).slice(0, 155);
+      keywords = [app.name + " 정답", app.name + " 정답 오늘", app.name + " 문제", app.name + " " + dateLabel, site.name].join(", ");
+      var imageUrl = convertDriveLink(today.imageUrl);
+      ogImage = imageUrl || (site.ogImage && site.ogImage.indexOf("http") === 0 ? site.ogImage : site.baseUrl + "/" + (site.ogImage || "assets/img/og-default.png"));
+    }
+
+    var choices = (today.choices || []).filter(Boolean);
     var choicesHTML = choices.length
       ? '<ul class="choice-list">' + choices.map(function (c) { return "<li>" + escapeHtml(c) + "</li>"; }).join("") + "</ul>"
       : "";
-
-    var imageHTML = imageUrl
-      ? '<figure class="q-image"><img src="' + escapeHtml(imageUrl) + '" alt="' + escapeHtml(app.name + " 문제 이미지") + '" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>' +
+    var singleImageUrl = convertDriveLink(today.imageUrl);
+    var imageHTML = singleImageUrl
+      ? '<figure class="q-image"><img src="' + escapeHtml(singleImageUrl) + '" alt="' + escapeHtml(app.name + " 문제 이미지") + '" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>' +
         (isDriveLink(today.imageUrl) ? '<p class="q-image__hint">※ 이미지가 보이지 않으면 구글드라이브 공유 설정이 "링크가 있는 모든 사용자"인지 확인해 주세요.</p>' : "")
       : "";
+
+    var faqEntities = isMultiRound
+      ? roundsMerged.map(function (r) {
+          return {
+            "@type": "Question",
+            "name": r.label + " — " + (r.question || app.name + " 퀴즈"),
+            "acceptedAnswer": { "@type": "Answer", "text": (r.answer || "") + " " + (r.explanation || "") }
+          };
+        })
+      : [{
+          "@type": "Question",
+          "name": today.question || app.name + " 오늘의 퀴즈",
+          "acceptedAnswer": { "@type": "Answer", "text": (today.answer || "") + " " + (today.explanation || "") }
+        }];
 
     var jsonLd = [
       {
         "@context": "https://schema.org",
         "@type": "FAQPage",
-        "mainEntity": [{
-          "@type": "Question",
-          "name": today.question || app.name + " 오늘의 퀴즈",
-          "acceptedAnswer": { "@type": "Answer", "text": (today.answer || "") + " " + (today.explanation || "") }
-        }]
+        "mainEntity": faqEntities
       },
       {
         "@context": "https://schema.org",
@@ -368,6 +453,7 @@
       headBlock({
         title: title,
         description: description,
+        keywords: keywords,
         canonical: canonical,
         siteName: site.name,
         adsensePubId: site.adsensePubId,
@@ -384,40 +470,60 @@
       '<div class="quiz-hero shell">' +
       '<div class="quiz-hero__row"><span class="quiz-hero__badge" aria-hidden="true">' + escapeHtml(app.emoji || "🎯") + "</span>" + favoriteButtonHTML(app.id) + "</div>" +
       '<span class="quiz-hero__cat">' + escapeHtml(app.category || "") + " · " + escapeHtml(app.schedule || "매일") + "</span>" +
-      "<h1>" + escapeHtml(app.name) + " 오늘의 정답</h1>" +
+      "<h1>" + escapeHtml(app.name) + " 정답 (" + dateLabel + ")</h1>" +
       '<p class="quiz-hero__updated">' + (fresh ? "✅ " : "🕓 ") + formatDateKo(today.date) + " 기준 · " + (fresh ? "오늘 확인된 정보" : "최근 확인된 정보 (오늘자 미등록)") + "</p>" +
-      shareBarHTML(app.name + " 오늘의 정답") +
+      shareBarHTML(app.name + " 정답 (" + dateLabel + ")") +
       "</div>" +
-      '<nav class="toc shell" aria-label="목차">' +
-      '<a href="#question">1. 문제</a><a href="#answer">2. 정답</a><a href="#explain">3. 해설</a><a href="#howto">4. 참여 방법</a><a href="#related">5. 관련 퀴즈</a>' +
-      "</nav>" +
-      adSlot("광고 영역 (본문 상단)") +
-      '<section class="section shell" id="question">' +
-      '<div class="section__label"><span class="n">01</span>' + escapeHtml(app.name) + " 문제</div>" +
-      '<div class="panel">' + imageHTML + '<p class="q-text">' + nl2p(today.question || "아직 등록된 문제가 없습니다. 관리자 페이지에서 오늘의 문제를 입력해 주세요.") + "</p>" + choicesHTML + "</div>" +
-      "</section>" +
-      '<section class="section shell" id="answer" style="padding-top:0;">' +
-      '<div class="section__label"><span class="n">02</span>' + escapeHtml(app.name) + " 정답</div>" +
-      '<div class="reveal" id="reveal">' +
-      '<button class="reveal__button" type="button" id="reveal-btn">🔒 탭해서 정답 확인하기</button>' +
-      '<div class="reveal__content">' +
-      '<span class="answer-badge">✅ 정답 · ' + escapeHtml(today.answer || "미등록") + "</span>" +
-      '<div id="explain" class="section__label" style="margin-top:18px;"><span class="n">03</span>오늘의 퀴즈 해설</div>' +
-      '<p class="explain-text">' + nl2p(today.explanation || "해설이 아직 등록되지 않았습니다.") + "</p>" +
-      "</div></div>" +
-      "</section>" +
-      adSlot("광고 영역 (본문 중간)") +
-      '<section class="section shell" id="howto" style="padding-top:0;">' +
-      '<div class="section__label"><span class="n">04</span>참여 방법</div>' +
-      '<div class="panel" style="text-align:center;">' +
-      '<a class="cta-button" href="' + escapeHtml(app.appDeeplink || "#") + '">' + escapeHtml(app.name) + " 참여하러 가기 →</a>" +
-      '<p class="path-steps">' + escapeHtml(app.participatePath || "") + "</p>" +
-      "</div></section>" +
-      '<section class="section shell" id="related" style="padding-top:0;">' +
-      '<div class="section__label"><span class="n">05</span>함께 보면 좋은 앱테크</div>' +
-      '<div class="related-list">' + relatedHTML + "</div>" +
-      (archiveSectionHTML(app) ? '<div style="margin-top:14px;">' + archiveSectionHTML(app) + "</div>" : "") +
-      "</section>" +
+      (isMultiRound
+        ? ('<nav class="toc shell" aria-label="목차"><a href="#rounds">1. 회차별 정답</a><a href="#howto">2. 참여 방법</a><a href="#related">3. 관련 퀴즈</a></nav>' +
+           adSlot("광고 영역 (본문 상단)") +
+           '<section class="section shell" id="rounds">' +
+           '<div class="section__label"><span class="n">01</span>' + escapeHtml(app.name) + " 회차별 문제와 정답</div>" +
+           roundsMerged.map(function (r) { return renderRoundBlock(app, r); }).join('<div style="height:14px;"></div>') +
+           "</section>" +
+           adSlot("광고 영역 (본문 중간)") +
+           '<section class="section shell" id="howto" style="padding-top:0;">' +
+           '<div class="section__label"><span class="n">02</span>참여 방법</div>' +
+           '<div class="panel" style="text-align:center;">' +
+           '<a class="cta-button" href="' + escapeHtml(app.appDeeplink || "#") + '">' + escapeHtml(app.name) + " 참여하러 가기 →</a>" +
+           '<p class="path-steps">' + escapeHtml(app.participatePath || "") + "</p>" +
+           "</div></section>" +
+           '<section class="section shell" id="related" style="padding-top:0;">' +
+           '<div class="section__label"><span class="n">03</span>함께 보면 좋은 앱테크</div>' +
+           '<div class="related-list">' + relatedHTML + "</div>" +
+           (archiveSectionHTML(app) ? '<div style="margin-top:14px;">' + archiveSectionHTML(app) + "</div>" : "") +
+           "</section>")
+        : ('<nav class="toc shell" aria-label="목차">' +
+           '<a href="#question">1. 문제</a><a href="#answer">2. 정답</a><a href="#explain">3. 해설</a><a href="#howto">4. 참여 방법</a><a href="#related">5. 관련 퀴즈</a>' +
+           "</nav>" +
+           adSlot("광고 영역 (본문 상단)") +
+           '<section class="section shell" id="question">' +
+           '<div class="section__label"><span class="n">01</span>' + escapeHtml(app.name) + " 문제</div>" +
+           '<div class="panel">' + imageHTML + '<p class="q-text">' + nl2p(today.question || "아직 등록된 문제가 없습니다. 관리자 페이지에서 오늘의 문제를 입력해 주세요.") + "</p>" + choicesHTML + "</div>" +
+           "</section>" +
+           '<section class="section shell" id="answer" style="padding-top:0;">' +
+           '<div class="section__label"><span class="n">02</span>' + escapeHtml(app.name) + " 정답</div>" +
+           '<div class="reveal" id="reveal">' +
+           '<button class="reveal__button" type="button" id="reveal-btn">🔒 탭해서 정답 확인하기</button>' +
+           '<div class="reveal__content">' +
+           '<span class="answer-badge">✅ 정답 · ' + escapeHtml(today.answer || "미등록") + "</span>" +
+           '<div id="explain" class="section__label" style="margin-top:18px;"><span class="n">03</span>오늘의 퀴즈 해설</div>' +
+           '<p class="explain-text">' + nl2p(today.explanation || "해설이 아직 등록되지 않았습니다.") + "</p>" +
+           "</div></div>" +
+           "</section>" +
+           adSlot("광고 영역 (본문 중간)") +
+           '<section class="section shell" id="howto" style="padding-top:0;">' +
+           '<div class="section__label"><span class="n">04</span>참여 방법</div>' +
+           '<div class="panel" style="text-align:center;">' +
+           '<a class="cta-button" href="' + escapeHtml(app.appDeeplink || "#") + '">' + escapeHtml(app.name) + " 참여하러 가기 →</a>" +
+           '<p class="path-steps">' + escapeHtml(app.participatePath || "") + "</p>" +
+           "</div></section>" +
+           '<section class="section shell" id="related" style="padding-top:0;">' +
+           '<div class="section__label"><span class="n">05</span>함께 보면 좋은 앱테크</div>' +
+           '<div class="related-list">' + relatedHTML + "</div>" +
+           (archiveSectionHTML(app) ? '<div style="margin-top:14px;">' + archiveSectionHTML(app) + "</div>" : "") +
+           "</section>")
+      ) +
       adSlot("광고 영역 (본문 하단)") +
       '<div class="disclaimer shell">본 페이지의 문제·정답·해설은 정보 제공 목적이며, 실제 정답 및 리워드 지급 여부는 해당 앱 화면을 기준으로 최종 확인해 주세요. 최근 확인 시각: ' + escapeHtml(app.updatedAt || today.date || "") + "</div>" +
       "</main>" +
