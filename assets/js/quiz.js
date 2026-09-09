@@ -1,13 +1,12 @@
 (function () {
   "use strict";
 
-  // Class-based (not id-based) so a multi-round page — several .reveal
-  // blocks, one per time slot — works the same as a single-round page.
+  // .reveal is a native <details> element — opening/closing needs no JS at
+  // all (works with JS disabled). This just adds a smooth-scroll nicety
+  // when JS *is* available, so the newly-revealed content stays in view.
   document.querySelectorAll(".reveal").forEach(function (reveal) {
-    var revealBtn = reveal.querySelector(".reveal__button");
-    if (!revealBtn) return;
-    revealBtn.addEventListener("click", function () {
-      reveal.classList.add("is-open");
+    reveal.addEventListener("toggle", function () {
+      if (!reveal.open) return;
       var content = reveal.querySelector(".reveal__content");
       if (content) content.scrollIntoView({ behavior: "smooth", block: "nearest" });
     });

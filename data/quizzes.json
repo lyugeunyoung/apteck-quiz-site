@@ -8,7 +8,9 @@
     "naverSiteVerification": "",
     "ogImage": "assets/img/og-default.png",
     "privacyPath": "/privacy.html",
-    "sheetUrl": ""
+    "sheetUrl": "",
+    "exposeAnswerInMeta": false,
+    "contactEmail": ""
   },
   "apps": [
     {
@@ -23,19 +25,53 @@
       "appDeeplink": "https://www.kakaobank.com/",
       "updatedAt": "2000-01-01",
       "roundSchedule": [
-        { "time": "08:00", "label": "오전 8시" },
-        { "time": "12:00", "label": "오후 12시" },
-        { "time": "20:00", "label": "오후 8시" }
+        {
+          "time": "08:00",
+          "label": "오전 8시"
+        },
+        {
+          "time": "12:00",
+          "label": "오후 12시"
+        },
+        {
+          "time": "20:00",
+          "label": "오후 8시"
+        }
       ],
       "today": {
         "date": "2000-01-01",
         "rounds": [
-          { "time": "08:00", "label": "오전 8시", "imageUrl": "", "question": "예시 문제입니다. 관리자 페이지에서 이 회차의 실제 문제로 교체해 주세요.", "choices": [], "answer": "예시 정답", "explanation": "관리자 페이지에서 회차별 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다." },
-          { "time": "12:00", "label": "오후 12시", "imageUrl": "", "question": "예시 문제입니다. 관리자 페이지에서 이 회차의 실제 문제로 교체해 주세요.", "choices": [], "answer": "예시 정답", "explanation": "관리자 페이지에서 회차별 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다." },
-          { "time": "20:00", "label": "오후 8시", "imageUrl": "", "question": "예시 문제입니다. 관리자 페이지에서 이 회차의 실제 문제로 교체해 주세요.", "choices": [], "answer": "예시 정답", "explanation": "관리자 페이지에서 회차별 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다." }
+          {
+            "time": "08:00",
+            "label": "오전 8시",
+            "imageUrl": "",
+            "question": "예시 문제입니다. 관리자 페이지에서 이 회차의 실제 문제로 교체해 주세요.",
+            "choices": [],
+            "answer": "예시 정답",
+            "explanation": "관리자 페이지에서 회차별 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다."
+          },
+          {
+            "time": "12:00",
+            "label": "오후 12시",
+            "imageUrl": "",
+            "question": "예시 문제입니다. 관리자 페이지에서 이 회차의 실제 문제로 교체해 주세요.",
+            "choices": [],
+            "answer": "예시 정답",
+            "explanation": "관리자 페이지에서 회차별 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다."
+          },
+          {
+            "time": "20:00",
+            "label": "오후 8시",
+            "imageUrl": "",
+            "question": "예시 문제입니다. 관리자 페이지에서 이 회차의 실제 문제로 교체해 주세요.",
+            "choices": [],
+            "answer": "예시 정답",
+            "explanation": "관리자 페이지에서 회차별 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다."
+          }
         ]
       },
-      "history": []
+      "history": [],
+      "brandColor": "#E8C700"
     },
     {
       "id": "hana-onecue-soccer",
@@ -52,11 +88,17 @@
         "date": "2026-09-04",
         "imageUrl": "https://drive.google.com/thumbnail?id=1k1izOZ-SsBmOlSKBJoNeo4-2s3e_50Y6&sz=w1000",
         "question": "오늘 K리그2 25라운드에서 충북청주와 맞붙는 목동종합운동장을 홈구장으로 사용하는 서울 연고의 팀은 어디일까요?",
-        "choices": ["① 파주", "② 서울E", "③ 대구", "④ 부산"],
+        "choices": [
+          "① 파주",
+          "② 서울E",
+          "③ 대구",
+          "④ 부산"
+        ],
         "answer": "② 서울E",
         "explanation": "서울E는 서울 이랜드 FC를 가리키며, 서울을 연고로 K리그2에 참가하는 프로축구단입니다. 홈경기장으로 목동종합운동장 주경기장을 사용해 문제에서 제시한 '목동종합운동장'과 직접 연결됩니다. 파주·대구·부산은 각각 다른 지역을 연고로 하는 팀·지역명이라 서울 연고 조건에 맞지 않으므로, 정답은 ② 서울E입니다."
       },
-      "history": []
+      "history": [],
+      "brandColor": "#009490"
     },
     {
       "id": "kakaopay-quiztime",
@@ -69,8 +111,16 @@
       "participatePath": "카카오페이 앱 > 혜택 > 퀴즈타임",
       "appDeeplink": "https://www.kakaopay.com/",
       "updatedAt": "2000-01-01",
-      "today": { "date": "2000-01-01", "imageUrl": "", "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.", "choices": [], "answer": "예시 정답", "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다." },
-      "history": []
+      "today": {
+        "date": "2000-01-01",
+        "imageUrl": "",
+        "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.",
+        "choices": [],
+        "answer": "예시 정답",
+        "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다."
+      },
+      "history": [],
+      "brandColor": "#3396FF"
     },
     {
       "id": "shinhan-sol-attendance",
@@ -83,8 +133,16 @@
       "participatePath": "신한 슈퍼SOL 앱 > 혜택 > 출석 퀴즈",
       "appDeeplink": "https://www.shinhan.com/",
       "updatedAt": "2000-01-01",
-      "today": { "date": "2000-01-01", "imageUrl": "", "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.", "choices": [], "answer": "예시 정답", "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다." },
-      "history": []
+      "today": {
+        "date": "2000-01-01",
+        "imageUrl": "",
+        "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.",
+        "choices": [],
+        "answer": "예시 정답",
+        "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다."
+      },
+      "history": [],
+      "brandColor": "#0046FF"
     },
     {
       "id": "shinhan-sol-baseball",
@@ -97,8 +155,16 @@
       "participatePath": "신한 슈퍼SOL 앱 > 혜택 > 야구/상식 쏠퀴즈",
       "appDeeplink": "https://www.shinhan.com/",
       "updatedAt": "2000-01-01",
-      "today": { "date": "2000-01-01", "imageUrl": "", "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.", "choices": [], "answer": "예시 정답", "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다." },
-      "history": []
+      "today": {
+        "date": "2000-01-01",
+        "imageUrl": "",
+        "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.",
+        "choices": [],
+        "answer": "예시 정답",
+        "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다."
+      },
+      "history": [],
+      "brandColor": "#0046FF"
     },
     {
       "id": "shinhan-solpay-pang",
@@ -111,8 +177,16 @@
       "participatePath": "신한 SOL페이 앱 > 혜택 > 퀴즈팡팡",
       "appDeeplink": "https://www.shinhan.com/",
       "updatedAt": "2000-01-01",
-      "today": { "date": "2000-01-01", "imageUrl": "", "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.", "choices": [], "answer": "예시 정답", "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다." },
-      "history": []
+      "today": {
+        "date": "2000-01-01",
+        "imageUrl": "",
+        "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.",
+        "choices": [],
+        "answer": "예시 정답",
+        "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다."
+      },
+      "history": [],
+      "brandColor": "#0046FF"
     },
     {
       "id": "climate-action-quiz",
@@ -125,8 +199,19 @@
       "participatePath": "기후행동 기회소득 앱 > 오늘의 퀴즈",
       "appDeeplink": "#",
       "updatedAt": "2000-01-01",
-      "today": { "date": "2000-01-01", "imageUrl": "", "question": "예시 O/X 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.", "choices": ["O (그렇다)", "X (아니다)"], "answer": "O", "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다." },
-      "history": []
+      "today": {
+        "date": "2000-01-01",
+        "imageUrl": "",
+        "question": "예시 O/X 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.",
+        "choices": [
+          "O (그렇다)",
+          "X (아니다)"
+        ],
+        "answer": "O",
+        "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다."
+      },
+      "history": [],
+      "brandColor": "#2E7D32"
     },
     {
       "id": "nhonebank-digging",
@@ -139,8 +224,16 @@
       "participatePath": "NH올원뱅크 앱 > 생활+ > 혜택 놀이터 > 데일리 퀴즈",
       "appDeeplink": "https://www.nonghyup.com/",
       "updatedAt": "2000-01-01",
-      "today": { "date": "2000-01-01", "imageUrl": "", "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.", "choices": [], "answer": "예시 정답", "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다." },
-      "history": []
+      "today": {
+        "date": "2000-01-01",
+        "imageUrl": "",
+        "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.",
+        "choices": [],
+        "answer": "예시 정답",
+        "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다."
+      },
+      "history": [],
+      "brandColor": "#04A94D"
     },
     {
       "id": "naman-doctor-health",
@@ -153,8 +246,16 @@
       "participatePath": "토스 앱 > 혜택 > 나만의닥터 건강퀴즈",
       "appDeeplink": "https://toss.im/",
       "updatedAt": "2000-01-01",
-      "today": { "date": "2000-01-01", "imageUrl": "", "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.", "choices": [], "answer": "예시 정답", "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다." },
-      "history": []
+      "today": {
+        "date": "2000-01-01",
+        "imageUrl": "",
+        "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.",
+        "choices": [],
+        "answer": "예시 정답",
+        "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다."
+      },
+      "history": [],
+      "brandColor": "#0064FF"
     },
     {
       "id": "doctornow-quiz",
@@ -167,8 +268,16 @@
       "participatePath": "닥터나우 앱 > 오늘의퀴즈",
       "appDeeplink": "https://www.doctornow.co.kr/",
       "updatedAt": "2000-01-01",
-      "today": { "date": "2000-01-01", "imageUrl": "", "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.", "choices": [], "answer": "예시 정답", "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다." },
-      "history": []
+      "today": {
+        "date": "2000-01-01",
+        "imageUrl": "",
+        "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.",
+        "choices": [],
+        "answer": "예시 정답",
+        "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다."
+      },
+      "history": [],
+      "brandColor": "#00C2B3"
     },
     {
       "id": "monimo-monischool",
@@ -181,8 +290,16 @@
       "participatePath": "monimo 앱 > 모니스쿨",
       "appDeeplink": "https://www.monimo.co.kr/",
       "updatedAt": "2000-01-01",
-      "today": { "date": "2000-01-01", "imageUrl": "", "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.", "choices": [], "answer": "예시 정답", "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다." },
-      "history": []
+      "today": {
+        "date": "2000-01-01",
+        "imageUrl": "",
+        "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.",
+        "choices": [],
+        "answer": "예시 정답",
+        "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다."
+      },
+      "history": [],
+      "brandColor": "#1428A0"
     },
     {
       "id": "kakaobank-ox",
@@ -195,8 +312,19 @@
       "participatePath": "카카오뱅크 앱 > 하단 혜택 > 바로 받아요",
       "appDeeplink": "https://www.kakaobank.com/",
       "updatedAt": "2000-01-01",
-      "today": { "date": "2000-01-01", "imageUrl": "", "question": "예시 O/X 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.", "choices": ["O (그렇다)", "X (아니다)"], "answer": "O", "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다." },
-      "history": []
+      "today": {
+        "date": "2000-01-01",
+        "imageUrl": "",
+        "question": "예시 O/X 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.",
+        "choices": [
+          "O (그렇다)",
+          "X (아니다)"
+        ],
+        "answer": "O",
+        "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다."
+      },
+      "history": [],
+      "brandColor": "#E8C700"
     },
     {
       "id": "hana-onecue-ox",
@@ -209,8 +337,19 @@
       "participatePath": "하나원큐 앱 > 혜택 > 슬기로운 금융생활 OX 게임",
       "appDeeplink": "https://www.kebhana.com/",
       "updatedAt": "2000-01-01",
-      "today": { "date": "2000-01-01", "imageUrl": "", "question": "예시 O/X 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.", "choices": ["O (그렇다)", "X (아니다)"], "answer": "O", "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다." },
-      "history": []
+      "today": {
+        "date": "2000-01-01",
+        "imageUrl": "",
+        "question": "예시 O/X 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.",
+        "choices": [
+          "O (그렇다)",
+          "X (아니다)"
+        ],
+        "answer": "O",
+        "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다."
+      },
+      "history": [],
+      "brandColor": "#009490"
     },
     {
       "id": "toss-luck",
@@ -223,8 +362,16 @@
       "participatePath": "토스 앱 > 혜택 > 퀴즈타임",
       "appDeeplink": "https://toss.im/",
       "updatedAt": "2000-01-01",
-      "today": { "date": "2000-01-01", "imageUrl": "", "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.", "choices": [], "answer": "예시 정답", "explanation": "관리자 페이지(admin.html)에서 앱을 선택하고 오늘의 문제·정답·해설을 입력한 뒤 저장하면, 이 문구 대신 실제 해설이 자동으로 이 페이지에 반영됩니다." },
-      "history": []
+      "today": {
+        "date": "2000-01-01",
+        "imageUrl": "",
+        "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.",
+        "choices": [],
+        "answer": "예시 정답",
+        "explanation": "관리자 페이지(admin.html)에서 앱을 선택하고 오늘의 문제·정답·해설을 입력한 뒤 저장하면, 이 문구 대신 실제 해설이 자동으로 이 페이지에 반영됩니다."
+      },
+      "history": [],
+      "brandColor": "#0064FF"
     },
     {
       "id": "kbpay-today",
@@ -237,8 +384,16 @@
       "participatePath": "KB Pay 앱 > 혜택 > 오늘의 퀴즈",
       "appDeeplink": "https://www.kbstar.com/",
       "updatedAt": "2000-01-01",
-      "today": { "date": "2000-01-01", "imageUrl": "", "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.", "choices": [], "answer": "예시 정답", "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다." },
-      "history": []
+      "today": {
+        "date": "2000-01-01",
+        "imageUrl": "",
+        "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.",
+        "choices": [],
+        "answer": "예시 정답",
+        "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다."
+      },
+      "history": [],
+      "brandColor": "#FFBC00"
     },
     {
       "id": "kb-starbanking-star",
@@ -251,8 +406,16 @@
       "participatePath": "KB스타뱅킹 앱 > 혜택 > 도전미션 스타퀴즈",
       "appDeeplink": "https://www.kbstar.com/",
       "updatedAt": "2000-01-01",
-      "today": { "date": "2000-01-01", "imageUrl": "", "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.", "choices": [], "answer": "예시 정답", "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다." },
-      "history": []
+      "today": {
+        "date": "2000-01-01",
+        "imageUrl": "",
+        "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.",
+        "choices": [],
+        "answer": "예시 정답",
+        "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다."
+      },
+      "history": [],
+      "brandColor": "#FFBC00"
     },
     {
       "id": "kb-starbanking-history",
@@ -265,8 +428,16 @@
       "participatePath": "KB스타뱅킹 앱 > 혜택 > 한국사 매일 퀴즈",
       "appDeeplink": "https://www.kbstar.com/",
       "updatedAt": "2000-01-01",
-      "today": { "date": "2000-01-01", "imageUrl": "", "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.", "choices": [], "answer": "예시 정답", "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다." },
-      "history": []
+      "today": {
+        "date": "2000-01-01",
+        "imageUrl": "",
+        "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.",
+        "choices": [],
+        "answer": "예시 정답",
+        "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다."
+      },
+      "history": [],
+      "brandColor": "#FFBC00"
     },
     {
       "id": "kbank-ai-challenge",
@@ -279,8 +450,16 @@
       "participatePath": "케이뱅크 앱 > 혜택 > AI 퀴즈 챌린지",
       "appDeeplink": "https://www.kbanknow.com/",
       "updatedAt": "2000-01-01",
-      "today": { "date": "2000-01-01", "imageUrl": "", "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.", "choices": [], "answer": "예시 정답", "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다." },
-      "history": []
+      "today": {
+        "date": "2000-01-01",
+        "imageUrl": "",
+        "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.",
+        "choices": [],
+        "answer": "예시 정답",
+        "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다."
+      },
+      "history": [],
+      "brandColor": "#FF1E6C"
     },
     {
       "id": "hpoint-quiz",
@@ -293,8 +472,16 @@
       "participatePath": "H.Point 앱 > 오늘의 QUIZ",
       "appDeeplink": "https://www.hpoint.co.kr/",
       "updatedAt": "2000-01-01",
-      "today": { "date": "2000-01-01", "imageUrl": "", "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.", "choices": [], "answer": "예시 정답", "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다." },
-      "history": []
+      "today": {
+        "date": "2000-01-01",
+        "imageUrl": "",
+        "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.",
+        "choices": [],
+        "answer": "예시 정답",
+        "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다."
+      },
+      "history": [],
+      "brandColor": "#C8102E"
     },
     {
       "id": "bitbunny-common",
@@ -307,8 +494,16 @@
       "participatePath": "비트버니 앱 > 혜택 > 오늘의 상식 퀴즈",
       "appDeeplink": "#",
       "updatedAt": "2000-01-01",
-      "today": { "date": "2000-01-01", "imageUrl": "", "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.", "choices": [], "answer": "예시 정답", "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다." },
-      "history": []
+      "today": {
+        "date": "2000-01-01",
+        "imageUrl": "",
+        "question": "예시 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.",
+        "choices": [],
+        "answer": "예시 정답",
+        "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다."
+      },
+      "history": [],
+      "brandColor": "#7C4DFF"
     },
     {
       "id": "bitbunny-ox",
@@ -321,8 +516,19 @@
       "participatePath": "비트버니 앱 > 혜택 > 오늘의 OX 퀴즈",
       "appDeeplink": "#",
       "updatedAt": "2000-01-01",
-      "today": { "date": "2000-01-01", "imageUrl": "", "question": "예시 O/X 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.", "choices": ["O (그렇다)", "X (아니다)"], "answer": "O", "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다." },
-      "history": []
+      "today": {
+        "date": "2000-01-01",
+        "imageUrl": "",
+        "question": "예시 O/X 문제입니다. 관리자 페이지에서 오늘 실제로 출제된 문제로 교체해 주세요.",
+        "choices": [
+          "O (그렇다)",
+          "X (아니다)"
+        ],
+        "answer": "O",
+        "explanation": "관리자 페이지에서 오늘의 문제·정답·해설을 입력하면 이 자리에 실제 내용이 표시됩니다."
+      },
+      "history": [],
+      "brandColor": "#7C4DFF"
     }
   ]
 }

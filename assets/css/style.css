@@ -296,8 +296,9 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 /* ---- quiz detail page ---- */
 .quiz-hero {
-  padding: 24px 16px 18px;
+  padding: 20px 16px 18px;
   background: linear-gradient(180deg, var(--accent-soft), transparent 140%);
+  border-top: 4px solid var(--brand, var(--accent));
 }
 .quiz-hero__badge {
   width: 56px;
@@ -310,26 +311,41 @@ ul { margin: 0; padding: 0; list-style: none; }
   font-size: 28px;
   box-shadow: var(--shadow-sm);
 }
-.quiz-hero__cat {
-  display: inline-block;
+.quiz-hero__statusbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin-top: 14px;
+}
+.quiz-hero__statusbar time {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+.quiz-hero__cat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
   font-size: 12px;
   font-weight: 700;
   color: var(--accent-strong);
   letter-spacing: 0.02em;
+}
+.quiz-hero__cat::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--brand, var(--accent));
+  flex: none;
 }
 .quiz-hero h1 {
   margin-top: 6px;
   font-size: 23px;
   font-weight: 800;
   letter-spacing: -0.01em;
-}
-.quiz-hero__updated {
-  margin-top: 8px;
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  color: var(--ink-muted);
-  font-variant-numeric: tabular-nums;
 }
 
 .toc {
@@ -399,6 +415,13 @@ ul { margin: 0; padding: 0; list-style: none; }
   color: var(--ink-muted);
 }
 
+/*
+ * .reveal is a native <details> element now (JS-free 펼치기 — works with
+ * JS disabled, and the answer/설명 text is already in the DOM either way,
+ * open or closed, so search engines always see it). No .is-open class or
+ * click-listener needed; the browser handles open/close via the `open`
+ * attribute.
+ */
 .reveal {
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
@@ -407,7 +430,6 @@ ul { margin: 0; padding: 0; list-style: none; }
   box-shadow: var(--shadow-sm);
 }
 .reveal__button {
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -419,12 +441,17 @@ ul { margin: 0; padding: 0; list-style: none; }
   font-weight: 800;
   font-size: 15px;
   cursor: pointer;
-  border: none;
+  list-style: none;
 }
+.reveal__button::-webkit-details-marker { display: none; }
+.reveal__button::after {
+  content: "▾";
+  margin-left: 4px;
+  transition: transform 0.15s ease;
+}
+.reveal[open] .reveal__button::after { transform: rotate(180deg); }
 .reveal__button:hover { filter: brightness(0.97); }
-.reveal__content { padding: 18px; display: none; }
-.reveal.is-open .reveal__button { display: none; }
-.reveal.is-open .reveal__content { display: block; }
+.reveal__content { padding: 18px; }
 
 .answer-badge {
   display: inline-flex;
@@ -668,6 +695,136 @@ ul { margin: 0; padding: 0; list-style: none; }
 .archive-row__date { font-family: var(--font-mono); color: var(--ink-faint); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .archive-row__q { color: var(--ink-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .archive-row__a { font-weight: 700; color: var(--accent-strong); flex: none; }
+
+/* ---- answer summary card (결론 우선 — 스크롤 없이 바로 정답) ---- */
+.answer-summary {
+  margin: 0 auto;
+  padding: 18px 16px 20px;
+}
+.answer-summary__label {
+  font-family: var(--font-display);
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--gold-ink);
+  letter-spacing: 0.02em;
+  margin-bottom: 8px;
+}
+.answer-summary__value {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 1.3;
+  color: var(--ink);
+  background: var(--success-soft);
+  border: 1px solid var(--success);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  text-wrap: balance;
+}
+.answer-summary__value.is-empty,
+.answer-summary__round-value.is-empty {
+  color: var(--ink-faint);
+  font-weight: 700;
+  font-size: 16px;
+  background: var(--surface-sunken);
+  border-color: var(--border);
+}
+.answer-summary__q {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--ink-muted);
+  line-height: 1.6;
+}
+.answer-summary__rounds {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px;
+}
+.answer-summary__round {
+  background: var(--success-soft);
+  border: 1px solid var(--success);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.answer-summary__round-time {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-muted);
+}
+.answer-summary__round-value {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+/* ---- 참여 방법 표 ---- */
+.howto-table {
+  width: 100%;
+  margin-top: 14px;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  text-align: left;
+}
+.howto-table th, .howto-table td {
+  padding: 9px 4px;
+  border-top: 1px solid var(--border);
+}
+.howto-table th {
+  width: 90px;
+  color: var(--ink-faint);
+  font-weight: 700;
+  font-size: 12px;
+}
+.howto-table td { color: var(--ink); }
+
+/* ---- FAQ ---- */
+.faq-list { display: flex; flex-direction: column; gap: 8px; }
+.faq-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  overflow: hidden;
+}
+.faq-item summary {
+  padding: 13px 14px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ink);
+  cursor: pointer;
+  list-style: none;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item[open] summary { border-bottom: 1px solid var(--border); }
+.faq-item p {
+  padding: 12px 14px;
+  font-size: 13.5px;
+  color: var(--ink-muted);
+  line-height: 1.7;
+}
+
+/* ---- 전체 앱 상호링크 그리드 ---- */
+.app-link-grid {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.app-link-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 6px 11px;
+}
 
 /* ---- admin ---- */
 .admin-body {
