@@ -41,6 +41,14 @@ async function main() {
   console.log("Parsed " + rows.length + " sheet row(s).");
 
   const today = templates.todayKST();
+
+  const errors = validateRows(rows, data.apps, today, templates);
+  if (errors.length) {
+    console.log("::error::시트 데이터에 문제가 있어 이번 동기화를 건너뜁니다 (아무것도 반영되지 않음):");
+    errors.forEach((e) => console.log("  - " + e));
+    process.exit(1);
+  }
+
   let touched = 0;
 
   data.apps.forEach((app) => {
@@ -52,6 +60,61 @@ async function main() {
 
   fs.writeFileSync(dataPath, JSON.stringify(data, null, 2) + "\n");
   console.log("Synced. " + touched + " app(s) had a matching sheet row for " + today + ".");
+}
+
+/*
+ * Rejects the whole run (no partial write) if the sheet has data that would
+ * silently corrupt the site: an app_id typo, a malformed date, a today's-row
+ * with a question but no answer, or a round_time that doesn't match the
+ * app's actual schedule. One bad row must not be allowed to write the other
+ * 20 apps' good rows either — so this checks everything up front and only
+ * proceeds if the whole sheet is clean.
+ */
+function validateRows(rows, apps, today, templates) {
+  const errors = [];
+  const appIds = new Set(apps.map((a) => a.id));
+  const appById = Object.fromEntries(apps.map((a) => [a.id, a]));
+  const dateRe = /^\d{4}-\d{2}-\d{2}$/;
+  const timeRe = /^([01]\d|2[0-3]):[0-5]\d$/;
+
+  rows.forEach((row, idx) => {
+    const rowNum = idx + 2; // +1 for header row, +1 for 1-based
+    const appId = templates.sheetAppId(row);
+    const label = "행 " + rowNum + " (app_id=\"" + appId + "\")";
+
+    if (!appId) {
+      errors.push(label + ": app_id가 비어 있습니다.");
+      return;
+    }
+    if (!appIds.has(appId)) {
+      errors.push(label + ": data/quizzes.json에 없는 app_id입니다 (오타 확인).");
+      return;
+    }
+    if (row.date && !dateRe.test(row.date)) {
+      errors.push(label + ": date 형식이 YYYY-MM-DD가 아닙니다 (\"" + row.date + "\").");
+    }
+    if (row.round_time && !timeRe.test(row.round_time)) {
+      errors.push(label + ": round_time 형식이 HH:MM이 아닙니다 (\"" + row.round_time + "\").");
+    }
+
+    var app = appById[appId];
+    var isMultiRound = !!(app.roundSchedule && app.roundSchedule.length);
+    if (isMultiRound && row.round_time && timeRe.test(row.round_time)) {
+      var validTimes = app.roundSchedule.map((s) => s.time);
+      if (validTimes.indexOf(row.round_time) === -1) {
+        errors.push(label + ": round_time \"" + row.round_time + "\"은(는) 이 앱의 회차(" + validTimes.join(", ") + ")에 없습니다.");
+      }
+    }
+
+    // Only rows for today actually get applied this run, so only those are
+    // held to "정답 공백" — a blank answer on a past/future-dated row isn't
+    // acted on yet and shouldn't block an otherwise-clean sync.
+    if (row.date === today && row.question && row.question.trim() && !(row.answer && row.answer.trim())) {
+      errors.push(label + ": 문제는 있는데 정답이 비어 있습니다.");
+    }
+  });
+
+  return errors;
 }
 
 function syncSingleRoundApp(app, rows, today, templates) {

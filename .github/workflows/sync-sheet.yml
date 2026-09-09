@@ -1,16 +1,31 @@
 name: Sync Google Sheet
 
-# 매 20분마다 자동 실행 + 저장소 Actions 탭에서 "Run workflow"로 언제든 즉시 실행 가능.
-# data/quizzes.json 의 site.sheetUrl 이 비어 있으면 sync-sheet.js가 아무것도 하지 않고
-# 종료하므로, 관리자 페이지에서 "자동 동기화 켜기"를 누르기 전까지는 이 워크플로가
-# 실행되어도 아무 변화가 없습니다(정상).
+# 대부분의 퀴즈가 오전 8시·10시·12시·오후 8시(KST) 전후로 새로 출제되므로, 그
+# 직후 30분은 5분 간격으로 촘촘히 확인하고 나머지 시간대는 2시간 간격으로만
+# 성기게 확인한다(불필요한 실행을 줄이면서도 실제 출제 타이밍은 빠르게 반영).
+# GitHub의 스케줄 실행 시각은 부하 상황에 따라 다소 밀릴 수 있다(공식 정책).
+# 저장소 Actions 탭에서 "Run workflow"를 누르면 즉시 실행할 수도 있다.
+#
+# data/quizzes.json 의 site.sheetUrl 이 비어 있으면 sync-sheet.js가 아무것도
+# 하지 않고 종료하므로, 관리자 페이지에서 "자동 동기화 켜기"를 누르기 전까지는
+# 이 워크플로가 실행되어도 아무 변화가 없습니다(정상).
 on:
   schedule:
-    - cron: "7,27,47 * * * *"
+    - cron: "2,7,12,17,22,27,32 23 * * *" # 08:00 KST 직후
+    - cron: "2,7,12,17,22,27,32 1 * * *"  # 10:00 KST 직후
+    - cron: "2,7,12,17,22,27,32 3 * * *"  # 12:00 KST 직후
+    - cron: "2,7,12,17,22,27,32 11 * * *" # 20:00 KST 직후
+    - cron: "45 5,7,9,13,15,17,19,21 * * *" # 그 외 시간대 — 약 2시간 간격
   workflow_dispatch: {}
 
 permissions:
   contents: write
+
+# 이전 실행이 아직 안 끝났으면 새 실행은 대기시킨다(둘 이상이 동시에
+# data/quizzes.json을 커밋하면서 충돌하는 것을 방지).
+concurrency:
+  group: sync-sheet
+  cancel-in-progress: false
 
 jobs:
   sync:
@@ -22,8 +37,14 @@ jobs:
         with:
           node-version: "20"
 
+      - name: 이미지 자산화용 의존성 설치 (sharp)
+        run: npm ci --omit=dev --no-audit --no-fund
+
       - name: 구글 시트에서 오늘의 문제·정답·해설 읽어오기
         run: node scripts/sync-sheet.js
+
+      - name: 문제 이미지를 구글드라이브에서 저장소 WebP로 다운로드
+        run: node scripts/fetch-images.js
 
       - name: 사이트 페이지 재생성
         run: node scripts/build.js
@@ -36,6 +57,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "변경 없음 — 커밋하지 않음."
           else
-            git commit -m "chore: 구글 시트 자동 동기화"
+            git commit -m "chore: 구글 시트 자동 동기화 [skip ci]"
             git push
           fi

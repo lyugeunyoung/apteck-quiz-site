@@ -142,6 +142,61 @@
     return /drive\.google\.com|lh3\.googleusercontent\.com/.test(String(url || ""));
   }
 
+  function isExternalUrl(url) {
+    return /^https?:\/\//i.test(String(url || ""));
+  }
+
+  /*
+   * Phase 2 image pipeline: scripts/fetch-images.js downloads external
+   * (Drive) image URLs and commits them as local WebP files under
+   * assets/img/quiz/, rewriting the stored value to that repo-relative
+   * path (e.g. "assets/img/quiz/toss-luck/2026-09-04.webp" — no leading
+   * "../", same convention as CSS/JS asset paths elsewhere). This resolves
+   * it for an <img src> on an actual page, which always lives one level
+   * deep under pages/: an external URL passes through convertDriveLink()
+   * unchanged; a local path gets the page's basePrefix ("../") prepended.
+   * If the pipeline ever fails to download an image, the stored value
+   * stays an external URL and this function keeps serving that directly —
+   * the fallback PROMPT.md Phase 2 asks for, with no special-casing needed
+   * here.
+   */
+  function resolveImagePath(url, basePrefix) {
+    var u = String(url == null ? "" : url).trim();
+    if (!u) return "";
+    if (isExternalUrl(u)) return convertDriveLink(u);
+    return (basePrefix || "") + u;
+  }
+
+  // Same idea but always returns an absolute URL — for og:image, which
+  // social crawlers require to be absolute regardless of which page it's on.
+  function absoluteImageUrl(url, siteBaseUrl) {
+    var u = String(url == null ? "" : url).trim();
+    if (!u) return "";
+    if (isExternalUrl(u)) return convertDriveLink(u);
+    return siteBaseUrl + "/" + u;
+  }
+
+  // width/height come from scripts/fetch-images.js's sharp metadata once an
+  // image has been localized to WebP (exact, prevents CLS precisely). Until
+  // then — a still-external Drive link — we don't know the real dimensions,
+  // so fall back to a portrait phone-screenshot ratio (most of these quiz
+  // screenshots are portrait mobile captures), which reserves roughly the
+  // right amount of space instead of a wrong landscape guess.
+  function renderImageFigure(rawUrl, width, height, altText, basePrefix) {
+    var resolved = resolveImagePath(rawUrl, basePrefix);
+    if (!resolved) return "";
+    var w = width || 720;
+    var h = height || 1280;
+    var hint = isDriveLink(rawUrl)
+      ? '<p class="q-image__hint">※ 이미지가 보이지 않으면 구글드라이브 공유 설정이 "링크가 있는 모든 사용자"인지 확인해 주세요.</p>'
+      : "";
+    return (
+      '<figure class="q-image"><img src="' + escapeHtml(resolved) + '" alt="' + escapeHtml(altText) +
+      '" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="' + w + '" height="' + h + '"></figure>' +
+      hint
+    );
+  }
+
   function adSlot(label) {
     return (
       '<div class="ad-slot" aria-hidden="true">' +
@@ -268,7 +323,7 @@
       '<span class="quiz-card__top"><span class="quiz-card__name">' + escapeHtml(app.name) + "</span></span>" +
       '<span class="quiz-card__meta">' + escapeHtml(metaText) + "</span>" +
       "</span>" +
-      '<span class="status-pill ' + statusClass + '"><span class="status-pill__dot"></span>' + statusText + "</span>" +
+      '<span class="status-pill ' + statusClass + '" data-fresh-date="' + escapeHtml((app.today && app.today.date) || "") + '"><span class="status-pill__dot"></span><span class="status-pill__text">' + statusText + "</span></span>" +
       "</a></div>"
     );
   }
@@ -337,6 +392,7 @@
       footerBlock(site) +
       '<script type="application/ld+json">' + JSON.stringify(jsonLd) + "</script>\n" +
       '<script src="assets/js/favorites.js"></script>\n' +
+      '<script src="assets/js/freshness.js"></script>\n' +
       '<script src="assets/js/site.js"></script>\n' +
       '<script src="assets/js/pwa.js"></script>\n' +
       "</body>\n</html>\n"
@@ -521,11 +577,7 @@
     var choicesHTML = choices.length
       ? '<ul class="choice-list">' + choices.map(function (c) { return "<li>" + escapeHtml(c) + "</li>"; }).join("") + "</ul>"
       : "";
-    var imageUrl = convertDriveLink(round.imageUrl);
-    var imageHTML = imageUrl
-      ? '<figure class="q-image"><img src="' + escapeHtml(imageUrl) + '" alt="' + escapeHtml(app.name + " " + round.label + " 문제 이미지") + '" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="800" height="450"></figure>' +
-        (isDriveLink(round.imageUrl) ? '<p class="q-image__hint">※ 이미지가 보이지 않으면 구글드라이브 공유 설정이 "링크가 있는 모든 사용자"인지 확인해 주세요.</p>' : "")
-      : "";
+    var imageHTML = renderImageFigure(round.imageUrl, round.imageWidth, round.imageHeight, app.name + " " + round.label + " 문제 이미지", "../");
     return (
       '<div class="round-block">' +
       '<span class="round-block__time">🕐 ' + escapeHtml(round.label || "") + " 회차</span>" +
@@ -569,24 +621,20 @@
       ? [app.name + " 정답", app.name + " 정답 오늘", app.name + " 회차", app.name + " " + dateLabel, site.name].join(", ")
       : [app.name + " 정답", app.name + " 정답 오늘", app.name + " 문제", app.name + " " + dateLabel, site.name].join(", ");
 
+    var defaultOgImage = site.ogImage && site.ogImage.indexOf("http") === 0 ? site.ogImage : site.baseUrl + "/" + (site.ogImage || "assets/img/og-default.png");
     var ogImage;
     if (isMultiRound) {
-      var firstRoundImage = roundsMerged.map(function (r) { return convertDriveLink(r.imageUrl); }).filter(Boolean)[0];
-      ogImage = firstRoundImage || (site.ogImage && site.ogImage.indexOf("http") === 0 ? site.ogImage : site.baseUrl + "/" + (site.ogImage || "assets/img/og-default.png"));
+      var firstRoundImageRaw = roundsMerged.map(function (r) { return r.imageUrl; }).filter(Boolean)[0];
+      ogImage = firstRoundImageRaw ? absoluteImageUrl(firstRoundImageRaw, site.baseUrl) : defaultOgImage;
     } else {
-      var imageUrl = convertDriveLink(today.imageUrl);
-      ogImage = imageUrl || (site.ogImage && site.ogImage.indexOf("http") === 0 ? site.ogImage : site.baseUrl + "/" + (site.ogImage || "assets/img/og-default.png"));
+      ogImage = today.imageUrl ? absoluteImageUrl(today.imageUrl, site.baseUrl) : defaultOgImage;
     }
 
     var choices = (today.choices || []).filter(Boolean);
     var choicesHTML = choices.length
       ? '<ul class="choice-list">' + choices.map(function (c) { return "<li>" + escapeHtml(c) + "</li>"; }).join("") + "</ul>"
       : "";
-    var singleImageUrl = convertDriveLink(today.imageUrl);
-    var imageHTML = singleImageUrl
-      ? '<figure class="q-image"><img src="' + escapeHtml(singleImageUrl) + '" alt="' + escapeHtml(app.name + " 문제 이미지") + '" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="800" height="450"></figure>' +
-        (isDriveLink(today.imageUrl) ? '<p class="q-image__hint">※ 이미지가 보이지 않으면 구글드라이브 공유 설정이 "링크가 있는 모든 사용자"인지 확인해 주세요.</p>' : "")
-      : "";
+    var imageHTML = renderImageFigure(today.imageUrl, today.imageWidth, today.imageHeight, app.name + " 문제 이미지", "../");
 
     var faqItems = buildFaqItems(app, isMultiRound, roundLabels);
     var faqEntities = faqItems.map(function (it) {
@@ -632,8 +680,8 @@
 
     // ---- 블록 1: 상단 상태 바 + H1 (히어로) ----
     var freshDatetime = today.date || "";
-    var statusPillHTML = '<span class="status-pill ' + (fresh ? "status-pill--fresh" : "status-pill--stale") + '">' +
-      '<span class="status-pill__dot"></span>' + (fresh ? "오늘 갱신됨" : "갱신 대기") + "</span>";
+    var statusPillHTML = '<span class="status-pill ' + (fresh ? "status-pill--fresh" : "status-pill--stale") + '" data-fresh-date="' + escapeHtml(freshDatetime) + '">' +
+      '<span class="status-pill__dot"></span><span class="status-pill__text">' + (fresh ? "오늘 갱신됨" : "갱신 대기") + "</span></span>";
     var heroHTML =
       '<div class="quiz-hero shell"' + (brand ? ' style="--brand:' + escapeHtml(brand) + ';"' : "") + '>' +
       '<div class="quiz-hero__row"><span class="quiz-hero__badge" aria-hidden="true">' + escapeHtml(app.emoji || "🎯") + "</span>" + favoriteButtonHTML(app.id) + "</div>" +
@@ -749,6 +797,7 @@
       footerBlock(site) +
       jsonLd.map(function (obj) { return '<script type="application/ld+json">' + JSON.stringify(obj) + "</script>\n"; }).join("") +
       '<script src="../assets/js/favorites.js"></script>\n' +
+      '<script src="../assets/js/freshness.js"></script>\n' +
       '<script src="../assets/js/quiz.js"></script>\n' +
       '<script src="../assets/js/pwa.js"></script>\n' +
       "</body>\n</html>\n"
@@ -808,6 +857,9 @@
     categories: categories,
     convertDriveLink: convertDriveLink,
     isDriveLink: isDriveLink,
+    isExternalUrl: isExternalUrl,
+    resolveImagePath: resolveImagePath,
+    absoluteImageUrl: absoluteImageUrl,
     HISTORY_LIMIT: HISTORY_LIMIT,
     renderIndexPage: renderIndexPage,
     renderAppPage: renderAppPage,

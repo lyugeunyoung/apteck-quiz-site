@@ -4,13 +4,19 @@
  * Quiz pages themselves are always fetched fresh from the network — daily
  * content must never be served stale from cache.
  */
-const CACHE = "apteck-shell-v1";
+// Bump this whenever a shell asset (CSS/JS) changes meaningfully — the
+// activate handler below deletes any cache key that isn't the current one,
+// so a version bump is what actually forces stale cached JS/CSS out for
+// returning visitors (the fetch handler serves cached-then-updates, so
+// without a bump they'd see last version's code on their first load back).
+const CACHE = "apteck-shell-v2";
 const SHELL = [
   "assets/css/style.css",
   "assets/js/template.js",
   "assets/js/site.js",
   "assets/js/quiz.js",
   "assets/js/favorites.js",
+  "assets/js/freshness.js",
   "assets/js/pwa.js",
   "assets/img/icon-192.png",
   "assets/img/icon-512.png"

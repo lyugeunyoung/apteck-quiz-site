@@ -1,0 +1,16 @@
+{
+  "name": "apteck-quiz-site",
+  "private": true,
+  "description": "빌드 스크립트 전용 의존성 — 사이트 자체는 여전히 순수 정적 HTML/CSS/JS이며, 브라우저에 전달되는 코드에는 이 의존성이 포함되지 않습니다. sharp는 scripts/fetch-images.js(GitHub Actions에서만 실행)의 이미지 WebP 변환에만 쓰입니다.",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "sync-sheet": "node scripts/sync-sheet.js",
+    "fetch-images": "node scripts/fetch-images.js"
+  },
+  "dependencies": {
+    "sharp": "^0.33.5"
+  },
+  "allowScripts": {
+    "sharp@0.33.5": true
+  }
+}
