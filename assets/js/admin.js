@@ -26,6 +26,7 @@
     "card-sheet", "f-sheet-url", "btn-sheet-load", "sheet-status", "btn-sheet-enable-auto", "sheet-auto-status",
     "btn-bulk-load", "bulk-status", "bulk-diff", "bulk-diff-list", "btn-bulk-publish", "bulk-publish-status",
     "card-rollback", "rollback-hint", "btn-rollback", "rollback-status",
+    "card-site-settings", "f-naver-verify", "f-google-verify", "f-contact-email", "btn-save-site-settings", "site-settings-status",
     "card-apps", "app-table", "app-search", "btn-new-app",
     "card-form", "form-title", "sheet-match", "new-app-fields", "f-selected-id", "category-options",
     "f-id", "f-emoji", "f-category", "f-schedule", "f-name", "f-reward", "f-deeplink", "f-path",
@@ -267,7 +268,11 @@
       el["card-dashboard"].style.display = "";
       el["card-sheet"].style.display = "";
       el["card-rollback"].style.display = "";
+      el["card-site-settings"].style.display = "";
       el["card-apps"].style.display = "";
+      el["f-naver-verify"].value = state.data.site.naverSiteVerification || "";
+      el["f-google-verify"].value = state.data.site.googleSiteVerification || "";
+      el["f-contact-email"].value = state.data.site.contactEmail || "";
       loadRollbackInfo();
     } catch (e) {
       setStatus(el["connect-status"], e.message || String(e), "err");
@@ -365,6 +370,43 @@
       setStatus(el["sheet-auto-status"], e.message || String(e), "err");
     } finally {
       el["btn-sheet-enable-auto"].disabled = false;
+    }
+  });
+
+  // site.naverSiteVerification / googleSiteVerification are emitted into
+  // <head> on every single page (headBlock), not just index.html — so a
+  // partial update would leave 21 app pages showing a stale/missing
+  // ownership-verification tag until their next unrelated save. Regenerate
+  // everything and land it as one atomic commit (same Git Data API path as
+  // bulk publish) so there's no in-between stale state.
+  el["btn-save-site-settings"].addEventListener("click", async function () {
+    el["btn-save-site-settings"].disabled = true;
+    setStatus(el["site-settings-status"], "최신 데이터 확인 중...", "busy");
+    try {
+      var latest = await ghGetFile("data/quizzes.json");
+      var data = JSON.parse(latest.text);
+      data.site.naverSiteVerification = el["f-naver-verify"].value.trim();
+      data.site.googleSiteVerification = el["f-google-verify"].value.trim();
+      data.site.contactEmail = el["f-contact-email"].value.trim();
+
+      setStatus(el["site-settings-status"], "전체 " + (data.apps.length + 4) + "개 파일을 한 커밋으로 재생성하는 중...", "busy");
+      var files = { "data/quizzes.json": JSON.stringify(data, null, 2) };
+      data.apps.forEach(function (app) { files["pages/" + app.page] = QuizTemplates.renderAppPage(app, data); });
+      files["index.html"] = QuizTemplates.renderIndexPage(data);
+      files["sitemap.xml"] = QuizTemplates.renderSitemap(data);
+      files["feed.xml"] = QuizTemplates.renderFeed(data);
+
+      await commitFilesAtomically(files, "chore: 사이트 전역 설정(소유확인/문의 이메일) 갱신");
+
+      state.data = data;
+      var refreshed = await ghGetFile("data/quizzes.json");
+      state.dataSha = refreshed.sha;
+      setStatus(el["site-settings-status"], "✅ 저장되었습니다. 모든 페이지에 즉시 반영되었습니다.", "ok");
+      loadRollbackInfo();
+    } catch (e) {
+      setStatus(el["site-settings-status"], "❌ " + (e.message || String(e)), "err");
+    } finally {
+      el["btn-save-site-settings"].disabled = false;
     }
   });
 
@@ -702,7 +744,7 @@
     state.multiRoundApp = isMultiRound ? app : null;
 
     el["new-app-fields"].style.display = isNew ? "" : "none";
-    el["form-title"].textContent = isNew ? "5. 새 퀴즈 앱 추가" : "5. 오늘의 퀴즈 입력 — " + app.name;
+    el["form-title"].textContent = isNew ? "6. 새 퀴즈 앱 추가" : "6. 오늘의 퀴즈 입력 — " + app.name;
 
     var today = (app && app.today) || {};
 

@@ -2,4 +2,8 @@ User-agent: *
 Allow: /
 Disallow: /admin.html
 
+User-agent: Yeti
+Allow: /
+Disallow: /admin.html
+
 Sitemap: https://lyugeunyoung.github.io/apteck-quiz-site/sitemap.xml

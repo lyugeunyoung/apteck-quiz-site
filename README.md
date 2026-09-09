@@ -225,23 +225,22 @@ GitHub Pages가 자체 CDN으로 서빙하므로 속도·안정성·SEO 모두 �
 
 **Google Search Console**
 1. https://search.google.com/search-console 접속 → "URL 접두어"로 사이트 등록
-2. 소유권 확인은 "HTML 태그" 방식 추천 → 발급받은 `content="..."` 값을
-   `data/quizzes.json`의 `"site.googleSiteVerification"`에 붙여넣고 `node scripts/build.js` 후 재배포
+2. 소유권 확인은 "HTML 태그" 방식 추천 → 발급받은 `content="..."` 값을 관리자 페이지(`admin.html`)
+   "4. 사이트 전역 설정" 카드의 "구글 서치 콘솔 소유확인 코드"에 붙여넣고 저장(전체 페이지에 즉시 반영됨)
 3. 등록 후 `sitemap.xml` 제출 (예: `https://사용자명.github.io/저장소명/sitemap.xml`)
 
 **네이버 서치어드바이저** (한국 검색 트래픽에 중요 — 구글 인증과 별개로 반드시 진행)
 1. https://searchadvisor.naver.com 접속 → 사이트 등록
-2. 소유 확인은 "HTML 태그" 방식 → 발급 코드값을 `data/quizzes.json`의
-   `"site.naverSiteVerification"`에 붙여넣고 재빌드·재배포
+2. 소유 확인은 "HTML 태그" 방식 → 발급 코드값을 관리자 페이지(`admin.html`) "4. 사이트 전역 설정"
+   카드의 "네이버 서치어드바이저 소유확인 코드"에 붙여넣고 저장(전체 페이지에 즉시 반영됨)
 3. 등록 후 **사이트맵 제출**(`sitemap.xml`)과 **RSS 제출**(`feed.xml`) 둘 다 등록하세요. 네이버는 RSS를
    통한 신규 콘텐츠 수집이 빨라, 매일 바뀌는 이 사이트 특성상 특히 중요합니다.
 4. "웹마스터 도구 > 요청 > 수집 요청"으로 오늘 갱신한 페이지 URL을 직접 넣으면 더 빠르게 반영됩니다.
 
-두 값 모두 채운 뒤에는 아래를 실행해 전체 페이지에 인증 메타 태그를 반영하세요.
+등록 후 매일/매주 반복해야 하는 실무 체크리스트는 [`docs/NAVER-CHECKLIST.md`](docs/NAVER-CHECKLIST.md) 참고.
 
-```bash
-node scripts/build.js
-```
+두 값을 손으로 직접 `data/quizzes.json`에 넣고 싶다면(관리자 페이지 대신) `"site.googleSiteVerification"`
+/`"site.naverSiteVerification"`에 붙여넣고 `node scripts/build.js` 후 재배포하면 동일하게 동작합니다.
 
 ---
 

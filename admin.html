@@ -125,8 +125,30 @@
     <div class="status-line" id="rollback-status"></div>
   </section>
 
+  <section class="admin-card" id="card-site-settings" style="display:none;">
+    <h2>4. 사이트 전역 설정</h2>
+    <p class="admin-card__hint">
+      네이버 서치어드바이저·구글 서치 콘솔 소유확인, 문의 이메일 노출 여부를 여기서 관리합니다.
+      값을 비워두면 해당 메타태그/문의 줄은 페이지에 아예 출력되지 않습니다.
+    </p>
+    <div class="field">
+      <label for="f-naver-verify">네이버 서치어드바이저 소유확인 코드</label>
+      <input id="f-naver-verify" type="text" placeholder="네이버 서치어드바이저 > 사이트 등록에서 발급된 값만 입력 (naver-site-verification 태그의 content 값)" autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="f-google-verify">구글 서치 콘솔 소유확인 코드</label>
+      <input id="f-google-verify" type="text" placeholder="구글 서치 콘솔 > HTML 태그 방식에서 발급된 값만 입력" autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="f-contact-email">문의 이메일 (선택 — 비우면 푸터에 표시 안 함)</label>
+      <input id="f-contact-email" type="text" placeholder="example@email.com" autocomplete="off">
+    </div>
+    <button class="btn btn--primary btn--small" id="btn-save-site-settings" type="button" style="width:auto;">사이트 설정 저장</button>
+    <div class="status-line" id="site-settings-status"></div>
+  </section>
+
   <section class="admin-card" id="card-apps" style="display:none;">
-    <h2>4. 퀴즈 앱 목록</h2>
+    <h2>5. 퀴즈 앱 목록</h2>
     <p class="admin-card__hint">수정할 앱을 탭하면 아래 입력 폼에 불러옵니다. 🟢 점은 오늘 이미 갱신된 앱입니다.</p>
     <div class="field" style="margin-bottom:10px;">
       <input id="app-search" type="text" placeholder="앱 이름으로 검색... (예: 토스, 카카오)" autocomplete="off">
@@ -138,7 +160,7 @@
   </section>
 
   <section class="admin-card" id="card-form" style="display:none;">
-    <h2 id="form-title">5. 오늘의 퀴즈 입력</h2>
+    <h2 id="form-title">6. 오늘의 퀴즈 입력</h2>
     <p class="admin-card__hint">저장하면 <code>data/quizzes.json</code>, 해당 앱의 상세 페이지, 홈 화면(<code>index.html</code>)이 한 번에 갱신되어 커밋됩니다.</p>
 
     <div id="sheet-match" class="status-line status-line--busy" style="display:none;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;"></div>

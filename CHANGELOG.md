@@ -3,6 +3,29 @@
 `PROMPT.md` 재설계 작업의 Phase별 변경 요약. 상세 근거는 `docs/DECISIONS.md`, 초기 상태는
 `docs/AS-IS.md` 참고.
 
+## Phase 5 — 네이버 대책 (2026-09-10)
+
+- **사이트 전역 설정 UI**: `admin.html`에 "4. 사이트 전역 설정" 카드 신설 — 네이버 서치어드바이저/구글
+  서치 콘솔 소유확인 코드, 문의 이메일을 여기서 입력·저장. 이 값들은 모든 페이지의 `<head>`에 들어가므로
+  저장 시 `data/quizzes.json` + 전체 21개 `pages/*.html` + `index.html`/`sitemap.xml`/`feed.xml`을
+  (Phase 3에서 만든 Git Data API 경로로) **한 커밋**으로 재생성해 일부 페이지만 옛 값으로 남는 상황을
+  방지. README "직접 등록해야 하는 것" 절차를 이 UI를 쓰도록 갱신.
+  실제 코드값은 사용자가 네이버/구글에 직접 사이트를 등록해야 발급되므로 이번 세션에서 채워 넣지 않음
+  (계속 공란 — 등록은 사용자 몫).
+- **`docs/NAVER-CHECKLIST.md` 신설**: 최초 1회/매일/매주로 나눈 네이버 노출 체크리스트. IndexNow가
+  네이버에는 안 통하므로([`DECISIONS.md`](docs/DECISIONS.md) #7) 서치어드바이저 수집 요청이 네이버 쪽
+  유일한 "빠른 반영" 수단임을 명시.
+- **`robots.txt`에 `User-agent: Yeti` 명시 블록 추가**: 기존 `User-agent: *` 규칙과 동일하게
+  `Allow: /` + `Disallow: /admin.html`을 네이버 크롤러(Yeti)에도 명시적으로 적용.
+- **OG/트위터 카드 완전성 보강**: `twitter:title`/`twitter:description`/`twitter:image`를
+  `headBlock`에 추가(기존엔 `twitter:card`만 있었음) — 공유 미리보기가 og: 태그를 못 읽는 일부
+  크롤러에서도 동일하게 뜨도록.
+- **고정 콘텐츠 분량 실측**: 생성된 21개 앱 페이지의 실제 표시 텍스트 길이를 스크립트로 측정 —
+  최소 1,794자 · 최대 2,360자 · 평균 1,888자로 `PROMPT.md`가 우려한 "800자 미만 thin content" 기준을
+  모든 페이지가 이미 여유 있게 충족(Phase 1의 FAQ·참여방법 표·아카이브·전체앱그리드 추가분이 실질적으로
+  기여). 별도 코드 변경 불필요, 실측치만 기록.
+- 티스토리와의 캐노니컬/역할분리 관련 작업은 [`DECISIONS.md`](docs/DECISIONS.md) #3 결정대로 계속 보류.
+
 ## Phase 4 — 구글·AI 검색 최적화 (2026-09-10)
 
 - **JSON-LD 확충**: 홈페이지에 `Organization`(사이트 발행 주체)과 `ItemList`(전체 앱 목록)를

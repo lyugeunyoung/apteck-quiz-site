@@ -320,6 +320,9 @@
       '<meta property="og:image" content="' + escapeHtml(opts.ogImage) + '">\n' +
       '<meta property="og:locale" content="ko_KR">\n' +
       '<meta name="twitter:card" content="summary_large_image">\n' +
+      '<meta name="twitter:title" content="' + escapeHtml(opts.title) + '">\n' +
+      '<meta name="twitter:description" content="' + escapeHtml(opts.description) + '">\n' +
+      '<meta name="twitter:image" content="' + escapeHtml(opts.ogImage) + '">\n' +
       '<link rel="preconnect" href="https://fonts.googleapis.com">\n' +
       '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n' +
       '<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@500;700;900&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">\n' +
