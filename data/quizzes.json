@@ -10,7 +10,8 @@
     "privacyPath": "/privacy.html",
     "sheetUrl": "",
     "exposeAnswerInMeta": false,
-    "contactEmail": ""
+    "contactEmail": "",
+    "indexNowKey": "c5f1f818e3ea4793be417d35401a0835"
   },
   "apps": [
     {

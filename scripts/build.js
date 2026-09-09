@@ -28,4 +28,7 @@ console.log("wrote sitemap.xml");
 fs.writeFileSync(path.join(root, "feed.xml"), templates.renderFeed(data));
 console.log("wrote feed.xml");
 
+fs.writeFileSync(path.join(root, "llms.txt"), templates.renderLlmsTxt(data));
+console.log("wrote llms.txt");
+
 console.log("\n빌드 완료: " + (data.apps.length + 1) + "개 페이지 생성됨.");

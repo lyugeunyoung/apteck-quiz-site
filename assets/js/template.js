@@ -425,16 +425,38 @@
 
     var ogImage = site.ogImage && site.ogImage.indexOf("http") === 0 ? site.ogImage : site.baseUrl + "/" + (site.ogImage || "assets/img/og-default.png");
 
-    var jsonLd = {
+    // WebSite + Organization: site-wide identity markup, emitted once here
+    // (the homepage) rather than repeated per app page — Phase 4 AEO/SEO
+    // requirement so Google/AI answer engines can resolve "누가 운영하는
+    // 사이트인가"와 사이트 검색 기능을 안정적으로 식별한다.
+    var jsonLdWebSite = {
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": site.name,
       "url": site.baseUrl + "/",
+      "publisher": { "@type": "Organization", "name": site.name, "url": site.baseUrl + "/" },
       "potentialAction": {
         "@type": "SearchAction",
         "target": site.baseUrl + "/?q={search_term_string}",
         "query-input": "required name=search_term_string"
       }
+    };
+    var jsonLdOrganization = {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": site.name,
+      "url": site.baseUrl + "/",
+      "logo": ogImage
+    };
+    // ItemList: 홈페이지가 나열하는 전체 퀴즈 앱을 명시적으로 목록화 — 개별
+    // 앱 페이지가 사이트의 다른 항목들과 어떻게 연결되는지 크롤러가 한 번에
+    // 파악할 수 있도록 한다(내부 링크 그리드의 JSON-LD 대응).
+    var jsonLdItemList = {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "itemListElement": apps.map(function (a, i) {
+        return { "@type": "ListItem", "position": i + 1, "name": a.name, "url": site.baseUrl + "/pages/" + a.page };
+      })
     };
 
     return (
@@ -470,7 +492,9 @@
       adSlot("광고 영역 (하단)") +
       "</main>" +
       footerBlock(site) +
-      '<script type="application/ld+json">' + JSON.stringify(jsonLd) + "</script>\n" +
+      [jsonLdWebSite, jsonLdOrganization, jsonLdItemList].map(function (obj) {
+        return '<script type="application/ld+json">' + JSON.stringify(obj) + "</script>\n";
+      }).join("") +
       '<script src="assets/js/favorites.js"></script>\n' +
       '<script src="assets/js/freshness.js"></script>\n' +
       '<script src="assets/js/site.js"></script>\n' +
@@ -735,7 +759,10 @@
         "datePublished": app.createdAt || today.date,
         "dateModified": app.updatedAt || today.date,
         "image": [ogImage],
-        "publisher": { "@type": "Organization", "name": site.name }
+        "publisher": { "@type": "Organization", "name": site.name },
+        // 정답 요약 카드(#summary)를 음성 비서/AI 답변엔진이 바로 읽어줄
+        // 부분으로 지정 — Phase 4 AEO 요구사항.
+        "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#summary"] }
       },
       {
         "@context": "https://schema.org",
@@ -887,8 +914,18 @@
   function renderSitemap(data) {
     var site = data.site;
     var apps = data.apps || [];
-    var urls = [site.baseUrl + "/"].concat(apps.map(function (a) { return site.baseUrl + "/pages/" + a.page; }));
-    var body = urls.map(function (u) { return "  <url><loc>" + escapeHtml(u) + "</loc></url>"; }).join("\n");
+    // lastmod은 실제로 그 페이지가 바뀐 날짜(app.updatedAt)를 그대로 쓴다 —
+    // 빌드가 실행된 날짜를 쓰면 콘텐츠가 그대로인데도 매번 "방금 바뀜"으로
+    // 보고하게 되어(Phase 2에서 없앤 날짜-only 팬텀 커밋과 같은 문제)
+    // 크롤러의 재방문 우선순위 판단을 오히려 흐린다.
+    var homeLastmod = apps.reduce(function (max, a) {
+      return (a.updatedAt || "") > max ? a.updatedAt : max;
+    }, "");
+    var entries = [{ loc: site.baseUrl + "/", lastmod: homeLastmod }]
+      .concat(apps.map(function (a) { return { loc: site.baseUrl + "/pages/" + a.page, lastmod: a.updatedAt || "" }; }));
+    var body = entries.map(function (e) {
+      return "  <url><loc>" + escapeHtml(e.loc) + "</loc>" + (e.lastmod ? "<lastmod>" + escapeHtml(e.lastmod) + "</lastmod>" : "") + "</url>";
+    }).join("\n");
     return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + body + "\n</urlset>\n";
   }
 
@@ -923,6 +960,37 @@
     );
   }
 
+  // llms.txt (Phase 4 AEO) — a short, structured page-list that LLM-based
+  // crawlers/answer engines can read instead of scraping the full site.
+  // Regenerated on every build from the same data as sitemap.xml/feed.xml,
+  // so it never drifts when an app is added or renamed.
+  function renderLlmsTxt(data) {
+    var site = data.site;
+    var apps = data.apps || [];
+    var lines = [];
+    lines.push("# " + site.name);
+    lines.push("");
+    lines.push("> " + site.tagline);
+    lines.push("");
+    lines.push(
+      "이 사이트는 국내 금융/핀테크 앱이 진행하는 \"앱테크\" 퀴즈 이벤트의 오늘의 문제·정답·해설을 " +
+      "정리해 안내하는 정보 제공 사이트입니다. 각 앱과 공식 제휴 관계는 없습니다."
+    );
+    lines.push("");
+    lines.push("## 주요 페이지");
+    lines.push("");
+    lines.push("- [홈](" + site.baseUrl + "/): 전체 앱 목록, 카테고리 필터, 검색");
+    lines.push("- [사이트맵](" + site.baseUrl + "/sitemap.xml)");
+    lines.push("- [RSS 피드](" + site.baseUrl + "/feed.xml): 최근 갱신된 퀴즈 순");
+    lines.push("");
+    lines.push("## 앱별 퀴즈 정답 페이지");
+    lines.push("");
+    apps.forEach(function (a) {
+      lines.push("- [" + a.name + " 정답](" + site.baseUrl + "/pages/" + a.page + ")" + (a.rewardHint ? " — " + a.rewardHint : ""));
+    });
+    return lines.join("\n") + "\n";
+  }
+
   return {
     parseCsv: parseCsv,
     csvToObjects: csvToObjects,
@@ -949,6 +1017,7 @@
     renderIndexPage: renderIndexPage,
     renderAppPage: renderAppPage,
     renderSitemap: renderSitemap,
-    renderFeed: renderFeed
+    renderFeed: renderFeed,
+    renderLlmsTxt: renderLlmsTxt
   };
 });

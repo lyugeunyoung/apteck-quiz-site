@@ -3,6 +3,28 @@
 `PROMPT.md` 재설계 작업의 Phase별 변경 요약. 상세 근거는 `docs/DECISIONS.md`, 초기 상태는
 `docs/AS-IS.md` 참고.
 
+## Phase 4 — 구글·AI 검색 최적화 (2026-09-10)
+
+- **JSON-LD 확충**: 홈페이지에 `Organization`(사이트 발행 주체)과 `ItemList`(전체 앱 목록)를
+  `WebSite` 옆에 신설, 앱 상세 페이지의 `Article`에 `SpeakableSpecification`(정답 요약 카드
+  `#summary`를 음성 답변 대상으로 지정) 추가. 정답 자체는 기존 결정(`DECISIONS.md` #2)대로 계속
+  메타 영역에 노출하지 않음 — 이번에 추가한 스키마들은 모두 정답 텍스트를 담지 않는다.
+  `renderIndexPage`가 이제 script 태그 3개(WebSite/Organization/ItemList)를 출력한다.
+- **sitemap.xml `lastmod` 추가**: 지금까지 URL만 있고 `lastmod`가 아예 없던 것을, 각 앱의
+  `updatedAt`(빌드 시점이 아니라 실제 콘텐츠가 바뀐 날짜)으로 채움 — 크롤러가 "최근에 진짜 바뀐" 페이지를
+  구분할 수 있게 됨(AS-IS.md #7 일부 해소).
+- **날짜별 아카이브 URL 미생성 결정**: `docs/DECISIONS.md` #6에 앱당 URL 1개 유지(허브 페이지 방식)
+  결정과 근거를 기록. 회차별 별도 URL을 만들지 않기로 확정.
+- **IndexNow 연동**: `scripts/indexnow.js` 신설 — Bing/Yandex에 sitemap.xml 변경을 알림(`site.indexNowKey`가
+  비어 있으면 완전 no-op). 검증 키 파일을 저장소 루트에 커밋하고, `sync-sheet.yml`이 실제로 커밋을
+  만들었을 때만 실행하도록 연결. **Google과 네이버는 IndexNow 미지원** — `docs/DECISIONS.md` #7에 명시,
+  두 엔진은 계속 sitemap 크롤링(+ Naver는 Phase 5의 서치어드바이저 수동 절차)에 의존.
+- **llms.txt 신설**: `scripts/build.js`가 `data/quizzes.json`으로부터 매번 재생성(사이트 소개 + 전체 앱
+  정답 페이지 링크 목록) — 손으로 관리하는 정적 파일이 아니라 다른 산출물처럼 항상 최신 상태 보장.
+- **AEO/개체명 재확인**: FAQ 답변(결론 먼저 후 단서), 메타 설명(`buildMetaDescription`), 정답 요약 카드가
+  이미 Phase 1에서 "결론 우선" 구조로 만들어져 있음을 재확인 — 추가 변경 불필요. `app.name`(공식 앱/퀴즈
+  이름)이 H1·메타·FAQ·JSON-LD 전 영역에서 일관되게 쓰이는 구조도 재확인.
+
 ## Phase 3 — 관리자 페이지(admin.html) 재설계 (2026-09-10)
 
 - **오늘 시트 전체 불러오기 + 일괄 게시**: `admin.html`에 새 섹션 추가 — 시트에서 오늘 날짜 행 전체를

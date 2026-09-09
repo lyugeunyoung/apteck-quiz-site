@@ -1,0 +1,35 @@
+# 오늘의 앱테크
+
+> 매일 아침, 모든 금융앱 퀴즈 정답을 한 곳에서
+
+이 사이트는 국내 금융/핀테크 앱이 진행하는 "앱테크" 퀴즈 이벤트의 오늘의 문제·정답·해설을 정리해 안내하는 정보 제공 사이트입니다. 각 앱과 공식 제휴 관계는 없습니다.
+
+## 주요 페이지
+
+- [홈](https://lyugeunyoung.github.io/apteck-quiz-site/): 전체 앱 목록, 카테고리 필터, 검색
+- [사이트맵](https://lyugeunyoung.github.io/apteck-quiz-site/sitemap.xml)
+- [RSS 피드](https://lyugeunyoung.github.io/apteck-quiz-site/feed.xml): 최근 갱신된 퀴즈 순
+
+## 앱별 퀴즈 정답 페이지
+
+- [카카오뱅크 AI 이모지 퀴즈 정답](https://lyugeunyoung.github.io/apteck-quiz-site/pages/kakaobank-ai-emoji.html) — 참여자 전원 최대 1,000원 랜덤 캐시
+- [하나원큐 축구Play 퀴즈HANA 정답](https://lyugeunyoung.github.io/apteck-quiz-site/pages/hana-onecue-soccer.html) — 원큐볼(하나머니) 최대 10,000
+- [카카오페이 퀴즈타임 정답](https://lyugeunyoung.github.io/apteck-quiz-site/pages/kakaopay-quiztime.html) — 카카오페이포인트 최대 10,000P
+- [신한 슈퍼SOL 출석 퀴즈 정답](https://lyugeunyoung.github.io/apteck-quiz-site/pages/shinhan-sol-attendance.html) — 마이신한포인트
+- [신한 슈퍼SOL 야구/상식 쏠퀴즈 정답](https://lyugeunyoung.github.io/apteck-quiz-site/pages/shinhan-sol-baseball.html) — 마이신한포인트 최대 100P
+- [신한 SOL Pay 퀴즈팡팡 정답](https://lyugeunyoung.github.io/apteck-quiz-site/pages/shinhan-solpay-pang.html) — 마이신한포인트 최대 10,000P 랜덤
+- [기후행동 기회소득 오늘의 퀴즈 정답](https://lyugeunyoung.github.io/apteck-quiz-site/pages/climate-action-quiz.html) — 기회소득(리워드)
+- [NH올원뱅크 디깅퀴즈 정답](https://lyugeunyoung.github.io/apteck-quiz-site/pages/nhonebank-digging.html) — NH포인트
+- [나만의닥터 건강퀴즈 정답](https://lyugeunyoung.github.io/apteck-quiz-site/pages/naman-doctor-health.html) — 닥터캐쉬 최대 10,000캐시
+- [닥터나우 오늘의퀴즈 정답](https://lyugeunyoung.github.io/apteck-quiz-site/pages/doctornow-quiz.html) — 포인트 (실생활 사용 가능)
+- [monimo 모니스쿨 정답](https://lyugeunyoung.github.io/apteck-quiz-site/pages/monimo-monischool.html) — 모니머니로 전환되는 젤리
+- [카카오뱅크 OX 퀴즈 정답](https://lyugeunyoung.github.io/apteck-quiz-site/pages/kakaobank-ox.html) — 참여자 전원 최대 1,000원 랜덤 캐시
+- [하나원큐 슬기로운 금융생활 OX 게임 정답](https://lyugeunyoung.github.io/apteck-quiz-site/pages/hana-onecue-ox.html) — 하나머니 랜덤 캐시
+- [토스 행운퀴즈 정답](https://lyugeunyoung.github.io/apteck-quiz-site/pages/toss-luck.html) — 토스포인트 (현금처럼 사용/출금)
+- [KB Pay 오늘의 퀴즈 정답](https://lyugeunyoung.github.io/apteck-quiz-site/pages/kbpay-today.html) — 포인트리
+- [KB 스타뱅킹 스타퀴즈 정답](https://lyugeunyoung.github.io/apteck-quiz-site/pages/kb-starbanking-star.html) — 스타포인트
+- [KB 스타뱅킹 한국사 매일 퀴즈 정답](https://lyugeunyoung.github.io/apteck-quiz-site/pages/kb-starbanking-history.html) — 스타포인트
+- [케이뱅크 AI 퀴즈 챌린지 정답](https://lyugeunyoung.github.io/apteck-quiz-site/pages/kbank-ai-challenge.html) — 현금 혜택 (누적 상금제)
+- [H.Point 오늘의 QUIZ 정답](https://lyugeunyoung.github.io/apteck-quiz-site/pages/hpoint-quiz.html) — H.포인트
+- [비트버니 오늘의 상식 퀴즈 정답](https://lyugeunyoung.github.io/apteck-quiz-site/pages/bitbunny-common.html) — 코인 (실제 가상자산 교환 가능)
+- [비트버니 오늘의 OX 퀴즈 정답](https://lyugeunyoung.github.io/apteck-quiz-site/pages/bitbunny-ox.html) — 코인 (실제 가상자산 교환 가능)
