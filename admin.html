@@ -46,28 +46,47 @@
         <input id="f-token" type="password" placeholder="github_pat_xxx..." autocomplete="off">
       </div>
     </div>
-    <label style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-muted);margin-bottom:12px;">
+    <label style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-muted);margin-bottom:4px;">
       <input id="f-remember" type="checkbox" style="width:auto;">
-      이 기기에 저장 정보 기억하기 (공용 PC에서는 체크하지 마세요)
+      이 기기에 토큰 저장 (localStorage, 공용 PC에서는 체크하지 마세요)
     </label>
+    <p class="admin-card__hint" style="margin-bottom:12px;">
+      기본값은 <strong>이 브라우저 탭을 닫으면 사라지는 임시 저장(sessionStorage)</strong>입니다.
+      체크하면 탭을 닫아도 이 기기에 90일간 남아있다가 자동으로 만료됩니다(개인 기기에서만 권장).
+    </p>
     <button class="btn btn--primary" id="btn-connect" type="button">불러오기</button>
     <div class="status-line" id="connect-status"></div>
   </section>
 
+  <section class="admin-card" id="card-dashboard" style="display:none;">
+    <h2>2. 오늘의 대시보드</h2>
+    <p class="admin-card__hint">오늘(<span id="dash-date"></span>) 기준 등록 현황입니다.</p>
+    <div class="dash-stats">
+      <div class="dash-stat dash-stat--ok"><span class="dash-stat__num" id="dash-done">0</span><span class="dash-stat__label">등록 완료</span></div>
+      <div class="dash-stat dash-stat--pending"><span class="dash-stat__num" id="dash-pending">0</span><span class="dash-stat__label">대기중</span></div>
+    </div>
+    <label style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-muted);margin-top:12px;">
+      <input id="dash-filter-pending" type="checkbox" style="width:auto;">
+      아래 앱 목록에 대기중인 앱만 보기
+    </label>
+  </section>
+
   <section class="admin-card" id="card-sheet" style="display:none;">
-    <h2>2. 구글 시트 연동</h2>
+    <h2>3. 구글 시트 연동</h2>
     <p class="admin-card__hint">
-      문제·정답·해설을 구글 시트에 정리해두면 두 가지 방식으로 쓸 수 있습니다.
+      문제·정답·해설을 구글 시트에 정리해두면 세 가지 방식으로 쓸 수 있습니다.
       <strong>① 자동 동기화</strong> — 아래 "자동 동기화 켜기"를 한 번 눌러두면, 이후로는 시트에 값만 입력해도
       약 20분마다 GitHub Actions가 자동으로 읽어와 사이트에 반영합니다(관리자 페이지를 열 필요 없음).
-      <strong>② 수동 불러오기</strong> — "시트 불러오기"를 누르면 지금 이 화면에서 바로 미리 채워볼 수 있습니다.
+      <strong>② 오늘 시트 전체 불러오기</strong> — 아래에서 바로 오늘 날짜 행 전체를 한 번에 미리 보고 검토 후 한 커밋으로 게시합니다.
+      <strong>③ 개별 수동 불러오기</strong> — 앱을 하나씩 선택해 아래 4번 폼에 채워 넣습니다.
     </p>
     <p class="admin-card__hint">
       시트 첫 줄은 헤더로 <code>date, app_id, question, choice1, choice2, choice3, choice4, answer, explanation, image_url</code>
       열을 사용하세요 (순서는 상관없고, choice·image_url은 비워도 됩니다). <code>app_id</code>는 아래 앱 목록에서 각 앱을
       선택했을 때 URL이나 페이지 소스에서 확인할 수 있는 영문 ID와 정확히 같아야 합니다. 카카오뱅크 AI 이모지 퀴즈처럼
       회차가 있는 앱은 <code>round_time</code> 열에 <code>08:00</code>/<code>12:00</code>/<code>20:00</code> 중 해당 회차를
-      추가로 적어주세요 — 자동 동기화만 회차별 데이터를 지원합니다(수동 불러오기는 회차 없는 일반 앱만 지원).
+      추가로 적어주세요 — 자동 동기화와 "오늘 시트 전체 불러오기"는 회차별 데이터를 지원합니다(4번의 개별 수동 불러오기만
+      회차 없는 일반 앱을 대상으로 합니다).
     </p>
     <p class="admin-card__hint">
       시트를 만든 뒤 <strong>파일 → 공유 → 공유</strong>에서 "링크가 있는 모든 사용자 – 뷰어"로 설정하고,
@@ -79,15 +98,35 @@
       <input id="f-sheet-url" type="text" placeholder="https://docs.google.com/spreadsheets/d/.../export?format=csv&gid=0" autocomplete="off">
     </div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;">
-      <button class="btn btn--ghost btn--small" id="btn-sheet-load" type="button">시트 불러오기 (수동 미리보기)</button>
+      <button class="btn btn--ghost btn--small" id="btn-sheet-load" type="button">시트 불러오기 (수동 미리보기용)</button>
       <button class="btn btn--primary btn--small" id="btn-sheet-enable-auto" type="button" style="width:auto;">🔁 자동 동기화 켜기</button>
     </div>
     <div class="status-line" id="sheet-status"></div>
     <div class="status-line" id="sheet-auto-status"></div>
+
+    <div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--border);">
+      <button class="btn btn--primary btn--small" id="btn-bulk-load" type="button" style="width:auto;">🔄 오늘 시트 전체 불러오기 (일괄 미리보기)</button>
+      <div class="status-line" id="bulk-status"></div>
+      <div id="bulk-diff" style="display:none;margin-top:12px;">
+        <p class="admin-card__hint" style="margin-bottom:10px;">
+          아래 항목만 <strong>한 번의 커밋</strong>으로 게시됩니다. 원치 않는 앱은 체크를 해제하세요.
+        </p>
+        <div id="bulk-diff-list" class="bulk-diff-list"></div>
+        <button class="btn btn--primary" id="btn-bulk-publish" type="button" style="margin-top:12px;">선택한 항목 전체 게시 (일괄 커밋)</button>
+        <div class="status-line" id="bulk-publish-status"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="admin-card" id="card-rollback" style="display:none;">
+    <h2>⏪ 되돌리기</h2>
+    <p class="admin-card__hint" id="rollback-hint">최근 커밋 정보를 불러오는 중...</p>
+    <button class="btn btn--ghost btn--small" id="btn-rollback" type="button" disabled>직전 게시 상태로 되돌리기</button>
+    <div class="status-line" id="rollback-status"></div>
   </section>
 
   <section class="admin-card" id="card-apps" style="display:none;">
-    <h2>3. 퀴즈 앱 목록</h2>
+    <h2>4. 퀴즈 앱 목록</h2>
     <p class="admin-card__hint">수정할 앱을 탭하면 아래 입력 폼에 불러옵니다. 🟢 점은 오늘 이미 갱신된 앱입니다.</p>
     <div class="field" style="margin-bottom:10px;">
       <input id="app-search" type="text" placeholder="앱 이름으로 검색... (예: 토스, 카카오)" autocomplete="off">
@@ -99,7 +138,7 @@
   </section>
 
   <section class="admin-card" id="card-form" style="display:none;">
-    <h2 id="form-title">4. 오늘의 퀴즈 입력</h2>
+    <h2 id="form-title">5. 오늘의 퀴즈 입력</h2>
     <p class="admin-card__hint">저장하면 <code>data/quizzes.json</code>, 해당 앱의 상세 페이지, 홈 화면(<code>index.html</code>)이 한 번에 갱신되어 커밋됩니다.</p>
 
     <div id="sheet-match" class="status-line status-line--busy" style="display:none;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;"></div>

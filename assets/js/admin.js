@@ -1,7 +1,9 @@
 (function () {
   "use strict";
 
-  var LS_KEY = "apteck-admin-connection";
+  var LS_KEY = "apteck-admin-connection";       // opt-in, persists across tabs/restarts
+  var SS_KEY = "apteck-admin-connection-tab";    // default, cleared when the tab closes
+  var TOKEN_EXPIRY_DAYS = 90;
 
   var state = {
     owner: "",
@@ -14,12 +16,16 @@
     sheetUrl: "",
     sheetRows: [],       // parsed rows from the Google Sheet CSV, if loaded
     multiRoundApp: null, // the selected app object when it has a roundSchedule, else null
+    bulkCandidates: [],  // built by loadBulkCandidates(), consumed by publishBulk()
   };
 
   var el = {};
   [
     "f-owner", "f-repo", "f-branch", "f-token", "f-remember", "btn-connect", "connect-status",
+    "card-dashboard", "dash-date", "dash-done", "dash-pending", "dash-filter-pending",
     "card-sheet", "f-sheet-url", "btn-sheet-load", "sheet-status", "btn-sheet-enable-auto", "sheet-auto-status",
+    "btn-bulk-load", "bulk-status", "bulk-diff", "bulk-diff-list", "btn-bulk-publish", "bulk-publish-status",
+    "card-rollback", "rollback-hint", "btn-rollback", "rollback-status",
     "card-apps", "app-table", "app-search", "btn-new-app",
     "card-form", "form-title", "sheet-match", "new-app-fields", "f-selected-id", "category-options",
     "f-id", "f-emoji", "f-category", "f-schedule", "f-name", "f-reward", "f-deeplink", "f-path",
@@ -47,11 +53,19 @@
   function clearStatus(node) {
     node.className = "status-line";
   }
+  function escapeText(s) { return QuizTemplates.escapeHtml(s); }
+  function truncate(s, n) {
+    s = String(s || "");
+    return s.length > n ? s.slice(0, n) + "…" : s;
+  }
 
   // ---------------------------------------------------------- GitHub calls
 
   function apiBase() {
     return "https://api.github.com/repos/" + state.owner + "/" + state.repo + "/contents/";
+  }
+  function gitApiBase() {
+    return "https://api.github.com/repos/" + state.owner + "/" + state.repo + "/git/";
   }
 
   function ghHeaders() {
@@ -100,16 +114,114 @@
     if (res.status === 404) msg = "저장소 또는 파일을 찾을 수 없습니다. 사용자명/저장소명/브랜치를 확인해 주세요.";
     if (res.status === 403) msg += " (권한 부족 — 토큰에 Contents: Read and write 권한이 있는지 확인하세요)";
     if (res.status === 409) msg = "저장 충돌이 발생했습니다. 다른 곳에서 방금 수정되었을 수 있습니다. 다시 '불러오기'를 눌러 최신 상태를 가져온 뒤 재시도하세요.";
+    if (res.status === 422) msg = "요청이 거부되었습니다(422). 저장소 상태가 방금 바뀌었을 수 있습니다. 새로고침 후 다시 시도해 주세요.";
     return new Error(msg);
+  }
+
+  // ------------------------------------------------- Git Data API (bulk commit)
+  // Contents API (ghPutFile) can only write one file per commit. The bulk
+  // "오늘 시트 전체 불러오기 → 전체 게시" flow can touch data/quizzes.json plus
+  // many pages/*.html at once, and PROMPT.md asks for that to land as a
+  // single commit (all-or-nothing, one entry in history) rather than N
+  // separate ones — so this flow drops down to the lower-level Git Data API:
+  // blob per file -> one tree -> one commit -> move the branch ref.
+
+  async function ghGetRef() {
+    var res = await fetch(gitApiBase() + "ref/heads/" + encodeURIComponent(state.branch), { headers: ghHeaders() });
+    if (!res.ok) throw await ghError(res);
+    var json = await res.json();
+    return json.object.sha; // commit sha
+  }
+
+  async function ghGetCommit(sha) {
+    var res = await fetch(gitApiBase() + "commits/" + sha, { headers: ghHeaders() });
+    if (!res.ok) throw await ghError(res);
+    return res.json(); // { tree: {sha}, parents: [{sha}], message, ... }
+  }
+
+  async function ghCreateBlob(content) {
+    var res = await fetch(gitApiBase() + "blobs", {
+      method: "POST",
+      headers: Object.assign({ "Content-Type": "application/json" }, ghHeaders()),
+      body: JSON.stringify({ content: b64EncodeUtf8(content), encoding: "base64" })
+    });
+    if (!res.ok) throw await ghError(res);
+    var json = await res.json();
+    return json.sha;
+  }
+
+  async function ghCreateTree(baseTreeSha, entries) {
+    var res = await fetch(gitApiBase() + "trees", {
+      method: "POST",
+      headers: Object.assign({ "Content-Type": "application/json" }, ghHeaders()),
+      body: JSON.stringify({ base_tree: baseTreeSha, tree: entries })
+    });
+    if (!res.ok) throw await ghError(res);
+    var json = await res.json();
+    return json.sha;
+  }
+
+  async function ghCreateCommit(message, treeSha, parentSha) {
+    var res = await fetch(gitApiBase() + "commits", {
+      method: "POST",
+      headers: Object.assign({ "Content-Type": "application/json" }, ghHeaders()),
+      body: JSON.stringify({ message: message, tree: treeSha, parents: [parentSha] })
+    });
+    if (!res.ok) throw await ghError(res);
+    var json = await res.json();
+    return json.sha;
+  }
+
+  async function ghUpdateRef(sha, force) {
+    var res = await fetch(gitApiBase() + "refs/heads/" + encodeURIComponent(state.branch), {
+      method: "PATCH",
+      headers: Object.assign({ "Content-Type": "application/json" }, ghHeaders()),
+      body: JSON.stringify({ sha: sha, force: !!force })
+    });
+    if (!res.ok) throw await ghError(res);
+    return sha;
+  }
+
+  // Writes { path: content } as a single atomic commit on top of whatever
+  // the branch currently points to, and returns the new commit sha.
+  async function commitFilesAtomically(files, message) {
+    var headSha = await ghGetRef();
+    var headCommit = await ghGetCommit(headSha);
+    var entries = [];
+    for (var path in files) {
+      if (!Object.prototype.hasOwnProperty.call(files, path)) continue;
+      var blobSha = await ghCreateBlob(files[path]);
+      entries.push({ path: path, mode: "100644", type: "blob", sha: blobSha });
+    }
+    var treeSha = await ghCreateTree(headCommit.tree.sha, entries);
+    var commitSha = await ghCreateCommit(message, treeSha, headSha);
+    await ghUpdateRef(commitSha, false); // false = must be a fast-forward from headSha
+    return commitSha;
   }
 
   // ------------------------------------------------------------- connect
 
   function loadSavedConnection() {
     try {
-      var raw = localStorage.getItem(LS_KEY);
-      if (!raw) return;
-      var saved = JSON.parse(raw);
+      var raw = sessionStorage.getItem(SS_KEY);
+      if (raw) {
+        var s = JSON.parse(raw);
+        el["f-owner"].value = s.owner || "";
+        el["f-repo"].value = s.repo || "";
+        el["f-branch"].value = s.branch || "main";
+        el["f-token"].value = s.token || "";
+        return;
+      }
+    } catch (e) {}
+    try {
+      var rawLs = localStorage.getItem(LS_KEY);
+      if (!rawLs) return;
+      var saved = JSON.parse(rawLs);
+      var ageDays = (Date.now() - (saved.savedAt || 0)) / 86400000;
+      if (ageDays > TOKEN_EXPIRY_DAYS) {
+        localStorage.removeItem(LS_KEY);
+        return;
+      }
       el["f-owner"].value = saved.owner || "";
       el["f-repo"].value = saved.repo || "";
       el["f-branch"].value = saved.branch || "main";
@@ -119,12 +231,15 @@
   }
 
   function persistConnectionIfRequested() {
+    var payload = { owner: state.owner, repo: state.repo, branch: state.branch, token: state.token };
+    // Always kept for the life of this tab, regardless of "이 기기에 저장" — a
+    // reload shouldn't force re-entering the token, only a fresh tab should.
+    try { sessionStorage.setItem(SS_KEY, JSON.stringify(payload)); } catch (e) {}
     if (el["f-remember"].checked) {
-      localStorage.setItem(LS_KEY, JSON.stringify({
-        owner: state.owner, repo: state.repo, branch: state.branch, token: state.token
-      }));
+      payload.savedAt = Date.now();
+      try { localStorage.setItem(LS_KEY, JSON.stringify(payload)); } catch (e) {}
     } else {
-      localStorage.removeItem(LS_KEY);
+      try { localStorage.removeItem(LS_KEY); } catch (e) {}
     }
   }
 
@@ -148,12 +263,33 @@
       persistConnectionIfRequested();
       setStatus(el["connect-status"], "연결됨 · 앱 " + state.data.apps.length + "개 불러옴", "ok");
       renderAppTable();
+      updateDashboard();
+      el["card-dashboard"].style.display = "";
       el["card-sheet"].style.display = "";
+      el["card-rollback"].style.display = "";
       el["card-apps"].style.display = "";
+      loadRollbackInfo();
     } catch (e) {
       setStatus(el["connect-status"], e.message || String(e), "err");
     }
   });
+
+  // --------------------------------------------------------- dashboard
+
+  function appIsFreshToday(app) {
+    return !!(app.today && app.today.date === todayISO());
+  }
+
+  function updateDashboard() {
+    if (!state.data) return;
+    var today = todayISO();
+    el["dash-date"].textContent = today;
+    var done = state.data.apps.filter(appIsFreshToday).length;
+    el["dash-done"].textContent = String(done);
+    el["dash-pending"].textContent = String(state.data.apps.length - done);
+  }
+
+  el["dash-filter-pending"].addEventListener("change", function () { if (state.data) renderAppTable(); });
 
   // ------------------------------------------------------ google sheets
 
@@ -178,6 +314,15 @@
     try { el["f-sheet-url"].value = localStorage.getItem(SHEET_LS_KEY) || ""; } catch (e) {}
   })();
 
+  async function fetchSheetRows(url) {
+    var res = await fetch(url);
+    if (!res.ok) throw new Error("시트를 불러오지 못했습니다 (" + res.status + "). 공유 설정과 주소를 확인해 주세요.");
+    var text = await res.text();
+    var rows = csvToObjects(text);
+    if (!rows.length) throw new Error("시트에서 데이터를 찾지 못했습니다. 첫 줄이 헤더(date, app_id, question...)인지 확인해 주세요.");
+    return rows;
+  }
+
   el["btn-sheet-load"].addEventListener("click", async function () {
     var url = el["f-sheet-url"].value.trim();
     if (!url) {
@@ -186,11 +331,7 @@
     }
     setStatus(el["sheet-status"], "시트 불러오는 중...", "busy");
     try {
-      var res = await fetch(url);
-      if (!res.ok) throw new Error("시트를 불러오지 못했습니다 (" + res.status + "). 공유 설정과 주소를 확인해 주세요.");
-      var text = await res.text();
-      var rows = csvToObjects(text);
-      if (!rows.length) throw new Error("시트에서 데이터를 찾지 못했습니다. 첫 줄이 헤더(date, app_id, question...)인지 확인해 주세요.");
+      var rows = await fetchSheetRows(url);
       state.sheetRows = rows;
       try { localStorage.setItem(SHEET_LS_KEY, url); } catch (e) {}
       var todayCount = rows.filter(function (r) { return r.date === todayISO(); }).length;
@@ -273,16 +414,265 @@
     el["sheet-match"].style.display = "none";
   }
 
+  // --------------------------------------------------- bulk import + publish
+
+  el["btn-bulk-load"].addEventListener("click", async function () {
+    var url = el["f-sheet-url"].value.trim();
+    if (!url) {
+      setStatus(el["bulk-status"], "먼저 시트 CSV 주소를 입력해 주세요.", "err");
+      return;
+    }
+    setStatus(el["bulk-status"], "시트 불러와 오늘 날짜 행을 앱별로 대조하는 중...", "busy");
+    el["bulk-diff"].style.display = "none";
+    try {
+      var rows = await fetchSheetRows(url);
+      state.sheetRows = rows;
+      try { localStorage.setItem(SHEET_LS_KEY, url); } catch (e) {}
+      var today = todayISO();
+      var candidates = [];
+
+      state.data.apps.forEach(function (app) {
+        var isMultiRound = !!(app.roundSchedule && app.roundSchedule.length);
+        if (isMultiRound) {
+          var matches = rows.filter(function (r) { return sheetAppId(r) === app.id && r.date === today && r.round_time; });
+          if (!matches.length) return;
+          var prevRounds = (app.today && app.today.date === today) ? (app.today.rounds || []) : [];
+          var nextRounds = QuizTemplates.computeMultiRoundToday(app, matches, today, prevRounds);
+          var changed = !QuizTemplates.isSameMultiRoundToday(app.today && app.today.date === today ? app.today.rounds : [], nextRounds);
+          var vErrors = [], vWarnings = [];
+          nextRounds.forEach(function (r) {
+            var v = QuizTemplates.validateQuizContent({ question: r.question, answer: r.answer, explanation: r.explanation, imageUrl: r.imageUrl });
+            v.errors.forEach(function (m) { vErrors.push(r.label + ": " + m); });
+            v.warnings.forEach(function (m) { vWarnings.push(r.label + ": " + m); });
+          });
+          candidates.push({
+            app: app, isMultiRound: true, nextToday: { date: today, rounds: nextRounds },
+            changed: changed, errors: vErrors, warnings: vWarnings
+          });
+        } else {
+          var row = rows.find(function (r) { return sheetAppId(r) === app.id && r.date === today; });
+          if (!row) return;
+          var nextToday = QuizTemplates.computeSingleRoundToday(row, today);
+          var changed2 = !QuizTemplates.isSameSingleRoundToday(app.today, nextToday);
+          var v2 = QuizTemplates.validateQuizContent({ question: nextToday.question, answer: nextToday.answer, explanation: nextToday.explanation, imageUrl: nextToday.imageUrl });
+          candidates.push({
+            app: app, isMultiRound: false, nextToday: nextToday,
+            changed: changed2, errors: v2.errors, warnings: v2.warnings
+          });
+        }
+      });
+
+      state.bulkCandidates = candidates;
+      renderBulkDiff();
+
+      if (!candidates.length) {
+        setStatus(el["bulk-status"], "오늘(" + today + ") 날짜 행이 시트에 없습니다. app_id·date 열을 확인해 주세요.", "err");
+        return;
+      }
+      var changedCount = candidates.filter(function (c) { return c.changed; }).length;
+      setStatus(el["bulk-status"], "✅ 오늘 날짜 행 매칭 " + candidates.length + "개 앱 (실제 변경 " + changedCount + "개). 아래에서 검토 후 게시하세요.", "ok");
+      el["bulk-diff"].style.display = "";
+    } catch (e) {
+      setStatus(el["bulk-status"], e.message || String(e), "err");
+    }
+  });
+
+  function diffLine(labelPrefix, oldVal, newVal, maxLen) {
+    oldVal = oldVal || "";
+    newVal = newVal || "";
+    if (oldVal === newVal) return "";
+    var out = "<div>" + escapeText(labelPrefix) + ": ";
+    if (oldVal) out += "<del>" + escapeText(truncate(oldVal, maxLen)) + "</del> → ";
+    out += "<ins>" + escapeText(truncate(newVal, maxLen)) + "</ins></div>";
+    return out;
+  }
+
+  function renderBulkDiff() {
+    el["bulk-diff-list"].innerHTML = state.bulkCandidates.map(function (c, idx) {
+      var hasErrors = c.errors.length > 0;
+      var body = "";
+      if (!c.changed) {
+        body = "<div>시트 값이 현재 저장된 내용과 동일합니다 — 게시해도 변화가 없습니다.</div>";
+      } else if (c.isMultiRound) {
+        var prevRounds = (c.app.today && c.app.today.date === todayISO()) ? (c.app.today.rounds || []) : [];
+        c.nextToday.rounds.forEach(function (r) {
+          var prev = prevRounds.filter(function (p) { return p.time === r.time; })[0] || {};
+          body += diffLine(r.label + " 정답", prev.answer, r.answer, 40);
+        });
+      } else {
+        body += diffLine("문제", c.app.today && c.app.today.question, c.nextToday.question, 30);
+        body += diffLine("정답", c.app.today && c.app.today.answer, c.nextToday.answer, 40);
+      }
+      if (c.errors.length) {
+        body += '<div class="bulk-diff-item__warn">⛔ ' + c.errors.map(escapeText).join(" / ") + "</div>";
+      }
+      if (c.warnings.length) {
+        body += '<div class="bulk-diff-item__warn">⚠️ ' + c.warnings.map(escapeText).join(" / ") + "</div>";
+      }
+      var checked = (c.changed && !hasErrors) ? " checked" : "";
+      var disabled = hasErrors ? " disabled" : "";
+      return (
+        '<div class="bulk-diff-item">' +
+        '<label class="bulk-diff-item__head">' +
+        '<input type="checkbox" data-bulk-idx="' + idx + '"' + checked + disabled + ">" +
+        '<span class="bulk-diff-item__name">' + (c.app.emoji || "🎯") + " " + escapeText(c.app.name) + "</span>" +
+        "</label>" +
+        '<div class="bulk-diff-item__body">' + (body || "변경 없음") + "</div>" +
+        "</div>"
+      );
+    }).join("");
+  }
+
+  el["btn-bulk-publish"].addEventListener("click", async function () {
+    var checkedIdx = Array.prototype.map.call(
+      el["bulk-diff-list"].querySelectorAll('input[type="checkbox"]:checked'),
+      function (i) { return parseInt(i.getAttribute("data-bulk-idx"), 10); }
+    );
+    var selected = checkedIdx.map(function (i) { return state.bulkCandidates[i]; }).filter(function (c) { return c && c.changed; });
+    if (!selected.length) {
+      setStatus(el["bulk-publish-status"], "게시할 항목을 하나 이상 선택해 주세요.", "err");
+      return;
+    }
+    var totalWarnings = selected.reduce(function (n, c) { return n + c.warnings.length; }, 0);
+    if (totalWarnings > 0) {
+      var proceed = confirm("선택한 항목에 경고 " + totalWarnings + "건이 있습니다 (해설이 짧거나 <, > 문자 포함 등). 그대로 게시할까요?");
+      if (!proceed) { setStatus(el["bulk-publish-status"], "게시가 취소되었습니다.", "busy"); return; }
+    }
+
+    el["btn-bulk-publish"].disabled = true;
+    try {
+      setStatus(el["bulk-publish-status"], "최신 data/quizzes.json 다시 확인 중...", "busy");
+      var latest = await ghGetFile("data/quizzes.json");
+      var freshData = JSON.parse(latest.text);
+      var today = todayISO();
+      var files = {};
+      var names = [];
+
+      selected.forEach(function (c) {
+        var app = freshData.apps.filter(function (a) { return a.id === c.app.id; })[0];
+        if (!app) return; // deleted since preview was built — skip rather than fail the whole batch
+
+        if (c.isMultiRound) {
+          if (app.today && app.today.date && app.today.date !== today && app.today.rounds && app.today.rounds.length) {
+            app.history = app.history || [];
+            app.history.unshift({ date: app.today.date, rounds: app.today.rounds });
+            app.history = app.history.slice(0, QuizTemplates.HISTORY_LIMIT);
+          }
+          var prevRounds = (app.today && app.today.date === today) ? (app.today.rounds || []) : [];
+          app.today = { date: today, rounds: QuizTemplates.computeMultiRoundToday(app, state.sheetRows.filter(function (r) { return sheetAppId(r) === app.id && r.date === today && r.round_time; }), today, prevRounds) };
+        } else {
+          var row = state.sheetRows.find(function (r) { return sheetAppId(r) === app.id && r.date === today; });
+          if (!row) return;
+          var nextToday = QuizTemplates.computeSingleRoundToday(row, today);
+          if (app.today && app.today.date && app.today.date !== today && app.today.question) {
+            app.history = app.history || [];
+            app.history.unshift({ date: app.today.date, question: app.today.question, answer: app.today.answer, explanation: app.today.explanation });
+            app.history = app.history.slice(0, QuizTemplates.HISTORY_LIMIT);
+          }
+          app.today = nextToday;
+        }
+        app.updatedAt = today;
+        names.push(app.name);
+        files["pages/" + app.page] = QuizTemplates.renderAppPage(app, freshData);
+      });
+
+      if (!names.length) {
+        setStatus(el["bulk-publish-status"], "게시할 실제 변경 사항이 없습니다(다른 곳에서 이미 반영되었을 수 있음). 새로고침 후 다시 확인해 주세요.", "err");
+        return;
+      }
+
+      files["data/quizzes.json"] = JSON.stringify(freshData, null, 2);
+      files["index.html"] = QuizTemplates.renderIndexPage(freshData);
+      files["sitemap.xml"] = QuizTemplates.renderSitemap(freshData);
+      files["feed.xml"] = QuizTemplates.renderFeed(freshData);
+
+      setStatus(el["bulk-publish-status"], names.length + "개 파일 " + (names.length + 4) + "개를 한 커밋으로 게시하는 중...", "busy");
+      var commitMsg = "퀴즈 일괄 게시: " + names.join(", ") + " (" + today + ")";
+      await commitFilesAtomically(files, commitMsg);
+
+      state.data = freshData;
+      var refreshed = await ghGetFile("data/quizzes.json");
+      state.dataSha = refreshed.sha;
+
+      setStatus(el["bulk-publish-status"], "✅ " + names.length + "개 앱을 한 커밋으로 게시했습니다. GitHub Pages 반영까지 보통 1분 이내 걸립니다.", "ok");
+      el["bulk-diff"].style.display = "none";
+      renderAppTable();
+      updateDashboard();
+      loadRollbackInfo();
+    } catch (e) {
+      setStatus(el["bulk-publish-status"], "❌ " + (e.message || String(e)), "err");
+    } finally {
+      el["btn-bulk-publish"].disabled = false;
+    }
+  });
+
+  // -------------------------------------------------------------- rollback
+
+  async function loadRollbackInfo() {
+    el["btn-rollback"].disabled = true;
+    try {
+      var headSha = await ghGetRef();
+      var headCommit = await ghGetCommit(headSha);
+      if (!headCommit.parents || !headCommit.parents.length) {
+        el["rollback-hint"].textContent = "이전 커밋이 없어 되돌릴 수 없습니다(첫 커밋).";
+        return;
+      }
+      var parentSha = headCommit.parents[0].sha;
+      var parentCommit = await ghGetCommit(parentSha);
+      el["rollback-hint"].innerHTML =
+        "최근 커밋: <strong>" + escapeText(truncate(headCommit.message.split("\n")[0], 60)) + "</strong><br>" +
+        "되돌리면 → <strong>" + escapeText(truncate(parentCommit.message.split("\n")[0], 60)) + "</strong> 상태로 돌아갑니다. " +
+        "(되돌리기도 새 커밋으로 기록되므로, 필요하면 다시 앞으로 되돌릴 수 있습니다.)";
+      el["btn-rollback"].disabled = false;
+      el["btn-rollback"].setAttribute("data-parent-sha", parentSha);
+      el["btn-rollback"].setAttribute("data-head-msg", headCommit.message.split("\n")[0]);
+      el["btn-rollback"].setAttribute("data-parent-msg", parentCommit.message.split("\n")[0]);
+    } catch (e) {
+      el["rollback-hint"].textContent = "최근 커밋 정보를 불러오지 못했습니다: " + (e.message || String(e));
+    }
+  }
+
+  el["btn-rollback"].addEventListener("click", async function () {
+    var parentSha = el["btn-rollback"].getAttribute("data-parent-sha");
+    var headMsg = el["btn-rollback"].getAttribute("data-head-msg");
+    var parentMsg = el["btn-rollback"].getAttribute("data-parent-msg");
+    if (!parentSha) return;
+    var ok = confirm(
+      '"' + headMsg + '" 커밋을 취소하고 "' + parentMsg + '" 상태로 되돌립니다.\n' +
+      "사이트에 반영된 모든 파일(data/quizzes.json, 페이지 HTML 등)이 그 시점 상태로 돌아갑니다.\n계속할까요?"
+    );
+    if (!ok) return;
+
+    el["btn-rollback"].disabled = true;
+    setStatus(el["rollback-status"], "되돌리는 중...", "busy");
+    try {
+      await ghUpdateRef(parentSha, true); // force: true — this is an intentional non-fast-forward move
+      var refreshed = await ghGetFile("data/quizzes.json");
+      state.data = JSON.parse(refreshed.text);
+      state.dataSha = refreshed.sha;
+      setStatus(el["rollback-status"], "✅ 되돌렸습니다. GitHub Pages 반영까지 보통 1분 이내 걸립니다.", "ok");
+      renderAppTable();
+      updateDashboard();
+      loadRollbackInfo();
+    } catch (e) {
+      setStatus(el["rollback-status"], "❌ " + (e.message || String(e)), "err");
+    } finally {
+      el["btn-rollback"].disabled = false;
+    }
+  });
+
   // ---------------------------------------------------------- app table
 
   function renderAppTable() {
     var today = todayISO();
     var q = (el["app-search"].value || "").trim().toLowerCase();
+    var pendingOnly = el["dash-filter-pending"].checked;
     el["app-table"].innerHTML = "";
     state.data.apps
       .filter(function (app) { return !q || app.name.toLowerCase().indexOf(q) !== -1; })
+      .filter(function (app) { return !pendingOnly || !appIsFreshToday(app); })
       .forEach(function (app) {
-        var fresh = app.today && app.today.date === today;
+        var fresh = appIsFreshToday(app);
         var row = document.createElement("button");
         row.type = "button";
         row.className = "app-row";
@@ -300,8 +690,6 @@
 
   el["app-search"].addEventListener("input", function () { if (state.data) renderAppTable(); });
 
-  function escapeText(s) { return QuizTemplates.escapeHtml(s); }
-
   // -------------------------------------------------------------- form
 
   el["btn-new-app"].addEventListener("click", function () { loadAppIntoForm(null); });
@@ -314,7 +702,7 @@
     state.multiRoundApp = isMultiRound ? app : null;
 
     el["new-app-fields"].style.display = isNew ? "" : "none";
-    el["form-title"].textContent = isNew ? "4. 새 퀴즈 앱 추가" : "4. 오늘의 퀴즈 입력 — " + app.name;
+    el["form-title"].textContent = isNew ? "5. 새 퀴즈 앱 추가" : "5. 오늘의 퀴즈 입력 — " + app.name;
 
     var today = (app && app.today) || {};
 
@@ -570,6 +958,37 @@
     el[id].addEventListener("input", updatePreview);
   });
 
+  // -------------------------------------------------------------- validation
+
+  // Returns { errors, warnings } across either the single-round fields or
+  // every round's fields, prefixed with the round label so a person can
+  // tell which round a message is about.
+  function validateForm() {
+    var errors = [], warnings = [];
+    if (state.multiRoundApp) {
+      state.multiRoundApp.roundSchedule.forEach(function (sched, idx) {
+        var v = QuizTemplates.validateQuizContent({
+          question: document.getElementById(roundFieldId(idx, "question")).value,
+          answer: document.getElementById(roundFieldId(idx, "answer")).value,
+          explanation: document.getElementById(roundFieldId(idx, "explanation")).value,
+          imageUrl: document.getElementById(roundFieldId(idx, "image")).value
+        });
+        v.errors.forEach(function (m) { errors.push(sched.label + ": " + m); });
+        v.warnings.forEach(function (m) { warnings.push(sched.label + ": " + m); });
+      });
+    } else {
+      var v2 = QuizTemplates.validateQuizContent({
+        question: el["f-question"].value,
+        answer: el["f-answer"].value,
+        explanation: el["f-explanation"].value,
+        imageUrl: el["f-image"].value
+      });
+      errors = v2.errors;
+      warnings = v2.warnings;
+    }
+    return { errors: errors, warnings: warnings };
+  }
+
   // -------------------------------------------------------------- save
 
   el["btn-save"].addEventListener("click", async function () {
@@ -593,6 +1012,19 @@
     if (!state.multiRoundApp && (!el["f-question"].value.trim() || !el["f-answer"].value.trim())) {
       setStatus(el["save-status"], "문제와 정답은 필수입니다.", "err");
       return;
+    }
+
+    var check = validateForm();
+    if (check.errors.length) {
+      setStatus(el["save-status"], "❌ 저장할 수 없습니다 — " + check.errors.join(" / "), "err");
+      return;
+    }
+    if (check.warnings.length) {
+      var proceed = confirm("저장 전 확인해 주세요:\n\n- " + check.warnings.join("\n- ") + "\n\n그대로 저장할까요?");
+      if (!proceed) {
+        setStatus(el["save-status"], "저장이 취소되었습니다.", "busy");
+        return;
+      }
     }
 
     el["btn-save"].disabled = true;
@@ -639,6 +1071,8 @@
 
       setStatus(el["save-status"], "✅ 저장 완료! GitHub Pages 반영까지 보통 1분 이내 걸립니다.", "ok");
       renderAppTable();
+      updateDashboard();
+      loadRollbackInfo();
       if (isNew) loadAppIntoForm(app.id);
     } catch (e) {
       setStatus(el["save-status"], "❌ " + (e.message || String(e)), "err");

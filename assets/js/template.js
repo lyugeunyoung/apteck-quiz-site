@@ -197,6 +197,86 @@
     );
   }
 
+  /*
+   * Sheet-row -> app.today conversion, shared by scripts/sync-sheet.js
+   * (Node, scheduled auto-sync) and assets/js/admin.js (browser, the "오늘
+   * 시트 전체 불러오기" bulk-import button in admin.html) so a sheet row
+   * produces byte-identical output regardless of which path applied it.
+   */
+  function computeSingleRoundToday(row, today) {
+    var imageUrlRaw = row.image_url || row.image || row.imageurl || "";
+    return {
+      date: today,
+      imageUrl: convertDriveLink(imageUrlRaw),
+      question: row.question || "",
+      choices: [row.choice1, row.choice2, row.choice3, row.choice4].filter(function (c) { return c && c.trim(); }),
+      answer: row.answer || "",
+      explanation: row.explanation || ""
+    };
+  }
+
+  function isSameSingleRoundToday(prev, next) {
+    return !!prev && prev.date === next.date &&
+      prev.question === next.question && prev.answer === next.answer &&
+      prev.explanation === next.explanation && prev.imageUrl === next.imageUrl &&
+      JSON.stringify(prev.choices || []) === JSON.stringify(next.choices);
+  }
+
+  function computeMultiRoundToday(app, matches, today, prevRounds) {
+    return app.roundSchedule.map(function (sched) {
+      var row = null;
+      for (var i = 0; i < matches.length; i++) { if (matches[i].round_time === sched.time) { row = matches[i]; break; } }
+      if (!row) {
+        var kept = (prevRounds || []).filter(function (r) { return r.time === sched.time; })[0];
+        return kept || { time: sched.time, label: sched.label, question: "", imageUrl: "", choices: [], answer: "", explanation: "" };
+      }
+      var imageUrlRaw = row.image_url || row.image || row.imageurl || "";
+      return {
+        time: sched.time,
+        label: sched.label,
+        question: row.question || "",
+        imageUrl: convertDriveLink(imageUrlRaw),
+        choices: [row.choice1, row.choice2, row.choice3, row.choice4].filter(function (c) { return c && c.trim(); }),
+        answer: row.answer || "",
+        explanation: row.explanation || ""
+      };
+    });
+  }
+
+  function isSameMultiRoundToday(prevRounds, nextRounds) {
+    return JSON.stringify(prevRounds || []) === JSON.stringify(nextRounds || []);
+  }
+
+  /*
+   * Save-time content checks (PROMPT.md Phase 3): "errors" block the save
+   * outright (would corrupt the page or break linking); "warnings" are
+   * shown to the person saving but don't block, since e.g. a short
+   * explanation or a literal "<"/">" in a math question can be legitimate.
+   */
+  function validateQuizContent(fields) {
+    var errors = [];
+    var warnings = [];
+    if (!(fields.answer && String(fields.answer).trim())) {
+      errors.push("정답이 비어 있습니다.");
+    }
+    if (fields.imageUrl && String(fields.imageUrl).trim()) {
+      var u = String(fields.imageUrl).trim();
+      if (!/^https?:\/\//i.test(u) && !/^(\.\.\/)*assets\//.test(u)) {
+        errors.push('이미지 주소 형식이 올바르지 않습니다 (http(s):// 로 시작하거나 assets/ 경로여야 함): "' + u + '"');
+      }
+    }
+    if (fields.explanation && String(fields.explanation).trim() && String(fields.explanation).trim().length < 30) {
+      warnings.push("정답 해설이 짧습니다 (30자 미만, 현재 " + String(fields.explanation).trim().length + "자) — 검색엔진 노출에는 좀 더 자세한 설명이 유리합니다.");
+    }
+    if (fields.question && /[<>]/.test(fields.question)) {
+      warnings.push("문제 텍스트에 <, > 문자가 있습니다. 의도한 내용인지 확인해 주세요.");
+    }
+    if (fields.explanation && /[<>]/.test(fields.explanation)) {
+      warnings.push("정답 해설에 <, > 문자가 있습니다. 의도한 내용인지 확인해 주세요.");
+    }
+    return { errors: errors, warnings: warnings };
+  }
+
   function adSlot(label) {
     return (
       '<div class="ad-slot" aria-hidden="true">' +
@@ -860,6 +940,11 @@
     isExternalUrl: isExternalUrl,
     resolveImagePath: resolveImagePath,
     absoluteImageUrl: absoluteImageUrl,
+    computeSingleRoundToday: computeSingleRoundToday,
+    isSameSingleRoundToday: isSameSingleRoundToday,
+    computeMultiRoundToday: computeMultiRoundToday,
+    isSameMultiRoundToday: isSameMultiRoundToday,
+    validateQuizContent: validateQuizContent,
     HISTORY_LIMIT: HISTORY_LIMIT,
     renderIndexPage: renderIndexPage,
     renderAppPage: renderAppPage,

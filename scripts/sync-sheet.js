@@ -121,22 +121,9 @@ function syncSingleRoundApp(app, rows, today, templates) {
   const row = rows.find((r) => templates.sheetAppId(r) === app.id && r.date === today);
   if (!row) return false;
 
-  const imageUrlRaw = row.image_url || row.image || row.imageurl || "";
-  const nextToday = {
-    date: today,
-    imageUrl: templates.convertDriveLink(imageUrlRaw),
-    question: row.question || "",
-    choices: [row.choice1, row.choice2, row.choice3, row.choice4].filter((c) => c && c.trim()),
-    answer: row.answer || "",
-    explanation: row.explanation || ""
-  };
-
+  const nextToday = templates.computeSingleRoundToday(row, today);
   const prev = app.today;
-  const identical = prev && prev.date === today &&
-    prev.question === nextToday.question && prev.answer === nextToday.answer &&
-    prev.explanation === nextToday.explanation && prev.imageUrl === nextToday.imageUrl &&
-    JSON.stringify(prev.choices || []) === JSON.stringify(nextToday.choices);
-  if (identical) return false;
+  if (templates.isSameSingleRoundToday(prev, nextToday)) return false;
 
   // Archive the previous day's Q&A the same way admin.js does on save.
   if (prev && prev.date && prev.date !== today && prev.question) {
@@ -157,26 +144,8 @@ function syncMultiRoundApp(app, rows, today, templates) {
 
   const isToday = app.today && app.today.date === today;
   const prevRounds = isToday ? (app.today.rounds || []) : [];
-
-  const nextRounds = app.roundSchedule.map((sched) => {
-    const row = matches.find((r) => r.round_time === sched.time);
-    if (!row) {
-      // No sheet row for this slot today — keep whatever is already saved
-      // for today (e.g. filled by hand earlier), or blank on a fresh day.
-      return prevRounds.find((r) => r.time === sched.time) ||
-        { time: sched.time, label: sched.label, question: "", imageUrl: "", choices: [], answer: "", explanation: "" };
-    }
-    const imageUrlRaw = row.image_url || row.image || row.imageurl || "";
-    return {
-      time: sched.time,
-      label: sched.label,
-      question: row.question || "",
-      imageUrl: templates.convertDriveLink(imageUrlRaw),
-      choices: [row.choice1, row.choice2, row.choice3, row.choice4].filter((c) => c && c.trim()),
-      answer: row.answer || "",
-      explanation: row.explanation || ""
-    };
-  });
+  const nextRounds = templates.computeMultiRoundToday(app, matches, today, prevRounds);
+  if (isToday && templates.isSameMultiRoundToday(prevRounds, nextRounds)) return false;
 
   if (app.today && app.today.date && app.today.date !== today && app.today.rounds && app.today.rounds.length) {
     app.history = app.history || [];
