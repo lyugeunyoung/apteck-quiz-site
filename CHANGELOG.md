@@ -3,6 +3,31 @@
 `PROMPT.md` 재설계 작업의 Phase별 변경 요약. 상세 근거는 `docs/DECISIONS.md`, 초기 상태는
 `docs/AS-IS.md` 참고.
 
+## Phase 6 — 애드센스 & 검증 (2026-09-10)
+
+- **애드센스 구조 마련(실제 ID는 비워둠)**: `site.adsense = { pubId, slots: { top, inArticle, bottom, middle } }`
+  구조를 신설하고 `adSlot()`이 값이 채워졌을 때만 실제 `<ins class="adsbygoogle">`를 삽입하도록 구현.
+  PROMPT.md에 적힌 게시자ID/슬롯4개는 **사용자가 "아직 비워두세요"로 확답**해 실제 값은 반영하지 않음
+  (애드센스 계정 정지 리스크 — 세션 중 재확인 완료). 자동광고는 기존 결정([DECISIONS.md](docs/DECISIONS.md)
+  #5)대로 계속 미사용.
+- **필수 정적 페이지 신설**: `terms.html`(이용약관), `about.html`(E-E-A-T용 사이트 소개). 푸터 링크를
+  `site.baseUrl` 기준 절대경로로 통일하는 과정에서 **기존 개인정보처리방침 링크가 GitHub Pages
+  서브패스를 무시하고 도메인 루트로 튀는 실제 버그(`/privacy.html`)를 발견해 함께 수정**.
+- **`scripts/verify.js` 신설(`npm test`)**: PROMPT.md §4.1의 10개 항목을 실제 빌드 산출물에 대해
+  자동 확인. 네이버/구글 인증 메타처럼 아직 값 자체가 없어 검증 불가능한 항목은 거짓 PASS 대신 SKIP으로
+  투명하게 표시. 구현 과정에서 `<h1>`만 있고 `<h2>`가 전혀 없던 실제 정보구조 문제를 발견해
+  `.section__label`을 `<div>`에서 `<h2>`로 전환(시각적 변화 없이 heading 위계 확보).
+  **10/10 통과**(1개 SKIP 제외).
+- **`docs/QA-REPORT.md` 신설**: PROMPT.md §4.2의 S1~S10 시나리오를 각 5회씩 실제 코드로 재현·기록.
+  이 과정에서 발견해 수정한 실제 버그 3건: (1) `sync-sheet.js`의 날짜 검증이 "2026-13-99" 같은
+  존재하지 않는 날짜를 자릿수만 보고 통과시키던 문제, (2) `.chip`/`.fav-star`/`.btn--small`/
+  `.app-link-pill` 4개 UI 요소의 터치 타깃이 44px 미만이던 문제, (3) 개별 저장이 5개 커밋으로
+  쪼개져 있어 롤백 1클릭이 저장 전체를 온전히 취소하지 못하던 구조적 문제 — Phase 3의 원자적 커밋
+  경로(`commitFilesAtomically`)를 개별 저장에도 적용해 모든 저장이 항상 커밋 1개가 되도록 통일.
+- **README 갱신**: 애드센스 연결 안내를 새 `site.adsense` 구조에 맞게, 파일 구조 목록을 Phase 2~6에서
+  추가된 파일(WebP 자산 경로, `llms.txt`, `scripts/indexnow.js`, `scripts/verify.js`, `docs/*.md` 등)
+  까지 반영하도록 갱신.
+
 ## Phase 5 — 네이버 대책 (2026-09-10)
 
 - **사이트 전역 설정 UI**: `admin.html`에 "4. 사이트 전역 설정" 카드 신설 — 네이버 서치어드바이저/구글

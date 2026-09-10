@@ -5,7 +5,8 @@
   "scripts": {
     "build": "node scripts/build.js",
     "sync-sheet": "node scripts/sync-sheet.js",
-    "fetch-images": "node scripts/fetch-images.js"
+    "fetch-images": "node scripts/fetch-images.js",
+    "test": "node scripts/verify.js"
   },
   "dependencies": {
     "sharp": "^0.33.5"

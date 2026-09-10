@@ -1087,31 +1087,24 @@
       var dateStr = app.today.date;
       var commitMsg = (isNew ? "앱테크: " : "퀴즈 갱신: ") + app.name + " (" + dateStr + ")";
 
-      setStatus(el["save-status"], "data/quizzes.json 저장 중...", "busy");
-      state.dataSha = await ghPutFile("data/quizzes.json", JSON.stringify(state.data, null, 2), state.dataSha, commitMsg);
+      // data/quizzes.json + 해당 페이지 + index/sitemap/feed를 5번의 개별
+      // 커밋(ghPutFile 5회)이 아니라 한 번의 원자적 커밋으로 묶는다 — 이래야
+      // "직전 게시 상태로 되돌리기" 버튼 한 번으로 이 저장 전체가 정확히
+      // 취소된다(예전처럼 5개 커밋 중 마지막 1개만 되돌아가 파일 간
+      // 불일치가 생기는 문제 방지). bulk publish/사이트 설정 저장과 동일한
+      // 경로(commitFilesAtomically).
+      setStatus(el["save-status"], "data/quizzes.json + 관련 페이지를 한 커밋으로 저장 중...", "busy");
+      var files = { "data/quizzes.json": JSON.stringify(state.data, null, 2) };
+      files["pages/" + app.page] = QuizTemplates.renderAppPage(app, state.data);
+      files["index.html"] = QuizTemplates.renderIndexPage(state.data);
+      files["sitemap.xml"] = QuizTemplates.renderSitemap(state.data);
+      files["feed.xml"] = QuizTemplates.renderFeed(state.data);
+      await commitFilesAtomically(files, commitMsg);
 
-      setStatus(el["save-status"], "퀴즈 상세 페이지(pages/" + app.page + ") 저장 중...", "busy");
-      var pagePath = "pages/" + app.page;
-      var existingPage = await ghGetFile(pagePath);
-      var pageHtml = QuizTemplates.renderAppPage(app, state.data);
-      await ghPutFile(pagePath, pageHtml, existingPage ? existingPage.sha : null, commitMsg);
+      var refreshed = await ghGetFile("data/quizzes.json");
+      state.dataSha = refreshed.sha;
 
-      setStatus(el["save-status"], "홈 화면(index.html) 저장 중...", "busy");
-      var existingIndex = await ghGetFile("index.html");
-      var indexHtml = QuizTemplates.renderIndexPage(state.data);
-      await ghPutFile("index.html", indexHtml, existingIndex ? existingIndex.sha : null, commitMsg);
-
-      setStatus(el["save-status"], "sitemap.xml 저장 중...", "busy");
-      var existingSitemap = await ghGetFile("sitemap.xml");
-      var sitemapXml = QuizTemplates.renderSitemap(state.data);
-      await ghPutFile("sitemap.xml", sitemapXml, existingSitemap ? existingSitemap.sha : null, commitMsg);
-
-      setStatus(el["save-status"], "feed.xml 저장 중...", "busy");
-      var existingFeed = await ghGetFile("feed.xml");
-      var feedXml = QuizTemplates.renderFeed(state.data);
-      await ghPutFile("feed.xml", feedXml, existingFeed ? existingFeed.sha : null, commitMsg);
-
-      setStatus(el["save-status"], "✅ 저장 완료! GitHub Pages 반영까지 보통 1분 이내 걸립니다.", "ok");
+      setStatus(el["save-status"], "✅ 저장 완료(커밋 1회)! GitHub Pages 반영까지 보통 1분 이내 걸립니다.", "ok");
       renderAppTable();
       updateDashboard();
       loadRollbackInfo();

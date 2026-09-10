@@ -172,6 +172,9 @@ ul { margin: 0; padding: 0; list-style: none; }
 .chip-row::-webkit-scrollbar { display: none; }
 .chip {
   flex: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px; /* 터치 타깃 44px 이상 (S8 QA) */
   font-size: 13.5px;
   font-weight: 600;
   padding: 8px 14px;
@@ -571,8 +574,8 @@ ul { margin: 0; padding: 0; list-style: none; }
 /* ---- favorite star ---- */
 .fav-star {
   flex: none;
-  width: 34px;
-  height: 34px;
+  width: 44px; /* 터치 타깃 44px 이상 (S8 QA) */
+  height: 44px;
   display: grid;
   place-items: center;
   border: none;
@@ -816,6 +819,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 .app-link-pill {
   display: inline-flex;
   align-items: center;
+  min-height: 44px; /* 터치 타깃 44px 이상 (S8 QA) */
   gap: 5px;
   font-size: 12px;
   font-weight: 600;
@@ -924,7 +928,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 .btn--primary { background: var(--accent); color: var(--accent-ink); width: 100%; padding: 14px; font-size: 15px; }
 .btn--primary:disabled { opacity: 0.5; cursor: not-allowed; }
 .btn--ghost { background: var(--surface); border-color: var(--border-strong); color: var(--ink); }
-.btn--small { padding: 8px 12px; font-size: 13px; }
+.btn--small { padding: 8px 12px; font-size: 13px; min-height: 44px; } /* 터치 타깃 44px 이상 (S8 QA) */
 
 .status-line {
   margin-top: 12px;

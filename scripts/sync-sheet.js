@@ -70,11 +70,21 @@ async function main() {
  * 20 apps' good rows either — so this checks everything up front and only
  * proceeds if the whole sheet is clean.
  */
+// "2026-13-99" passes a digit-shape regex like /^\d{4}-\d{2}-\d{2}$/ but
+// isn't a real date (month 13, day 99) — round-trip through Date to catch
+// out-of-range month/day, not just wrong digit counts.
+function isValidCalendarDate(str) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(str);
+  if (!m) return false;
+  const year = parseInt(m[1], 10), month = parseInt(m[2], 10), day = parseInt(m[3], 10);
+  const d = new Date(year, month - 1, day);
+  return d.getFullYear() === year && d.getMonth() === month - 1 && d.getDate() === day;
+}
+
 function validateRows(rows, apps, today, templates) {
   const errors = [];
   const appIds = new Set(apps.map((a) => a.id));
   const appById = Object.fromEntries(apps.map((a) => [a.id, a]));
-  const dateRe = /^\d{4}-\d{2}-\d{2}$/;
   const timeRe = /^([01]\d|2[0-3]):[0-5]\d$/;
 
   rows.forEach((row, idx) => {
@@ -90,8 +100,8 @@ function validateRows(rows, apps, today, templates) {
       errors.push(label + ": data/quizzes.json에 없는 app_id입니다 (오타 확인).");
       return;
     }
-    if (row.date && !dateRe.test(row.date)) {
-      errors.push(label + ": date 형식이 YYYY-MM-DD가 아닙니다 (\"" + row.date + "\").");
+    if (row.date && !isValidCalendarDate(row.date)) {
+      errors.push(label + ": date가 YYYY-MM-DD 형식의 실제 날짜가 아닙니다 (\"" + row.date + "\").");
     }
     if (row.round_time && !timeRe.test(row.round_time)) {
       errors.push(label + ": round_time 형식이 HH:MM이 아닙니다 (\"" + row.round_time + "\").");

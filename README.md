@@ -268,12 +268,15 @@ GitHub Pages가 자체 CDN으로 서빙하므로 속도·안정성·SEO 모두 �
 1. 사이트가 GitHub Pages에 실제로 공개된 뒤, 콘텐츠(각 퀴즈 페이지)가 최소 여러 개 이상 쌓이고 방문 트래픽이 생기면
    [Google AdSense](https://adsense.google.com)에 본인 계정으로 가입 신청합니다.
 2. 승인 심사 중 사이트 소유권 확인을 요구하면, AdSense가 안내하는 메타태그 또는 `ads.txt` 방식으로 인증합니다.
-3. 승인되면 발급받는 **게시자 ID**(`pub-XXXXXXXXXXXXXXXX`)를 두 곳에 반영하세요.
+3. 승인되면 발급받는 **게시자 ID**(`pub-XXXXXXXXXXXXXXXX`)와 **광고 단위 슬롯 ID**를 반영하세요.
    - `ads.txt` 파일의 `pub-0000000000000000` 부분을 교체
-   - `data/quizzes.json`의 `"site.adsensePubId"` 값에 입력 후 `node scripts/build.js` 재실행 → 커밋
-     (이 값이 채워지면 모든 페이지 `<head>`에 애드센스 로더 스크립트가 자동으로 들어갑니다.)
-4. 각 페이지의 `<div class="ad-slot">` 자리에 애드센스에서 발급한 `<ins class="adsbygoogle">` 광고 유닛 코드를 넣고
-   싶다면 `assets/js/template.js`의 `adSlot()` 함수를 수정하세요. (현재는 광고 자리 표시자만 있습니다.)
+   - `data/quizzes.json`의 `site.adsense.pubId`에 게시자 ID를, `site.adsense.slots.top` /
+     `slots.inArticle` / `slots.bottom`에 각 위치별 광고 단위 슬롯 ID를 입력 후
+     `node scripts/build.js` 재실행 → 커밋. 이 값들이 채워지면 모든 페이지 `<head>`에 로더 스크립트가,
+     각 `<div class="ad-slot">` 자리에는 실제 `<ins class="adsbygoogle">` 태그가 자동으로 들어갑니다
+     (`slots.middle`은 4번째 예비 슬롯 — 현재 어느 위치에도 연결돼 있지 않습니다).
+   - 값이 비어 있는 동안은 항상 안전한 자리 표시자만 렌더링되므로, 승인 전에 실수로 광고가 뜨는 일은
+     없습니다.
 
 **Claude 아티팩트로 미리 본 데모 링크는 애드센스 광고가 뜨지 않습니다.** Claude의 웹페이지 미리보기는
 보안 정책상 외부 광고 스크립트 로딩을 차단하기 때문입니다. 실제 수익화는 반드시 이 저장소를 GitHub Pages(또는
@@ -287,24 +290,30 @@ Netlify/Vercel 등)에 올린 뒤에만 가능합니다.
 apteck-quiz-site/
 ├── index.html                 # 홈 (앱 목록) — admin.html 저장 시 자동 재생성
 ├── admin.html                  # 관리자 페이지
-├── privacy.html                 # 개인정보처리방침 (애드센스 심사에 필요)
+├── privacy.html / terms.html / about.html  # 개인정보처리방침 / 이용약관 / 사이트 소개(E-E-A-T)
 ├── manifest.json                # PWA 매니페스트 (홈 화면 추가)
 ├── sw.js                         # 서비스워커 (정적 자원 캐시)
 ├── ads.txt                       # 애드센스 게시자 인증 파일
-├── robots.txt / sitemap.xml / feed.xml   # 검색엔진·RSS용 — admin.html 저장 시 자동 재생성
+├── robots.txt / sitemap.xml / feed.xml / llms.txt   # 검색엔진·RSS·LLM 크롤러용 — 저장/빌드 시 자동 재생성
 ├── data/quizzes.json              # 전체 콘텐츠 원본 데이터 (source of truth, 21개 앱 + 지난 정답 이력)
 ├── pages/*.html                   # 앱별 퀴즈 상세 페이지(21개) — admin.html 저장 시 자동 재생성
 ├── assets/css/style.css           # 디자인 시스템
-├── assets/img/                    # 아이콘, 기본 OG 이미지, (선택) 직접 올린 문제 이미지
+├── assets/img/                    # 아이콘, 기본 OG 이미지
+├── assets/img/quiz/{app-id}/*.webp  # Phase 2 이미지 자산화 결과물 (scripts/fetch-images.js가 생성)
 ├── assets/js/template.js          # 페이지 HTML을 만드는 공용 렌더러 (Node·브라우저 겸용)
-├── assets/js/admin.js             # 관리자 페이지 로직 (GitHub API 연동, 드라이브 링크 변환 등)
+├── assets/js/admin.js             # 관리자 페이지 로직 (GitHub API 연동, 일괄 게시, 롤백 등)
+├── assets/js/freshness.js         # "오늘 갱신됨" 배지·헤더 날짜를 방문자 브라우저에서 실시간 계산
 ├── assets/js/site.js              # 홈 화면 카테고리 필터 + 검색 + 즐겨찾기 필터
-├── assets/js/quiz.js              # 정답 펼치기, 공유 버튼, 목차 스크롤 스파이
+├── assets/js/quiz.js              # 정답 펼치기 스무스스크롤, 공유 버튼, 목차 스크롤 스파이
 ├── assets/js/favorites.js         # 즐겨찾기(★) localStorage 로직 — 홈/상세 공통
 ├── assets/js/pwa.js               # 홈 화면 추가 배너, 서비스워커 등록
-├── scripts/build.js               # data/quizzes.json → 전체 HTML/사이트맵/RSS 재생성 (수동 실행용)
+├── scripts/build.js               # data/quizzes.json → 전체 HTML/사이트맵/RSS/llms.txt 재생성 (수동 실행용)
 ├── scripts/sync-sheet.js          # 구글 시트 → data/quizzes.json 자동 반영 (GitHub Actions가 실행)
-└── .github/workflows/sync-sheet.yml  # 위 스크립트를 약 20분마다 자동 실행하는 워크플로
+├── scripts/fetch-images.js        # 드라이브 이미지 → WebP 자산화 (GitHub Actions가 실행)
+├── scripts/indexnow.js            # Bing/Yandex에 변경 알림 (site.indexNowKey가 있을 때만)
+├── scripts/verify.js              # Phase 6 자동 검증 10개 항목 (`npm test`)
+├── docs/AS-IS.md / DECISIONS.md / QA-REPORT.md / NAVER-CHECKLIST.md  # 설계 기록·의사결정·QA 결과·운영 체크리스트
+└── .github/workflows/sync-sheet.yml  # 위 스크립트들을 약 20분마다 자동 실행하는 워크플로
 ```
 
 `data/quizzes.json`을 직접 텍스트 편집기로 고쳐도 되며, 이 경우 `node scripts/build.js`를 실행해

@@ -3,15 +3,22 @@
     "name": "오늘의 앱테크",
     "tagline": "매일 아침, 모든 금융앱 퀴즈 정답을 한 곳에서",
     "baseUrl": "https://lyugeunyoung.github.io/apteck-quiz-site",
-    "adsensePubId": "",
     "googleSiteVerification": "",
     "naverSiteVerification": "",
     "ogImage": "assets/img/og-default.png",
-    "privacyPath": "/privacy.html",
     "sheetUrl": "",
     "exposeAnswerInMeta": false,
     "contactEmail": "",
-    "indexNowKey": "c5f1f818e3ea4793be417d35401a0835"
+    "indexNowKey": "c5f1f818e3ea4793be417d35401a0835",
+    "adsense": {
+      "pubId": "",
+      "slots": {
+        "top": "",
+        "inArticle": "",
+        "bottom": "",
+        "middle": ""
+      }
+    }
   },
   "apps": [
     {

@@ -277,10 +277,32 @@
     return { errors: errors, warnings: warnings };
   }
 
-  function adSlot(label) {
+  // slotKey: "top" | "inArticle" | "bottom" | "middle" — matches
+  // data.site.adsense.slots. PROMPT.md Phase 6 defines 4 slot IDs total for
+  // the WHOLE site (not per page) — the same "top" ad unit ID is reused at
+  // the homepage top AND at every app page's block A, exactly like a real
+  // AdSense placement normally works (one ad unit id = one position,
+  // instantiated wherever that position appears). "middle" is reserved for
+  // a future 4th placement — nothing currently renders there, since the
+  // site only has 3 distinct ad positions today (top/inArticle/bottom).
+  // Until data.site.adsense.pubId + the matching slot id are both filled
+  // in, this stays a harmless placeholder — no <ins> is emitted, so there
+  // is nothing that could misfire and put a real AdSense account at risk.
+  function adSlot(slotKey, label, adsense) {
+    var pubId = adsense && adsense.pubId;
+    var slotId = adsense && adsense.slots && adsense.slots[slotKey];
+    if (pubId && slotId) {
+      return (
+        '<div class="ad-slot ad-slot--live" aria-hidden="true">' +
+        '<ins class="adsbygoogle" style="display:block" data-ad-client="' + escapeHtml(pubId) +
+        '" data-ad-slot="' + escapeHtml(slotId) + '" data-ad-format="auto" data-full-width-responsive="true"></ins>' +
+        "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>" +
+        "</div>"
+      );
+    }
     return (
       '<div class="ad-slot" aria-hidden="true">' +
-      "<!-- AdSense ad unit: replace this div's contents with your <ins class=\"adsbygoogle\"> tag once approved. See README \"광고 붙이기\". -->" +
+      "<!-- AdSense ad unit: data.site.adsense.pubId / slots." + slotKey + " 값을 채우면 이 자리에 실제 <ins class=\"adsbygoogle\"> 태그가 자동 삽입됩니다. README \"광고 붙이기\" 참고. -->" +
       escapeHtml(label) +
       "</div>"
     );
@@ -294,7 +316,7 @@
       ? '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' +
         escapeHtml(opts.adsensePubId) +
         '" crossorigin="anonymous"></script>'
-      : "<!-- 애드센스 승인 후 data/quizzes.json 의 site.adsensePubId 값을 채우면 이 위치에 로더 스크립트가 자동 삽입됩니다. -->";
+      : "<!-- 애드센스 승인 후 data/quizzes.json 의 site.adsense.pubId 값을 채우면 이 위치에 로더 스크립트가 자동 삽입됩니다. -->";
     var verifyTags = "";
     if (opts.googleSiteVerification) {
       verifyTags += '<meta name="google-site-verification" content="' + escapeHtml(opts.googleSiteVerification) + '">\n';
@@ -341,12 +363,20 @@
     var contactLine = site.contactEmail
       ? '<p>문의: <a href="mailto:' + escapeHtml(site.contactEmail) + '">' + escapeHtml(site.contactEmail) + "</a></p>"
       : "";
+    // 도메인 루트가 아니라 "baseUrl/서브패스"에서 서빙되므로("/privacy.html" 같은
+    // 루트-절대경로는 서브패스를 무시하고 도메인 루트로 튀는 404 링크가 된다),
+    // 항상 site.baseUrl을 붙인 완전한 절대경로를 쓴다 — index.html이든
+    // pages/*.html이든 깊이에 상관없이 항상 올바른 주소가 된다.
+    var legalLinks = ["privacy.html", "terms.html", "about.html"].map(function (p) {
+      var label = { "privacy.html": "개인정보처리방침", "terms.html": "이용약관", "about.html": "사이트 소개" }[p];
+      return '<a href="' + escapeHtml(site.baseUrl + "/" + p) + '">' + label + "</a>";
+    }).join(" · ");
     return (
       '<footer class="site-footer">' +
       "<p>" + escapeHtml(site.name) + " · 본 사이트는 각 앱의 이벤트/퀴즈 정보를 정리해 안내하는 개인 정보 제공 사이트이며, 카카오·토스·신한·KB·NH·하나·케이뱅크 등 각 브랜드와 무관합니다.</p>" +
       "<p>실제 참여 가능 여부, 지급 조건, 회차 시간은 각 앱 화면을 최종 기준으로 확인해 주세요. 문제·정답은 변경될 수 있습니다.</p>" +
       contactLine +
-      '<p><a href="' + (site.privacyPath || "/privacy.html") + '">개인정보처리방침</a></p>' +
+      "<p>" + legalLinks + "</p>" +
       "</footer>"
     );
   }
@@ -470,7 +500,7 @@
         keywords: apps.slice(0, 12).map(function (a) { return a.name + " 정답"; }).join(", "),
         canonical: site.baseUrl + "/",
         siteName: site.name,
-        adsensePubId: site.adsensePubId,
+        adsensePubId: site.adsense && site.adsense.pubId,
         cssPath: "assets/css/style.css",
         basePrefix: "",
         ogImage: ogImage,
@@ -487,12 +517,12 @@
       '<div class="search-box"><input type="search" id="search-input" placeholder="앱 이름으로 검색 (예: 토스, 카카오뱅크)" aria-label="퀴즈 앱 검색"></div>' +
       "</div>" +
       '<nav class="chip-row shell" aria-label="카테고리 필터">' + chips + "</nav>" +
-      adSlot("광고 영역 (상단)") +
+      adSlot("top", "광고 영역 (상단)", site.adsense) +
       '<div class="card-list shell" id="card-list" style="padding-left:0;padding-right:0;">' +
       (cards || '<p class="empty-state">아직 등록된 퀴즈가 없습니다. 관리자 페이지에서 첫 퀴즈를 추가해 주세요.</p>') +
       '<p class="empty-state" id="no-results" hidden>검색 결과가 없습니다.</p>' +
       "</div>" +
-      adSlot("광고 영역 (하단)") +
+      adSlot("bottom", "광고 영역 (하단)", site.adsense) +
       "</main>" +
       footerBlock(site) +
       [jsonLdWebSite, jsonLdOrganization, jsonLdItemList].map(function (obj) {
@@ -811,29 +841,29 @@
         '<nav class="toc shell" aria-label="목차">' +
         '<a href="#rounds">1.문제/정답</a><a href="#howto">2.참여방법</a><a href="#archive">3.지난정답</a><a href="#faq">4.FAQ</a><a href="#related">5.관련퀴즈</a>' +
         "</nav>" +
-        adSlot("광고 영역 A (정답 요약 아래)") +
+        adSlot("top", "광고 영역 A (정답 요약 아래)", site.adsense) +
         '<section class="section shell" id="rounds">' +
-        '<div class="section__label"><span class="n">01</span>' + escapeHtml(app.name) + " 회차별 문제와 정답</div>" +
+        '<h2 class="section__label"><span class="n">01</span>' + escapeHtml(app.name) + " 회차별 문제와 정답</h2>" +
         roundsMerged.map(function (r) { return renderRoundBlock(app, r); }).join('<div style="height:14px;"></div>') +
         "</section>" +
-        adSlot("광고 영역 B (본문 중간)") +
+        adSlot("inArticle", "광고 영역 B (본문 중간)", site.adsense) +
         '<section class="section shell" id="howto" style="padding-top:0;">' +
-        '<div class="section__label"><span class="n">02</span>참여 방법</div>' +
+        '<h2 class="section__label"><span class="n">02</span>참여 방법</h2>' +
         '<div class="panel" style="text-align:center;">' +
         '<a class="cta-button" href="' + escapeHtml(app.appDeeplink || "#") + '">' + escapeHtml(app.name) + " 참여하러 가기 →</a>" +
         '<p class="path-steps">' + escapeHtml(app.participatePath || "") + "</p>" +
         renderHowtoTable(app) +
         "</div></section>" +
         '<section class="section shell" id="archive" style="padding-top:0;">' +
-        '<div class="section__label"><span class="n">03</span>지난 정답 모음</div>' +
+        '<h2 class="section__label"><span class="n">03</span>지난 정답 모음</h2>' +
         archiveSectionHTML(app) +
         "</section>" +
         '<section class="section shell" id="faq" style="padding-top:0;">' +
-        '<div class="section__label"><span class="n">04</span>자주 묻는 질문</div>' +
+        '<h2 class="section__label"><span class="n">04</span>자주 묻는 질문</h2>' +
         renderFaqSection(faqItems) +
         "</section>" +
         '<section class="section shell" id="related" style="padding-top:0;">' +
-        '<div class="section__label"><span class="n">05</span>함께 보면 좋은 앱테크</div>' +
+        '<h2 class="section__label"><span class="n">05</span>함께 보면 좋은 앱테크</h2>' +
         '<div class="related-list">' + relatedHTML + "</div>" +
         renderAllAppsGrid(apps, app.id, "") +
         "</section>";
@@ -842,13 +872,13 @@
         '<nav class="toc shell" aria-label="목차">' +
         '<a href="#question">1.문제</a><a href="#answer">2.해설</a><a href="#howto">3.참여방법</a><a href="#archive">4.지난정답</a><a href="#faq">5.FAQ</a><a href="#related">6.관련퀴즈</a>' +
         "</nav>" +
-        adSlot("광고 영역 A (정답 요약 아래)") +
+        adSlot("top", "광고 영역 A (정답 요약 아래)", site.adsense) +
         '<section class="section shell" id="question">' +
-        '<div class="section__label"><span class="n">01</span>' + escapeHtml(app.name) + " 문제</div>" +
+        '<h2 class="section__label"><span class="n">01</span>' + escapeHtml(app.name) + " 문제</h2>" +
         '<div class="panel">' + imageHTML + '<p class="q-text">' + nl2p(today.question || "아직 등록된 문제가 없습니다. 관리자 페이지에서 오늘의 문제를 입력해 주세요.") + "</p>" + choicesHTML + "</div>" +
         "</section>" +
         '<section class="section shell" id="answer" style="padding-top:0;">' +
-        '<div class="section__label"><span class="n">02</span>정답 해설</div>' +
+        '<h2 class="section__label"><span class="n">02</span>정답 해설</h2>' +
         "<details class=\"reveal\">" +
         "<summary class=\"reveal__button\">정답과 자세한 해설 보기</summary>" +
         '<div class="reveal__content">' +
@@ -856,24 +886,24 @@
         '<p class="explain-text">' + nl2p(today.explanation || "해설이 아직 등록되지 않았습니다.") + "</p>" +
         "</div></details>" +
         "</section>" +
-        adSlot("광고 영역 B (본문 중간)") +
+        adSlot("inArticle", "광고 영역 B (본문 중간)", site.adsense) +
         '<section class="section shell" id="howto" style="padding-top:0;">' +
-        '<div class="section__label"><span class="n">03</span>참여 방법</div>' +
+        '<h2 class="section__label"><span class="n">03</span>참여 방법</h2>' +
         '<div class="panel" style="text-align:center;">' +
         '<a class="cta-button" href="' + escapeHtml(app.appDeeplink || "#") + '">' + escapeHtml(app.name) + " 참여하러 가기 →</a>" +
         '<p class="path-steps">' + escapeHtml(app.participatePath || "") + "</p>" +
         renderHowtoTable(app) +
         "</div></section>" +
         '<section class="section shell" id="archive" style="padding-top:0;">' +
-        '<div class="section__label"><span class="n">04</span>지난 정답 모음</div>' +
+        '<h2 class="section__label"><span class="n">04</span>지난 정답 모음</h2>' +
         archiveSectionHTML(app) +
         "</section>" +
         '<section class="section shell" id="faq" style="padding-top:0;">' +
-        '<div class="section__label"><span class="n">05</span>자주 묻는 질문</div>' +
+        '<h2 class="section__label"><span class="n">05</span>자주 묻는 질문</h2>' +
         renderFaqSection(faqItems) +
         "</section>" +
         '<section class="section shell" id="related" style="padding-top:0;">' +
-        '<div class="section__label"><span class="n">06</span>함께 보면 좋은 앱테크</div>' +
+        '<h2 class="section__label"><span class="n">06</span>함께 보면 좋은 앱테크</h2>' +
         '<div class="related-list">' + relatedHTML + "</div>" +
         renderAllAppsGrid(apps, app.id, "") +
         "</section>";
@@ -887,7 +917,7 @@
         keywords: keywords,
         canonical: canonical,
         siteName: site.name,
-        adsensePubId: site.adsensePubId,
+        adsensePubId: site.adsense && site.adsense.pubId,
         cssPath: "../assets/css/style.css",
         basePrefix: "../",
         ogImage: ogImage,
@@ -902,7 +932,7 @@
       heroHTML +
       summaryHTML +
       bodyHTML +
-      adSlot("광고 영역 C (하단 Multiplex)") +
+      adSlot("bottom", "광고 영역 C (하단 Multiplex)", site.adsense) +
       "</main>" +
       footerBlock(site) +
       jsonLd.map(function (obj) { return '<script type="application/ld+json">' + JSON.stringify(obj) + "</script>\n"; }).join("") +
