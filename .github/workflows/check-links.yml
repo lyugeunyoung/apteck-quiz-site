@@ -1,0 +1,26 @@
+name: Weekly Link Health Check
+
+# 참여 딥링크와 아직 WebP로 자산화되지 않은 외부 이미지 URL이 여전히
+# 정상 응답하는지 주 1회 확인한다(PROMPT.md Phase 7 "링크 헬스체크").
+# 매주 월요일 09:00 KST(=일요일 00:00 UTC)에 실행.
+on:
+  schedule:
+    - cron: "0 0 * * 1"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: 딥링크 · 이미지 URL 응답 확인 + 이슈 자동 관리
+        run: node scripts/check-links.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

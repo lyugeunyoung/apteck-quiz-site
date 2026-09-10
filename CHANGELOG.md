@@ -3,6 +3,22 @@
 `PROMPT.md` 재설계 작업의 Phase별 변경 요약. 상세 근거는 `docs/DECISIONS.md`, 초기 상태는
 `docs/AS-IS.md` 참고.
 
+## Phase 7 — 운영 자동화 & 모니터링 (2026-09-10)
+
+- **미갱신 감시**: `.github/workflows/check-freshness.yml`(매일 22시 KST) + `scripts/check-freshness.js` —
+  그날 데이터가 없는(회차 앱은 모든 회차가 안 채워진) 앱을 찾아 GitHub Issue를 자동 생성. 이미 열려있는
+  이슈가 있으면 내용만 갱신(중복 생성 없음), 전부 채워지면 다음 실행 때 자동으로 닫힘.
+- **주간 링크 헬스체크**: `.github/workflows/check-links.yml`(매주 월요일 09시 KST) +
+  `scripts/check-links.js` — 참여 딥링크와 아직 WebP로 자산화되지 않은 외부 이미지 URL의 응답 상태를
+  확인해 문제가 있으면 이슈로 알림(저장소에 이미 커밋된 WebP는 확인 대상에서 제외 — 죽을 링크가 아니므로).
+- **`scripts/gh-issue.js` 신설**: 두 체크 스크립트가 공유하는 "찾아서 갱신, 없으면 생성, 해소되면
+  자동으로 닫기" 로직. GitHub Issues API 모의로 생성/갱신/닫기/재오픈/무동작 5가지 경로를 실제 실행해
+  검증.
+- **README 9번 섹션 정정**: Phase 2에서 이미 없앤 "날짜만 바뀌어도 매일 자동 커밋이 생길 수 있다"는
+  낡은 안내 문구를 제거하고, `git pull --rebase`·`npm test` 사용을 권장하도록 갱신. 세 자동화
+  워크플로(시트 동기화/미갱신 감시/링크 헬스체크)의 주기를 표로 정리.
+- 최종 Definition of Done 체크리스트는 [`docs/QA-REPORT.md`](docs/QA-REPORT.md) 4번 항목 참고.
+
 ## Phase 6 — 애드센스 & 검증 (2026-09-10)
 
 - **애드센스 구조 마련(실제 ID는 비워둠)**: `site.adsense = { pubId, slots: { top, inArticle, bottom, middle } }`

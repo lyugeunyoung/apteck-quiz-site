@@ -1,0 +1,28 @@
+name: Check Daily Freshness
+
+# 그날의 마지막 회차(20시 KST)가 끝난 뒤 실행되도록 22시 KST(=13시 UTC)에
+# 한 번 돈다. 오늘 데이터가 없는 앱이 있으면 GitHub Issue를 만들거나(이미
+# 열려있으면) 내용을 갱신하고, 모두 갱신됐으면 열려있는 이슈를 자동으로
+# 닫는다 — 관리자가 매일 사이트를 직접 열어보지 않아도 빠뜨린 앱을 알 수
+# 있게 하는 것이 목적(PROMPT.md Phase 7).
+on:
+  schedule:
+    - cron: "0 13 * * *" # 22:00 KST
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: 오늘 갱신되지 않은 앱 확인 + 이슈 자동 관리
+        run: node scripts/check-freshness.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
