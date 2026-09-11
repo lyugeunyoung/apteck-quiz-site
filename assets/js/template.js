@@ -111,11 +111,17 @@
     return seen;
   }
 
-  function pickRelated(app, allApps, n) {
-    var others = allApps.filter(function (a) { return a.id !== app.id; });
-    var sameCat = others.filter(function (a) { return a.category === app.category; });
-    var rest = others.filter(function (a) { return a.category !== app.category; });
-    return sameCat.concat(rest).slice(0, n || 3);
+  // "오늘의 픽" — 카테고리 기반으로 페이지마다 다른 추천을 계산하던 이전
+  // 방식(가변 목록) 대신, 모든 상세 페이지가 같은 앱 목록을 보여주도록 배열
+  // 앞쪽 n+1개를 고정 후보 풀로 쓴다. 지금 보고 있는 페이지 자신만 그 풀에서
+  // 제외해 죽은 자기참조 링크를 피하되, 그 외에는 어느 페이지에서 봐도
+  // 사실상 항상 같은 목록이 뜬다(참고: bookshelf-journey.tistory.com의
+  // "오늘의 픽" 섹션과 동일한 컨셉 — 카카오뱅크 페이지에서도, 토스 페이지
+  // 에서도 같은 픽을 보여준다).
+  function pickFeatured(allApps, currentId, n) {
+    var count = n || 3;
+    var pool = allApps.slice(0, count + 1);
+    return pool.filter(function (a) { return a.id !== currentId; }).slice(0, count);
   }
 
   /*
@@ -428,7 +434,7 @@
       ? formatDateKo(app.today.date) + " 문제 · " + (app.rewardHint || "")
       : "문제 준비 중";
     return (
-      '<div class="quiz-card">' +
+      '<div class="quiz-card"' + (app.brandColor ? ' style="--brand:' + escapeHtml(app.brandColor) + ';"' : "") + '>' +
       favoriteButtonHTML(app.id) +
       '<a class="quiz-card__link" href="' + pagePrefix + escapeHtml(app.page) + '">' +
       '<span class="quiz-card__badge" aria-hidden="true">' + escapeHtml(app.emoji || "🎯") + "</span>" +
@@ -678,7 +684,7 @@
   function renderAllAppsGrid(apps, currentId, pagePrefix) {
     var items = apps.filter(function (a) { return a.id !== currentId; }).map(function (a) {
       return (
-        '<a class="app-link-pill" href="' + pagePrefix + escapeHtml(a.page) + '">' +
+        '<a class="app-link-pill"' + (a.brandColor ? ' style="--brand:' + escapeHtml(a.brandColor) + ';"' : "") + ' href="' + pagePrefix + escapeHtml(a.page) + '">' +
         '<span aria-hidden="true">' + escapeHtml(a.emoji || "🎯") + "</span>" + escapeHtml(a.name) +
         "</a>"
       );
@@ -735,7 +741,7 @@
     var apps = data.apps || [];
     var fresh = isFresh(app);
     var today = app.today || {};
-    var related = pickRelated(app, apps, 3);
+    var featured = pickFeatured(apps, app.id, 3);
     var canonical = site.baseUrl + "/pages/" + app.page;
     var dateLabel = formatDateMD(today.date);
     var exposeAnswer = !!site.exposeAnswerInMeta;
@@ -808,9 +814,9 @@
       }
     ];
 
-    var relatedHTML = related.map(function (r) {
+    var featuredHTML = featured.map(function (r) {
       return (
-        '<a class="related-card" href="' + escapeHtml(r.page) + '">' +
+        '<a class="related-card"' + (r.brandColor ? ' style="--brand:' + escapeHtml(r.brandColor) + ';"' : "") + ' href="' + escapeHtml(r.page) + '">' +
         '<span class="related-card__badge" aria-hidden="true">' + escapeHtml(r.emoji || "🎯") + "</span>" +
         '<span><span class="related-card__name">' + escapeHtml(r.name) + '</span><br>' +
         '<span class="related-card__hint">' + escapeHtml(r.rewardHint || "오늘의 정답 보기") + "</span></span>" +
@@ -863,8 +869,10 @@
         renderFaqSection(faqItems) +
         "</section>" +
         '<section class="section shell" id="related" style="padding-top:0;">' +
-        '<h2 class="section__label"><span class="n">05</span>함께 보면 좋은 앱테크</h2>' +
-        '<div class="related-list">' + relatedHTML + "</div>" +
+        '<h2 class="section__label"><span class="n">05</span>다른 앱테크 퀴즈 정답 모음</h2>' +
+        '<p class="section__sublabel">오늘의 픽</p>' +
+        '<div class="related-list">' + featuredHTML + "</div>" +
+        '<p class="section__sublabel">전체 앱테크 퀴즈 정답 바로가기</p>' +
         renderAllAppsGrid(apps, app.id, "") +
         "</section>";
     } else {
@@ -903,8 +911,10 @@
         renderFaqSection(faqItems) +
         "</section>" +
         '<section class="section shell" id="related" style="padding-top:0;">' +
-        '<h2 class="section__label"><span class="n">06</span>함께 보면 좋은 앱테크</h2>' +
-        '<div class="related-list">' + relatedHTML + "</div>" +
+        '<h2 class="section__label"><span class="n">06</span>다른 앱테크 퀴즈 정답 모음</h2>' +
+        '<p class="section__sublabel">오늘의 픽</p>' +
+        '<div class="related-list">' + featuredHTML + "</div>" +
+        '<p class="section__sublabel">전체 앱테크 퀴즈 정답 바로가기</p>' +
         renderAllAppsGrid(apps, app.id, "") +
         "</section>";
     }

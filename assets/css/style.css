@@ -205,6 +205,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   padding: 10px 8px 10px 14px;
   background: var(--surface);
   border: 1px solid var(--border);
+  border-left: 4px solid var(--brand, var(--border)); /* 앱별 특징 컬러 */
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
   transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
@@ -227,7 +228,8 @@ ul { margin: 0; padding: 0; list-style: none; }
   width: 46px;
   height: 46px;
   border-radius: var(--radius-sm);
-  background: var(--surface-sunken);
+  background: color-mix(in srgb, var(--brand, var(--ink-faint)) 16%, var(--surface-sunken));
+  border: 1.5px solid color-mix(in srgb, var(--brand, var(--ink-faint)) 40%, var(--border));
   display: grid;
   place-items: center;
   font-size: 22px;
@@ -390,6 +392,14 @@ ul { margin: 0; padding: 0; list-style: none; }
   font-family: var(--font-mono);
   color: var(--accent);
 }
+.section__sublabel {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--ink-faint);
+  letter-spacing: 0.03em;
+  margin: 16px 0 8px;
+}
+.section__sublabel:first-of-type { margin-top: 0; }
 
 .panel {
   background: var(--surface);
@@ -515,13 +525,15 @@ ul { margin: 0; padding: 0; list-style: none; }
   padding: 12px 14px;
   background: var(--surface);
   border: 1px solid var(--border);
+  border-left: 3px solid var(--brand, var(--accent)); /* 앱별 특징 컬러 */
   border-radius: var(--radius-sm);
 }
 .related-card__badge {
   font-size: 18px;
   width: 34px; height: 34px;
   border-radius: 9px;
-  background: var(--surface-sunken);
+  background: color-mix(in srgb, var(--brand, var(--ink-faint)) 16%, var(--surface-sunken));
+  border: 1.5px solid color-mix(in srgb, var(--brand, var(--ink-faint)) 40%, var(--border));
   display: grid;
   place-items: center;
   flex: none;
@@ -826,8 +838,9 @@ ul { margin: 0; padding: 0; list-style: none; }
   color: var(--ink-muted);
   background: var(--surface);
   border: 1px solid var(--border);
+  border-left: 3px solid var(--brand, var(--border-strong)); /* 앱별 특징 컬러 */
   border-radius: var(--radius-pill);
-  padding: 6px 11px;
+  padding: 6px 11px 6px 9px;
 }
 
 /* ---- admin ---- */
