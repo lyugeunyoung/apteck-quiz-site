@@ -392,7 +392,13 @@
       '<header class="site-header">' +
       '<div class="site-header__row">' +
       '<a class="brand" href="' + basePrefix + 'index.html"><span class="brand__mark">🪙</span>' + escapeHtml(site.name) + "</a>" +
-      '<time class="header-date" id="header-date" datetime="">' + formatDateKo(todayKST()) + "</time>" +
+      // 실제 날짜는 assets/js/freshness.js가 방문자 브라우저에서 즉시 채운다
+      // (#header-date를 찾아 textContent를 오늘 날짜로 교체). 여기 빌드
+      // 시점 텍스트를 실제 날짜로 박아두면 그 값 자체가 매일 바뀌어서,
+      // 콘텐츠가 하나도 안 변해도 스케줄 워크플로가 매일 "변경 있음" 커밋을
+      // 만드는 원인이 된다(Phase 2에서 상태 배지는 고쳤지만 이 줄은
+      // 놓쳤던 부분) — 그래서 날짜에 의존하지 않는 고정 문구만 정적으로 둔다.
+      '<time class="header-date" id="header-date" datetime="">매일 아침 갱신</time>' +
       "</div></header>" +
       installBannerBlock()
     );
