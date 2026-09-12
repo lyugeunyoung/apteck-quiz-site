@@ -446,8 +446,8 @@
     renderChoicesEditor(choices);
     el["f-answer"].value = row.answer || "";
     el["f-explanation"].value = row.explanation || "";
-    if (row.image_url || row.image || row.imageurl) {
-      el["f-image"].value = row.image_url || row.image || row.imageurl;
+    if (row.q_image || row.image_url || row.image || row.imageurl) {
+      el["f-image"].value = row.q_image || row.image_url || row.image || row.imageurl;
       updateImagePreview();
     }
     // The row's own "date" column is only used to pick which row matches —
@@ -824,7 +824,7 @@
       var convertBtn = document.querySelector('[data-round-convert="' + idx + '"]');
 
       function refreshPreview() {
-        var url = img.value.trim() ? QuizTemplates.convertDriveLink(img.value.trim()) : "";
+        var url = previewImageSrc(img.value.trim());
         if (url) { preview.src = url; preview.style.display = ""; } else { preview.style.display = "none"; }
       }
       img.addEventListener("input", function () { refreshPreview(); updatePreview(); });
@@ -859,15 +859,18 @@
 
   function buildRoundsFromForm(roundSchedule) {
     return roundSchedule.map(function (sched, idx) {
-      return {
+      var image = QuizTemplates.resolveIncomingImage(document.getElementById(roundFieldId(idx, "image")).value.trim());
+      var round = {
         time: sched.time,
         label: sched.label,
         question: document.getElementById(roundFieldId(idx, "question")).value.trim(),
-        imageUrl: QuizTemplates.convertDriveLink(document.getElementById(roundFieldId(idx, "image")).value.trim()),
+        imageUrl: image.imageUrl,
         choices: document.getElementById(roundFieldId(idx, "choices")).value.split(",").map(function (s) { return s.trim(); }).filter(Boolean),
         answer: document.getElementById(roundFieldId(idx, "answer")).value.trim(),
         explanation: document.getElementById(roundFieldId(idx, "explanation")).value.trim()
       };
+      if (image.imageWidth) { round.imageWidth = image.imageWidth; round.imageHeight = image.imageHeight; }
+      return round;
     });
   }
 
@@ -905,9 +908,18 @@
       .filter(Boolean);
   }
 
+  // "Coming Soon"이라고 입력하면(bookshelf-journey.tistory.com이 실제
+  // 문제 스크린샷이 아직 없을 때 쓰는 것과 같은 관행) 드라이브 링크
+  // 대신 고정된 안내 그래픽을 미리보기·저장 양쪽에서 보여준다.
+  function previewImageSrc(raw) {
+    if (!raw) return "";
+    if (QuizTemplates.isComingSoonText(raw)) return QuizTemplates.COMING_SOON_IMAGE.path;
+    return QuizTemplates.convertDriveLink(raw);
+  }
+
   function updateImagePreview() {
     var raw = el["f-image"].value.trim();
-    var url = raw ? QuizTemplates.convertDriveLink(raw) : "";
+    var url = previewImageSrc(raw);
     if (url) {
       el["image-preview"].src = url;
       el["image-preview"].style.display = "";
@@ -968,14 +980,16 @@
         });
         base.history = base.history.slice(0, QuizTemplates.HISTORY_LIMIT);
       }
+      var image = QuizTemplates.resolveIncomingImage(el["f-image"].value.trim());
       base.today = {
         date: date,
-        imageUrl: QuizTemplates.convertDriveLink(el["f-image"].value.trim()),
+        imageUrl: image.imageUrl,
         question: el["f-question"].value.trim(),
         choices: currentChoices(),
         answer: el["f-answer"].value.trim(),
         explanation: el["f-explanation"].value.trim()
       };
+      if (image.imageWidth) { base.today.imageWidth = image.imageWidth; base.today.imageHeight = image.imageHeight; }
     }
     return base;
   }

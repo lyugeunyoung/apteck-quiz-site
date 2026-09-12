@@ -28,7 +28,6 @@ const path = require("path");
 const root = path.join(__dirname, "..");
 const templates = require(path.join(root, "assets/js/template.js"));
 const dataPath = path.join(root, "data/quizzes.json");
-const MAX_WIDTH = 1200;
 
 let sharp;
 try {
@@ -38,15 +37,16 @@ try {
   process.exit(0);
 }
 
+// 원본 해상도를 그대로 유지한다(리사이즈 없음) — 실제 앱 화면 스크린샷을
+// 축소 없이 원본 그대로 보여달라는 요청. 포맷만 WebP로 바꿔 용량/신뢰성을
+// 챙기고(핫링크 대신 저장소 자산화), 가로·세로 값은 sharp가 읽은 원본
+// 그대로를 <img width height>에 써서 CLS를 막는다.
 async function convertOne(rawUrl, destRelPath) {
   const res = await fetch(rawUrl);
   if (!res.ok) throw new Error("HTTP " + res.status);
   const buf = Buffer.from(await res.arrayBuffer());
   const img = sharp(buf).rotate(); // rotate(): normalize EXIF orientation
-  const meta = await img.metadata();
-  const resize = meta.width && meta.width > MAX_WIDTH ? { width: MAX_WIDTH } : null;
-  const pipeline = resize ? img.resize(resize) : img;
-  const outBuf = await pipeline.webp({ quality: 82 }).toBuffer();
+  const outBuf = await img.webp({ quality: 90 }).toBuffer();
   const outMeta = await sharp(outBuf).metadata();
 
   const destPath = path.join(root, destRelPath);

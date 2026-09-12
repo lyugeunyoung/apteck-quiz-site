@@ -203,6 +203,22 @@
     );
   }
 
+  // 오늘의 앱테크 뉴스(bookshelf-journey.tistory.com)가 실제로 쓰는 것과 같은
+  // 관행: 그날의 실제 문제 스크린샷이 아직 준비되지 않았을 때, 시트의 이미지
+  // 칸에 URL 대신 문자 그대로 "Coming Soon"을 적어두면 고정된 안내 그래픽을
+  // 보여준다. 정적 자산이라 fetch-images.js의 다운로드·리사이즈 대상이 아니고,
+  // 폭·높이도 이 시점에 바로 확정해 CLS 없이 렌더링된다.
+  var COMING_SOON_IMAGE = { path: "assets/img/coming-soon.webp", width: 300, height: 300 };
+  function isComingSoonText(v) {
+    return String(v == null ? "" : v).trim().toLowerCase() === "coming soon";
+  }
+  function resolveIncomingImage(rawValue) {
+    if (isComingSoonText(rawValue)) {
+      return { imageUrl: COMING_SOON_IMAGE.path, imageWidth: COMING_SOON_IMAGE.width, imageHeight: COMING_SOON_IMAGE.height };
+    }
+    return { imageUrl: convertDriveLink(rawValue) };
+  }
+
   /*
    * Sheet-row -> app.today conversion, shared by scripts/sync-sheet.js
    * (Node, scheduled auto-sync) and assets/js/admin.js (browser, the "오늘
@@ -210,15 +226,15 @@
    * produces byte-identical output regardless of which path applied it.
    */
   function computeSingleRoundToday(row, today) {
-    var imageUrlRaw = row.image_url || row.image || row.imageurl || "";
-    return {
-      date: today,
-      imageUrl: convertDriveLink(imageUrlRaw),
-      question: row.question || "",
-      choices: [row.choice1, row.choice2, row.choice3, row.choice4].filter(function (c) { return c && c.trim(); }),
-      answer: row.answer || "",
-      explanation: row.explanation || ""
-    };
+    var imageUrlRaw = row.q_image || row.image_url || row.image || row.imageurl || "";
+    var image = resolveIncomingImage(imageUrlRaw);
+    var result = { date: today, imageUrl: image.imageUrl };
+    if (image.imageWidth) { result.imageWidth = image.imageWidth; result.imageHeight = image.imageHeight; }
+    result.question = row.question || "";
+    result.choices = [row.choice1, row.choice2, row.choice3, row.choice4].filter(function (c) { return c && c.trim(); });
+    result.answer = row.answer || "";
+    result.explanation = row.explanation || "";
+    return result;
   }
 
   function isSameSingleRoundToday(prev, next) {
@@ -236,16 +252,14 @@
         var kept = (prevRounds || []).filter(function (r) { return r.time === sched.time; })[0];
         return kept || { time: sched.time, label: sched.label, question: "", imageUrl: "", choices: [], answer: "", explanation: "" };
       }
-      var imageUrlRaw = row.image_url || row.image || row.imageurl || "";
-      return {
-        time: sched.time,
-        label: sched.label,
-        question: row.question || "",
-        imageUrl: convertDriveLink(imageUrlRaw),
-        choices: [row.choice1, row.choice2, row.choice3, row.choice4].filter(function (c) { return c && c.trim(); }),
-        answer: row.answer || "",
-        explanation: row.explanation || ""
-      };
+      var imageUrlRaw = row.q_image || row.image_url || row.image || row.imageurl || "";
+      var image = resolveIncomingImage(imageUrlRaw);
+      var result = { time: sched.time, label: sched.label, question: row.question || "", imageUrl: image.imageUrl };
+      if (image.imageWidth) { result.imageWidth = image.imageWidth; result.imageHeight = image.imageHeight; }
+      result.choices = [row.choice1, row.choice2, row.choice3, row.choice4].filter(function (c) { return c && c.trim(); });
+      result.answer = row.answer || "";
+      result.explanation = row.explanation || "";
+      return result;
     });
   }
 
@@ -1087,6 +1101,9 @@
     isExternalUrl: isExternalUrl,
     resolveImagePath: resolveImagePath,
     absoluteImageUrl: absoluteImageUrl,
+    isComingSoonText: isComingSoonText,
+    resolveIncomingImage: resolveIncomingImage,
+    COMING_SOON_IMAGE: COMING_SOON_IMAGE,
     computeSingleRoundToday: computeSingleRoundToday,
     isSameSingleRoundToday: isSameSingleRoundToday,
     computeMultiRoundToday: computeMultiRoundToday,

@@ -3,6 +3,20 @@
 `PROMPT.md` 재설계 작업의 Phase별 변경 요약. 상세 근거는 `docs/DECISIONS.md`, 초기 상태는
 `docs/AS-IS.md` 참고.
 
+## Phase 7 이후 — "Coming Soon" 이미지 규칙 + 원본 해상도 유지 (2026-09-13)
+
+- **"Coming Soon" 이미지 규칙**: 구글 시트의 이미지 칸(`q_image` — `image_url`/`image`/`imageurl`도 계속 같은
+  열로 인식)에 실제 링크 대신 글자 그대로 `Coming Soon`을 적으면, 저장소에 고정 커밋해 둔 안내 그래픽
+  (`assets/img/coming-soon.webp`, 300×300)을 대신 보여준다. bookshelf-journey.tistory.com이 실제로 쓰는
+  것과 같은 관행(그날 문제 스크린샷이 아직 없을 때 "공개 예정" 그래픽으로 대체)을 그대로 반영 —
+  실제 사용 중인 그 그래픽을 다운로드해 우리 자산으로 로컬화했다. `template.js`의
+  `computeSingleRoundToday`/`computeMultiRoundToday`(자동 동기화·일괄 게시 공용)와 `admin.js`의 개별
+  저장·미리보기 전 경로에 동일하게 적용해, 어느 입력 경로로 들어와도 같은 규칙이 적용된다.
+- **이미지 원본 해상도 유지**: `scripts/fetch-images.js`의 1200px 리사이즈 캡을 제거 — 이제 원본
+  스크린샷 해상도 그대로 WebP로만 변환해 저장한다(포맷 변환은 유지, 크기 축소는 안 함).
+- 관리자 페이지 안내 문구에 위 두 가지(시트 헤더에 `q_image` 사용법, 개별 폼에서 `Coming Soon` 입력법)를
+  추가.
+
 ## Phase 7 이후 — 정답을 목차 2번으로 승격 (2026-09-13)
 
 - **정보 구조 재배열**: 문제(1) → **정답(2, 클릭 없이 바로 노출)** → 해설(3, 자세한 설명은 계속 펼치기로
