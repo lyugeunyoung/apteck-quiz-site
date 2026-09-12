@@ -603,8 +603,11 @@
         );
       }).join("");
       return (
-        '<section class="answer-summary answer-summary--rounds shell" id="summary" aria-label="오늘의 회차별 정답">' +
-        '<div class="answer-summary__label">🏆 오늘의 회차별 정답</div>' +
+        // "shell" 클래스를 빼서 이중 여백을 없앤다 — 이제 항상 목차 2번
+        // "오늘의 정답" 섹션(.section.shell) 안에 들어가므로 폭 제약은
+        // 바깥 섹션이 이미 담당한다.
+        '<section class="answer-summary answer-summary--rounds" id="summary" aria-label="오늘의 회차별 정답">' +
+        '<div class="answer-summary__label">🏆 회차별 정답</div>' +
         '<div class="answer-summary__rounds">' + rows + "</div>" +
         "</section>"
       );
@@ -612,8 +615,8 @@
     var hasAnswer = !!(today.answer && today.answer.trim());
     var qPreview = (today.question || "").slice(0, 70);
     return (
-      '<section class="answer-summary shell" id="summary" aria-label="오늘의 정답">' +
-      '<div class="answer-summary__label">🏆 오늘의 정답</div>' +
+      '<section class="answer-summary" id="summary" aria-label="오늘의 정답">' +
+      '<div class="answer-summary__label">🏆 정답</div>' +
       '<div class="answer-summary__value">' + (hasAnswer ? escapeHtml(today.answer) : "아직 등록 전") + "</div>" +
       (qPreview ? '<p class="answer-summary__q">Q. ' + escapeHtml(qPreview) + (today.question && today.question.length > 70 ? "…" : "") + "</p>" : "") +
       "</section>"
@@ -718,21 +721,39 @@
       (app.participatePath ? app.participatePath + "에서 참여할 수 있습니다." : "")).slice(0, 155);
   }
 
-  // 한 회차(오전/오후/저녁 등)의 문제 → 정답/해설 카드. <details>는 네이티브
-  // 요소라 JS를 꺼도 펼치기가 동작하고, 본문 텍스트는 접혀 있어도 DOM에 그대로
-  // 존재해 검색엔진이 읽는다.
-  function renderRoundBlock(app, round) {
-    var choices = (round.choices || []).filter(Boolean);
-    var choicesHTML = choices.length
-      ? '<ul class="choice-list">' + choices.map(function (c) { return "<li>" + escapeHtml(c) + "</li>"; }).join("") + "</ul>"
-      : "";
+  // 문제 이미지가 있으면 텍스트 보기 목록은 생략한다 — 실제 앱 화면
+  // 스크린샷 안에 보기가 이미 그대로 보이므로, 아래에 같은 내용을 다시
+  // 글로 나열하는 건 중복이다. 이미지가 없을 때만(아직 문제만 등록되고
+  // 이미지는 없는 경우) 텍스트 보기가 유일한 정보원이므로 그대로 보여준다.
+  function renderChoicesIfNoImage(choices, hasImage) {
+    var list = (choices || []).filter(Boolean);
+    if (!list.length || hasImage) return "";
+    return '<ul class="choice-list">' + list.map(function (c) { return "<li>" + escapeHtml(c) + "</li>"; }).join("") + "</ul>";
+  }
+
+  // 한 회차(오전/오후/저녁 등)의 "문제만" 카드 — 정답/해설은
+  // renderRoundAnswerBlock으로 분리해 "오늘의 정답" 섹션에 별도로 배치한다.
+  function renderRoundQuestionBlock(app, round) {
     var imageHTML = renderImageFigure(round.imageUrl, round.imageWidth, round.imageHeight, app.name + " " + round.label + " 문제 이미지", "../");
+    var choicesHTML = renderChoicesIfNoImage(round.choices, !!round.imageUrl);
     return (
       '<div class="round-block">' +
       '<span class="round-block__time">🕐 ' + escapeHtml(round.label || "") + " 회차</span>" +
       '<div class="panel">' + imageHTML + '<p class="q-text">' + nl2p(round.question || "아직 등록된 문제가 없습니다. 관리자 페이지에서 이 회차의 문제를 입력해 주세요.") + "</p>" + choicesHTML + "</div>" +
+      "</div>"
+    );
+  }
+
+  // 한 회차의 "해설만" 카드 — 정답 자체는 이미 오늘의 정답 섹션(un-gated)에
+  // 나와 있으므로, 여기서는 자세한 해설을 <details>로 접어 둔다. <details>는
+  // 네이티브 요소라 JS를 꺼도 펼치기가 동작하고, 접혀 있어도 텍스트는 DOM에
+  // 그대로 있어 검색엔진이 읽는다.
+  function renderRoundAnswerBlock(app, round) {
+    return (
+      '<div class="round-block">' +
+      '<span class="round-block__time">🕐 ' + escapeHtml(round.label || "") + " 회차</span>" +
       "<details class=\"reveal\">" +
-      "<summary class=\"reveal__button\">" + escapeHtml(round.label || "") + " 정답과 해설 자세히 보기</summary>" +
+      "<summary class=\"reveal__button\">" + escapeHtml(round.label || "") + " 정답과 자세한 해설 보기</summary>" +
       '<div class="reveal__content">' +
       '<span class="answer-badge">✅ 정답 · ' + escapeHtml(round.answer || "미등록") + "</span>" +
       '<p class="explain-text">' + nl2p(round.explanation || "해설이 아직 등록되지 않았습니다.") + "</p>" +
@@ -779,10 +800,7 @@
       ogImage = today.imageUrl ? absoluteImageUrl(today.imageUrl, site.baseUrl) : defaultOgImage;
     }
 
-    var choices = (today.choices || []).filter(Boolean);
-    var choicesHTML = choices.length
-      ? '<ul class="choice-list">' + choices.map(function (c) { return "<li>" + escapeHtml(c) + "</li>"; }).join("") + "</ul>"
-      : "";
+    var choicesHTML = renderChoicesIfNoImage(today.choices, !!today.imageUrl);
     var imageHTML = renderImageFigure(today.imageUrl, today.imageWidth, today.imageHeight, app.name + " 문제 이미지", "../");
 
     var faqItems = buildFaqItems(app, isMultiRound, roundLabels);
@@ -844,38 +862,47 @@
       shareBarHTML(app.name + " 정답 (" + dateLabel + ")") +
       "</div>";
 
-    // ---- 블록 3: 정답 요약 카드 (스크롤 없이 바로 결론) ----
+    // ---- 정답 요약 카드 — 목차 2번 "오늘의 정답" 섹션의 본문으로 쓰인다
+    // (문제 바로 아래, 클릭 없이 바로 보이는 결론 우선 원칙은 그대로 유지).
     var summaryHTML = renderSummaryCard(app, isMultiRound, roundsMerged, today);
 
     var bodyHTML;
     if (isMultiRound) {
       bodyHTML =
         '<nav class="toc shell" aria-label="목차">' +
-        '<a href="#rounds">1.문제/정답</a><a href="#howto">2.참여방법</a><a href="#archive">3.지난정답</a><a href="#faq">4.FAQ</a><a href="#related">5.관련퀴즈</a>' +
+        '<a href="#question">1.문제</a><a href="#today-answer">2.정답</a><a href="#answer">3.해설</a><a href="#howto">4.참여방법</a><a href="#archive">5.지난정답</a><a href="#faq">6.FAQ</a><a href="#related">7.관련퀴즈</a>' +
         "</nav>" +
-        adSlot("top", "광고 영역 A (정답 요약 아래)", site.adsense) +
-        '<section class="section shell" id="rounds">' +
-        '<h2 class="section__label"><span class="n">01</span>' + escapeHtml(app.name) + " 회차별 문제와 정답</h2>" +
-        roundsMerged.map(function (r) { return renderRoundBlock(app, r); }).join('<div style="height:14px;"></div>') +
+        adSlot("top", "광고 영역 A (상단)", site.adsense) +
+        '<section class="section shell" id="question">' +
+        '<h2 class="section__label"><span class="n">01</span>' + escapeHtml(app.name) + " 회차별 문제</h2>" +
+        roundsMerged.map(function (r) { return renderRoundQuestionBlock(app, r); }).join('<div style="height:14px;"></div>') +
         "</section>" +
-        adSlot("inArticle", "광고 영역 B (본문 중간)", site.adsense) +
+        '<section class="section shell" id="today-answer" style="padding-top:0;">' +
+        '<h2 class="section__label"><span class="n">02</span>오늘의 정답</h2>' +
+        summaryHTML +
+        "</section>" +
+        adSlot("inArticle", "광고 영역 B (정답 아래)", site.adsense) +
+        '<section class="section shell" id="answer" style="padding-top:0;">' +
+        '<h2 class="section__label"><span class="n">03</span>회차별 정답 해설</h2>' +
+        roundsMerged.map(function (r) { return renderRoundAnswerBlock(app, r); }).join('<div style="height:14px;"></div>') +
+        "</section>" +
         '<section class="section shell" id="howto" style="padding-top:0;">' +
-        '<h2 class="section__label"><span class="n">02</span>참여 방법</h2>' +
+        '<h2 class="section__label"><span class="n">04</span>참여 방법</h2>' +
         '<div class="panel" style="text-align:center;">' +
         '<a class="cta-button" href="' + escapeHtml(app.appDeeplink || "#") + '">' + escapeHtml(app.name) + " 참여하러 가기 →</a>" +
         '<p class="path-steps">' + escapeHtml(app.participatePath || "") + "</p>" +
         renderHowtoTable(app) +
         "</div></section>" +
         '<section class="section shell" id="archive" style="padding-top:0;">' +
-        '<h2 class="section__label"><span class="n">03</span>지난 정답 모음</h2>' +
+        '<h2 class="section__label"><span class="n">05</span>지난 정답 모음</h2>' +
         archiveSectionHTML(app) +
         "</section>" +
         '<section class="section shell" id="faq" style="padding-top:0;">' +
-        '<h2 class="section__label"><span class="n">04</span>자주 묻는 질문</h2>' +
+        '<h2 class="section__label"><span class="n">06</span>자주 묻는 질문</h2>' +
         renderFaqSection(faqItems) +
         "</section>" +
         '<section class="section shell" id="related" style="padding-top:0;">' +
-        '<h2 class="section__label"><span class="n">05</span>다른 앱테크 퀴즈 정답 모음</h2>' +
+        '<h2 class="section__label"><span class="n">07</span>다른 앱테크 퀴즈 정답 모음</h2>' +
         '<p class="section__sublabel">오늘의 픽</p>' +
         '<div class="related-list">' + featuredHTML + "</div>" +
         '<p class="section__sublabel">전체 앱테크 퀴즈 정답 바로가기</p>' +
@@ -884,15 +911,20 @@
     } else {
       bodyHTML =
         '<nav class="toc shell" aria-label="목차">' +
-        '<a href="#question">1.문제</a><a href="#answer">2.해설</a><a href="#howto">3.참여방법</a><a href="#archive">4.지난정답</a><a href="#faq">5.FAQ</a><a href="#related">6.관련퀴즈</a>' +
+        '<a href="#question">1.문제</a><a href="#today-answer">2.정답</a><a href="#answer">3.해설</a><a href="#howto">4.참여방법</a><a href="#archive">5.지난정답</a><a href="#faq">6.FAQ</a><a href="#related">7.관련퀴즈</a>' +
         "</nav>" +
-        adSlot("top", "광고 영역 A (정답 요약 아래)", site.adsense) +
+        adSlot("top", "광고 영역 A (상단)", site.adsense) +
         '<section class="section shell" id="question">' +
         '<h2 class="section__label"><span class="n">01</span>' + escapeHtml(app.name) + " 문제</h2>" +
         '<div class="panel">' + imageHTML + '<p class="q-text">' + nl2p(today.question || "아직 등록된 문제가 없습니다. 관리자 페이지에서 오늘의 문제를 입력해 주세요.") + "</p>" + choicesHTML + "</div>" +
         "</section>" +
+        '<section class="section shell" id="today-answer" style="padding-top:0;">' +
+        '<h2 class="section__label"><span class="n">02</span>오늘의 정답</h2>' +
+        summaryHTML +
+        "</section>" +
+        adSlot("inArticle", "광고 영역 B (정답 아래)", site.adsense) +
         '<section class="section shell" id="answer" style="padding-top:0;">' +
-        '<h2 class="section__label"><span class="n">02</span>정답 해설</h2>' +
+        '<h2 class="section__label"><span class="n">03</span>정답 해설</h2>' +
         "<details class=\"reveal\">" +
         "<summary class=\"reveal__button\">정답과 자세한 해설 보기</summary>" +
         '<div class="reveal__content">' +
@@ -900,24 +932,23 @@
         '<p class="explain-text">' + nl2p(today.explanation || "해설이 아직 등록되지 않았습니다.") + "</p>" +
         "</div></details>" +
         "</section>" +
-        adSlot("inArticle", "광고 영역 B (본문 중간)", site.adsense) +
         '<section class="section shell" id="howto" style="padding-top:0;">' +
-        '<h2 class="section__label"><span class="n">03</span>참여 방법</h2>' +
+        '<h2 class="section__label"><span class="n">04</span>참여 방법</h2>' +
         '<div class="panel" style="text-align:center;">' +
         '<a class="cta-button" href="' + escapeHtml(app.appDeeplink || "#") + '">' + escapeHtml(app.name) + " 참여하러 가기 →</a>" +
         '<p class="path-steps">' + escapeHtml(app.participatePath || "") + "</p>" +
         renderHowtoTable(app) +
         "</div></section>" +
         '<section class="section shell" id="archive" style="padding-top:0;">' +
-        '<h2 class="section__label"><span class="n">04</span>지난 정답 모음</h2>' +
+        '<h2 class="section__label"><span class="n">05</span>지난 정답 모음</h2>' +
         archiveSectionHTML(app) +
         "</section>" +
         '<section class="section shell" id="faq" style="padding-top:0;">' +
-        '<h2 class="section__label"><span class="n">05</span>자주 묻는 질문</h2>' +
+        '<h2 class="section__label"><span class="n">06</span>자주 묻는 질문</h2>' +
         renderFaqSection(faqItems) +
         "</section>" +
         '<section class="section shell" id="related" style="padding-top:0;">' +
-        '<h2 class="section__label"><span class="n">06</span>다른 앱테크 퀴즈 정답 모음</h2>' +
+        '<h2 class="section__label"><span class="n">07</span>다른 앱테크 퀴즈 정답 모음</h2>' +
         '<p class="section__sublabel">오늘의 픽</p>' +
         '<div class="related-list">' + featuredHTML + "</div>" +
         '<p class="section__sublabel">전체 앱테크 퀴즈 정답 바로가기</p>' +
@@ -946,7 +977,6 @@
       headerBlock(site, "../") +
       "<main>" +
       heroHTML +
-      summaryHTML +
       bodyHTML +
       adSlot("bottom", "광고 영역 C (하단 Multiplex)", site.adsense) +
       "</main>" +
