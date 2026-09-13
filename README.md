@@ -352,11 +352,19 @@ apteck-quiz-site/
 
 ```bash
 git clone https://github.com/사용자명/저장소명.git
+cd 저장소명
+npm install   # scripts/fetch-images.js, scripts/sync-sheet.js가 쓰는 sharp 설치 (build.js/verify.js는 없어도 동작)
 ```
 
-- 그 폴더를 열어 Node.js로 `node scripts/build.js`를 실행할 수 있으면 준비 끝입니다.
-- 그 컴퓨터에서 Claude Code(또는 다른 AI 코딩 도구)를 새로 열 때는, 이전 대화 기록은 없지만 이
-  README에 구조·디자인 방향·최근 결정사항이 정리되어 있어 금방 맥락을 파악할 수 있습니다.
+- `node scripts/build.js && npm test`가 에러 없이 끝나면(빌드 + 자동 검증 10개 항목) 준비 끝입니다.
+- **그 컴퓨터에서 Claude Code(또는 다른 AI 코딩 도구)를 새로 열 때, 이 순서로 읽으면 대화 기록 없이도
+  몇 분 안에 전체 맥락을 따라잡을 수 있습니다:**
+  1. [`PROMPT.md`](PROMPT.md) — 전체 재설계 지시서 원문(Phase 0~7 전 범위, 절대 원칙들)
+  2. [`docs/DECISIONS.md`](docs/DECISIONS.md) — 왜 이렇게 정했는지(도메인/정답노출/이미지소스/광고 등 ADR)
+  3. [`CHANGELOG.md`](CHANGELOG.md) — Phase별·날짜별 실제 변경 이력(가장 최근 항목이 "지금 상태")
+  4. [`docs/AS-IS.md`](docs/AS-IS.md) — Phase 0 시점 구조 스냅샷(그 뒤로 뭐가 바뀌었는지는 CHANGELOG로 대조)
+  5. [`docs/QA-REPORT.md`](docs/QA-REPORT.md) — Definition of Done 체크리스트("사용자가 직접 해야 할 일" 포함)
+  6. [`docs/NAVER-CHECKLIST.md`](docs/NAVER-CHECKLIST.md) — 등록 후 반복 운영 체크리스트
 - **처음 `git push`할 때 그 컴퓨터에서 GitHub 로그인이 새로 필요합니다** — 로그인 정보는 컴퓨터마다
   따로 저장되고 자동으로 넘어가지 않습니다.
 
