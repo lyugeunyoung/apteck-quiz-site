@@ -306,18 +306,38 @@ ul { margin: 0; padding: 0; list-style: none; }
   background: linear-gradient(180deg, var(--accent-soft), transparent 140%);
   border-top: 4px solid var(--brand, var(--accent));
 }
+/*
+ * 히어로 상단부 — 300px 정사각형 원본 썸네일을 큼직하게(72px 표시) 왼쪽에
+ * 놓고, 카테고리 태그 + 제목을 오른쪽에 세로로 쌓아 나란히 배치한다
+ * (기존엔 뱃지 56px가 즐겨찾기 별과만 한 줄에 있고 제목은 그 아래 별도
+ * 줄이라 썸네일과 제목의 연결감이 약했다).
+ */
+.quiz-hero__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+.quiz-hero__identity {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
 .quiz-hero__badge {
-  width: 56px;
-  height: 56px;
+  width: 72px;
+  height: 72px;
   border-radius: var(--radius-md);
   background: var(--surface);
   border: 1px solid var(--border);
   display: grid;
   place-items: center;
-  font-size: 28px;
+  font-size: 34px;
   box-shadow: var(--shadow-sm);
   object-fit: cover;
+  flex: none;
 }
+.quiz-hero__titlewrap { min-width: 0; }
 .quiz-hero__statusbar {
   display: flex;
   align-items: center;
@@ -334,7 +354,6 @@ ul { margin: 0; padding: 0; list-style: none; }
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-top: 10px;
   font-size: 12px;
   font-weight: 700;
   color: var(--accent-strong);
@@ -353,6 +372,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   font-size: 23px;
   font-weight: 800;
   letter-spacing: -0.01em;
+  line-height: 1.3;
 }
 
 .toc {
@@ -365,10 +385,10 @@ ul { margin: 0; padding: 0; list-style: none; }
 .toc::-webkit-scrollbar { display: none; }
 .toc a {
   flex: none;
-  font-size: 12.5px;
-  font-weight: 600;
+  font-size: 14.5px;
+  font-weight: 700;
   color: var(--ink-muted);
-  padding: 6px 12px;
+  padding: 8px 14px;
   border: 1px solid var(--border);
   border-radius: var(--radius-pill);
   background: var(--surface);
@@ -627,13 +647,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 .fav-star[aria-pressed="true"] { color: var(--gold); }
 .fav-star__icon { font-size: 19px; line-height: 1; }
 
-.quiz-hero__row {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-}
-.quiz-hero__row .fav-star { background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+.quiz-hero__top .fav-star { background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-sm); flex: none; }
 
 /* ---- share row ---- */
 .share-row {
@@ -678,8 +692,14 @@ ul { margin: 0; padding: 0; list-style: none; }
   margin: 0 0 14px;
 }
 .q-image img {
-  width: 100%;
+  display: block;
+  /* 최대 크기는 <img width height> 속성이 정한 원본 해상도까지만(desktop
+     처럼 패널이 원본보다 넓어도 확대되지 않음) — max-width:100%가 그보다
+     좁은 화면(모바일)에서는 컨테이너 폭에 맞춰 축소되게 한다. */
+  width: auto;
+  max-width: 100%;
   height: auto; /* width/height 속성으로 잡은 원본 비율 유지(안 넣으면 세로가 원본 px로 고정돼 찌그러져 보임) */
+  margin: 0 auto;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
   background: var(--surface-sunken);
@@ -744,23 +764,26 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .answer-summary__label {
   font-family: var(--font-display);
-  font-size: 12.5px;
+  font-size: 13.5px;
   font-weight: 800;
   color: var(--gold-ink);
   letter-spacing: 0.02em;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
+/* 눈에 바로 들어오도록: 진한 그라디언트 배경 + 두꺼운 테두리 + 그림자 +
+   더 큰 글자 — 스크롤 없이도 "정답이 여기 있다"가 한눈에 인지돼야 한다. */
 .answer-summary__value {
   font-family: var(--font-display);
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 900;
-  line-height: 1.3;
-  color: var(--ink);
-  background: var(--success-soft);
-  border: 1px solid var(--success);
+  line-height: 1.35;
+  color: var(--success-ink, var(--ink));
+  background: linear-gradient(135deg, var(--success-soft), color-mix(in srgb, var(--brand, var(--success)) 14%, var(--success-soft)));
+  border: 2px solid var(--success);
   border-radius: var(--radius-md);
-  padding: 16px 18px;
+  padding: 20px;
   text-wrap: balance;
+  box-shadow: var(--shadow-sm);
 }
 .answer-summary__value.is-empty,
 .answer-summary__round-value.is-empty {
@@ -782,13 +805,14 @@ ul { margin: 0; padding: 0; list-style: none; }
   gap: 8px;
 }
 .answer-summary__round {
-  background: var(--success-soft);
-  border: 1px solid var(--success);
+  background: linear-gradient(135deg, var(--success-soft), color-mix(in srgb, var(--brand, var(--success)) 14%, var(--success-soft)));
+  border: 2px solid var(--success);
   border-radius: var(--radius-sm);
-  padding: 10px 12px;
+  padding: 12px 14px;
   display: flex;
   flex-direction: column;
   gap: 4px;
+  box-shadow: var(--shadow-sm);
 }
 .answer-summary__round-time {
   font-family: var(--font-mono);
@@ -797,9 +821,9 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .answer-summary__round-value {
   font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 15px;
-  color: var(--ink);
+  font-weight: 900;
+  font-size: 17px;
+  color: var(--success-ink, var(--ink));
 }
 
 /* ---- 참여 방법 표 ---- */

@@ -221,8 +221,26 @@
   // 사실상 항상 같은 목록이 뜬다(참고: bookshelf-journey.tistory.com의
   // "오늘의 픽" 섹션과 동일한 컨셉 — 카카오뱅크 페이지에서도, 토스 페이지
   // 에서도 같은 픽을 보여준다).
-  function pickFeatured(allApps, currentId, n) {
+  function pickFeatured(allApps, currentId, n, featuredAppIds) {
     var count = n || 3;
+    // 관리자 페이지에서 수동으로 고정한 "오늘의 픽"이 있으면 그걸 최우선으로
+    // 쓴다(현재 페이지 자신은 후보에서 제외). 지정된 앱이 count개 미만이면
+    // 예전 자동 알고리즘으로 나머지를 채워, 항상 count개가 채워지게 한다.
+    if (featuredAppIds && featuredAppIds.length) {
+      var byId = {};
+      allApps.forEach(function (a) { byId[a.id] = a; });
+      var picked = featuredAppIds
+        .map(function (id) { return byId[id]; })
+        .filter(function (a) { return a && a.id !== currentId; })
+        .slice(0, count);
+      if (picked.length < count) {
+        var have = {};
+        picked.forEach(function (a) { have[a.id] = true; });
+        var fill = allApps.filter(function (a) { return a.id !== currentId && !have[a.id]; });
+        picked = picked.concat(fill.slice(0, count - picked.length));
+      }
+      return picked;
+    }
     var pool = allApps.slice(0, count + 1);
     return pool.filter(function (a) { return a.id !== currentId; }).slice(0, count);
   }
@@ -939,7 +957,7 @@
     var apps = data.apps || [];
     var fresh = isFresh(app);
     var today = app.today || {};
-    var featured = pickFeatured(apps, app.id, 3);
+    var featured = pickFeatured(apps, app.id, 3, site.featuredAppIds);
     var canonical = site.baseUrl + "/pages/" + app.page;
     var dateLabel = formatDateMD(today.date);
     var exposeAnswer = !!site.exposeAnswerInMeta;
@@ -1029,11 +1047,17 @@
       '<span class="status-pill__dot"></span><span class="status-pill__text">' + (fresh ? "오늘 갱신됨" : "갱신 대기") + "</span></span>";
     var heroHTML =
       '<div class="quiz-hero shell"' + (brand ? ' style="--brand:' + escapeHtml(brand) + ';"' : "") + '>' +
-      '<div class="quiz-hero__row">' + renderAppBadge(app, "quiz-hero__badge", "../") + favoriteButtonHTML(app.id) + "</div>" +
-      '<div class="quiz-hero__statusbar">' + statusPillHTML +
-      '<time datetime="' + escapeHtml(freshDatetime) + '">' + formatDateKo(today.date) + " 기준</time></div>" +
+      '<div class="quiz-hero__top">' +
+      '<div class="quiz-hero__identity">' +
+      renderAppBadge(app, "quiz-hero__badge", "../") +
+      '<div class="quiz-hero__titlewrap">' +
       '<span class="quiz-hero__cat">' + escapeHtml(app.category || "") + " · " + escapeHtml(app.schedule || "매일") + "</span>" +
       "<h1>" + escapeHtml(app.name) + " 정답 (" + dateLabel + ")</h1>" +
+      "</div></div>" +
+      favoriteButtonHTML(app.id) +
+      "</div>" +
+      '<div class="quiz-hero__statusbar">' + statusPillHTML +
+      '<time datetime="' + escapeHtml(freshDatetime) + '">' + formatDateKo(today.date) + " 기준</time></div>" +
       shareBarHTML(app.name + " 정답 (" + dateLabel + ")") +
       "</div>";
 

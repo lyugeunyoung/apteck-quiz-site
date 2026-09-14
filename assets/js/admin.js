@@ -17,6 +17,7 @@
     sheetRows: [],       // parsed rows from the Google Sheet CSV, if loaded
     multiRoundApp: null, // the selected app object when it has a roundSchedule, else null
     bulkCandidates: [],  // built by loadBulkCandidates(), consumed by publishBulk()
+    featuredAppIds: [],  // "오늘의 픽" 수동 선택 — 최대 3개, admin.html 토글에서 채워짐
   };
 
   var el = {};
@@ -27,6 +28,7 @@
     "btn-bulk-load", "bulk-status", "bulk-diff", "bulk-diff-list", "btn-bulk-publish", "bulk-publish-status",
     "card-rollback", "rollback-hint", "btn-rollback", "rollback-status",
     "card-site-settings", "f-naver-verify", "f-google-verify", "f-contact-email", "btn-save-site-settings", "site-settings-status",
+    "featured-apps-toggle", "featured-apps-status",
     "card-apps", "app-table", "app-search", "btn-new-app",
     "card-form", "form-title", "sheet-match", "new-app-fields", "f-selected-id", "category-options",
     "f-id", "f-emoji", "f-category", "f-schedule", "f-name", "f-reward", "f-deeplink", "f-path",
@@ -273,6 +275,8 @@
       el["f-naver-verify"].value = state.data.site.naverSiteVerification || "";
       el["f-google-verify"].value = state.data.site.googleSiteVerification || "";
       el["f-contact-email"].value = state.data.site.contactEmail || "";
+      state.featuredAppIds = (state.data.site.featuredAppIds || []).slice(0, 3);
+      renderFeaturedAppsToggle();
       loadRollbackInfo();
     } catch (e) {
       setStatus(el["connect-status"], e.message || String(e), "err");
@@ -386,6 +390,36 @@
     }
   });
 
+  // "오늘의 픽" 수동 선택 토글 — 정확히 3개까지만 누를 수 있는 pill 버튼
+  // 목록. 4번째를 누르면 무시(경고만 표시)하고, 선택된 걸 다시 누르면
+  // 해제된다. 선택이 0개면 저장 시 featuredAppIds를 빈 배열로 저장하고,
+  // pickFeatured()가 예전처럼 자동으로 앞쪽 3개를 고른다(template.js).
+  function renderFeaturedAppsToggle() {
+    if (!el["featured-apps-toggle"] || !state.data) return;
+    var apps = state.data.apps || [];
+    el["featured-apps-toggle"].innerHTML = apps.map(function (app) {
+      var pressed = state.featuredAppIds.indexOf(app.id) !== -1;
+      return '<button type="button" data-app-id="' + app.id + '" aria-pressed="' + pressed + '">' +
+        (app.emoji || "🎯") + " " + app.name + "</button>";
+    }).join("");
+    Array.prototype.forEach.call(el["featured-apps-toggle"].querySelectorAll("button"), function (btn) {
+      btn.addEventListener("click", function () {
+        var id = btn.getAttribute("data-app-id");
+        var idx = state.featuredAppIds.indexOf(id);
+        if (idx !== -1) {
+          state.featuredAppIds.splice(idx, 1);
+        } else if (state.featuredAppIds.length >= 3) {
+          setStatus(el["featured-apps-status"], "이미 3개를 선택했습니다. 다른 걸 고르려면 먼저 하나를 해제하세요.", "err");
+          return;
+        } else {
+          state.featuredAppIds.push(id);
+        }
+        setStatus(el["featured-apps-status"], state.featuredAppIds.length + " / 3개 선택됨", "ok");
+        renderFeaturedAppsToggle();
+      });
+    });
+  }
+
   // site.naverSiteVerification / googleSiteVerification are emitted into
   // <head> on every single page (headBlock), not just index.html — so a
   // partial update would leave 21 app pages showing a stale/missing
@@ -401,6 +435,7 @@
       data.site.naverSiteVerification = el["f-naver-verify"].value.trim();
       data.site.googleSiteVerification = el["f-google-verify"].value.trim();
       data.site.contactEmail = el["f-contact-email"].value.trim();
+      data.site.featuredAppIds = state.featuredAppIds.slice(0, 3);
 
       setStatus(el["site-settings-status"], "전체 " + (data.apps.length + 4) + "개 파일을 한 커밋으로 재생성하는 중...", "busy");
       var files = { "data/quizzes.json": JSON.stringify(data, null, 2) };
