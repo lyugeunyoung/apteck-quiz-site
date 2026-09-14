@@ -47,10 +47,32 @@
     return rows;
   }
 
+  // 스프레드시트 열 문자(A, B, ..., Z, AA, AB, ...) — 헤더가 비어있거나
+  // 중복일 때 그 열을 가리킬 안전한 키가 필요해서 쓴다.
+  function columnLetter(index) {
+    var s = "";
+    var n = index;
+    do {
+      s = String.fromCharCode(97 + (n % 26)) + s;
+      n = Math.floor(n / 26) - 1;
+    } while (n >= 0);
+    return s;
+  }
+
   function csvToObjects(text) {
     var rows = parseCsv(text).filter(function (r) { return r.some(function (c) { return c.trim() !== ""; }); });
     if (!rows.length) return [];
-    var headers = rows[0].map(function (h) { return h.trim().toLowerCase(); });
+    // 헤더가 비어있거나(꾸밈 없는 부가 열) 서로 겹치면(같은 텍스트가 두 번) 같은
+    // 키로 덮어써서 값이 사라진다 — 열 문자(a/b/c...)를 대신 키로 써서
+    // 막는다. 실제 구글 시트 하나는 라벨 없는 부가 열 3개(I/J/K)를 쓰고
+    // 있어서 이 처리가 없으면 그중 둘의 값이 소리 없이 사라진다.
+    var seen = {};
+    var headers = rows[0].map(function (h, i) {
+      var key = h.trim().toLowerCase();
+      if (!key) key = columnLetter(i);
+      if (seen[key]) { seen[key]++; key = key + seen[key]; } else { seen[key] = 1; }
+      return key;
+    });
     return rows.slice(1).map(function (r) {
       var obj = {};
       headers.forEach(function (h, i) { obj[h] = (r[i] || "").trim(); });
@@ -58,7 +80,63 @@
     });
   }
 
+  // "A (구분/ID)", "B (question)"처럼 "괄호 안 라벨"로 된 헤더도 지원한다
+  // (실제 운영 중인 구글 시트가 이 형식). 괄호에서 뽑아낸 논리적 이름을
+  // 원래 키에 "추가로" 얹어서(덮어쓰지 않음) 두 표기 방식이 동시에 계속
+  // 동작하게 한다 — date,app_id,question... 처럼 단순한 헤더를 쓰는 기존
+  // 시트는 이 함수가 사실상 아무것도 바꾸지 않는다(괄호가 없으므로).
+  function normalizeSheetRow(rawRow) {
+    var out = {};
+    Object.keys(rawRow).forEach(function (key) {
+      out[key] = rawRow[key];
+      var m = key.match(/\(([^)]+)\)\s*\d*$/);
+      if (m) {
+        var logical = m[1].trim().toLowerCase();
+        if (out[logical] === undefined) out[logical] = rawRow[key];
+      }
+    });
+    return out;
+  }
+
   function sheetAppId(row) { return row.app_id || row.id || row.appid || ""; }
+
+  // 구글 시트의 "편집" 주소(.../edit?usp=sharing)를 그대로 등록하는 실수가
+  // 흔하다(실제로 이 저장소에도 그렇게 등록된 적 있음) — 편집 화면 HTML이
+  // 그대로 fetch되어 CSV 파싱이 통째로 실패한다. admin.js(브라우저,
+  // "시트 불러오기"/"자동 동기화 켜기")와 sync-sheet.js(Node, 스케줄
+  // 실행) 양쪽에서 시트 주소를 쓰기 직전에 이 함수로 정규화한다. 이미
+  // export?format=csv 형식이거나 구글 시트 주소가 아니면 그대로 둔다.
+  function normalizeSheetCsvUrl(url) {
+    var u = String(url == null ? "" : url).trim();
+    var m = u.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/);
+    if (!m) return u;
+    if (/\/export\?/.test(u) && /format=csv/.test(u)) return u;
+    var id = m[1];
+    var gidMatch = u.match(/[?#&]gid=([0-9]+)/);
+    var gid = gidMatch ? gidMatch[1] : "0";
+    return "https://docs.google.com/spreadsheets/d/" + id + "/export?format=csv&gid=" + gid;
+  }
+
+  // app_id 열이 없는 시트(실사용 시트는 "A (구분/ID)" 열에 앱의 표시 이름을
+  // 적는다)도 지원하도록, id 매칭이 실패하면 이름으로도 찾아본다. 공백 유무
+  // 차이(예: "신한 슈퍼 SOL" vs "신한 슈퍼SOL")는 무시하고 비교하고,
+  // app.sheetName(시트에서 다르게 부르는 경우의 별칭)도 확인한다.
+  function normalizeNameForMatch(s) {
+    return String(s == null ? "" : s).replace(/\s+/g, "").trim().toLowerCase();
+  }
+  function resolveSheetApp(row, apps) {
+    var id = sheetAppId(row);
+    if (id) {
+      var byId = apps.filter(function (a) { return a.id === id; })[0];
+      if (byId) return byId;
+    }
+    var rawName = row["구분/id"] || row["구분"] || row.name || row["이름"] || "";
+    var norm = normalizeNameForMatch(rawName);
+    if (!norm) return null;
+    return apps.filter(function (a) {
+      return normalizeNameForMatch(a.sheetName || a.name) === norm;
+    })[0] || null;
+  }
 
   function escapeHtml(str) {
     return String(str == null ? "" : str).replace(/[&<>"']/g, function (c) {
@@ -69,6 +147,31 @@
   function nl2p(str) {
     var lines = String(str == null ? "" : str).split(/\n+/).map(function (s) { return s.trim(); }).filter(Boolean);
     return lines.map(function (l) { return escapeHtml(l); }).join("<br>");
+  }
+
+  // 실사용 구글 시트의 해설(E열)은 <br />, <b>, <mark> 같은 태그로 이미
+  // 서식이 입혀진 HTML로 들어온다 — escapeHtml을 거치면 태그가 그대로
+  // 화면에 글자로 보이며 깨진다. 운영자 본인의 시트에서 오는 신뢰된
+  // 콘텐츠이므로(공개 이용자 입력이 아님) 태그처럼 보이면 그대로
+  // 통과시키되, 실수로 섞여 들어올 수 있는 명백히 위험한 것(script/
+  // style/iframe, on속성, javascript: 링크)만 방어적으로 제거한다.
+  // 태그가 안 섞인 순수 텍스트는 기존처럼 nl2p로 줄바꿈만 처리한다.
+  function isHtmlLike(str) {
+    return /<[a-z][\s\S]*>/i.test(String(str || ""));
+  }
+  function sanitizeTrustedHtml(html) {
+    var s = String(html == null ? "" : html);
+    s = s.replace(/<script[\s\S]*?<\/script>/gi, "");
+    s = s.replace(/<style[\s\S]*?<\/style>/gi, "");
+    s = s.replace(/<iframe[\s\S]*?<\/iframe>/gi, "");
+    s = s.replace(/\son\w+\s*=\s*"[^"]*"/gi, "").replace(/\son\w+\s*=\s*'[^']*'/gi, "");
+    s = s.replace(/\s(href|src)\s*=\s*["']\s*javascript:[^"']*["']/gi, "");
+    return s;
+  }
+  function renderRichText(str) {
+    var s = String(str == null ? "" : str);
+    if (!s.trim()) return "";
+    return isHtmlLike(s) ? sanitizeTrustedHtml(s) : nl2p(s);
   }
 
   function todayKST() {
@@ -225,7 +328,19 @@
    * 시트 전체 불러오기" bulk-import button in admin.html) so a sheet row
    * produces byte-identical output regardless of which path applied it.
    */
+  // H/I/J/K처럼 라벨이 없는(또는 "H (custom_title)"처럼 있는) 부가 열을
+  // 논리 이름 -> 열 문자 순으로 찾는다. 나중에 시트에 제대로 된 헤더를
+  // 붙이면 그 라벨이 우선되고, 지금처럼 라벨이 없으면 열 문자(h/i/j/k)로
+  // 동작한다 — 실제 운영 시트가 지금 이 상태(I/J/K 열에 라벨이 없음).
+  function pickAlias(row, names) {
+    for (var i = 0; i < names.length; i++) {
+      if (row[names[i]]) return row[names[i]];
+    }
+    return "";
+  }
+
   function computeSingleRoundToday(row, today) {
+    row = normalizeSheetRow(row);
     var imageUrlRaw = row.q_image || row.image_url || row.image || row.imageurl || "";
     var image = resolveIncomingImage(imageUrlRaw);
     var result = { date: today, imageUrl: image.imageUrl };
@@ -234,6 +349,17 @@
     result.choices = [row.choice1, row.choice2, row.choice3, row.choice4].filter(function (c) { return c && c.trim(); });
     result.answer = row.answer || "";
     result.explanation = row.explanation || "";
+    // 아래 4개는 실제 운영 시트(A~H열 + 라벨 없는 I/J/K열)에서만 쓰이는
+    // 선택 필드다 — 값이 없으면 그냥 빈 문자열이라 기존 단순 헤더 시트에는
+    // 영향이 없다.
+    var customTitle = pickAlias(row, ["custom_title", "h"]);
+    var pendingMessage = pickAlias(row, ["pending_message", "status_message", "i"]);
+    var promoBlurb = pickAlias(row, ["promo", "blurb", "j"]);
+    var hint = pickAlias(row, ["hint", "k"]);
+    if (customTitle) result.customTitle = customTitle;
+    if (pendingMessage) result.pendingMessage = pendingMessage;
+    if (promoBlurb) result.promoBlurb = promoBlurb;
+    if (hint) result.hint = hint;
     return result;
   }
 
@@ -241,6 +367,8 @@
     return !!prev && prev.date === next.date &&
       prev.question === next.question && prev.answer === next.answer &&
       prev.explanation === next.explanation && prev.imageUrl === next.imageUrl &&
+      prev.customTitle === next.customTitle && prev.pendingMessage === next.pendingMessage &&
+      prev.promoBlurb === next.promoBlurb && prev.hint === next.hint &&
       JSON.stringify(prev.choices || []) === JSON.stringify(next.choices);
   }
 
@@ -252,6 +380,7 @@
         var kept = (prevRounds || []).filter(function (r) { return r.time === sched.time; })[0];
         return kept || { time: sched.time, label: sched.label, question: "", imageUrl: "", choices: [], answer: "", explanation: "" };
       }
+      row = normalizeSheetRow(row);
       var imageUrlRaw = row.q_image || row.image_url || row.image || row.imageurl || "";
       var image = resolveIncomingImage(imageUrlRaw);
       var result = { time: sched.time, label: sched.label, question: row.question || "", imageUrl: image.imageUrl };
@@ -259,6 +388,10 @@
       result.choices = [row.choice1, row.choice2, row.choice3, row.choice4].filter(function (c) { return c && c.trim(); });
       result.answer = row.answer || "";
       result.explanation = row.explanation || "";
+      var pendingMessage = pickAlias(row, ["pending_message", "status_message", "i"]);
+      var hint = pickAlias(row, ["hint", "k"]);
+      if (pendingMessage) result.pendingMessage = pendingMessage;
+      if (hint) result.hint = hint;
       return result;
     });
   }
@@ -291,7 +424,10 @@
     if (fields.question && /[<>]/.test(fields.question)) {
       warnings.push("문제 텍스트에 <, > 문자가 있습니다. 의도한 내용인지 확인해 주세요.");
     }
-    if (fields.explanation && /[<>]/.test(fields.explanation)) {
+    // 해설이 <b>/<br /> 같은 실제 태그로 서식이 입혀진 경우(운영 중인
+    // 구글 시트가 이렇게 준다)는 의도된 것이므로 경고하지 않는다 — 그 외
+    // "<"/">" 낱글자만 섞인 경우만 오타일 수 있어 확인을 권한다.
+    if (fields.explanation && /[<>]/.test(fields.explanation) && !isHtmlLike(fields.explanation)) {
       warnings.push("정답 해설에 <, > 문자가 있습니다. 의도한 내용인지 확인해 주세요.");
     }
     return { errors: errors, warnings: warnings };
@@ -612,7 +748,7 @@
           '<div class="answer-summary__round">' +
           '<span class="answer-summary__round-time">' + escapeHtml(r.label || "") + "</span>" +
           '<span class="answer-summary__round-value' + (known ? "" : " is-empty") + '">' +
-          (known ? escapeHtml(r.answer) : "아직 등록 전") +
+          (known ? escapeHtml(r.answer) : escapeHtml(r.pendingMessage || "아직 등록 전")) +
           "</span></div>"
         );
       }).join("");
@@ -631,7 +767,7 @@
     return (
       '<section class="answer-summary" id="summary" aria-label="오늘의 정답">' +
       '<div class="answer-summary__label">🏆 정답</div>' +
-      '<div class="answer-summary__value">' + (hasAnswer ? escapeHtml(today.answer) : "아직 등록 전") + "</div>" +
+      '<div class="answer-summary__value">' + (hasAnswer ? escapeHtml(today.answer) : escapeHtml(today.pendingMessage || "아직 등록 전")) + "</div>" +
       (qPreview ? '<p class="answer-summary__q">Q. ' + escapeHtml(qPreview) + (today.question && today.question.length > 70 ? "…" : "") + "</p>" : "") +
       "</section>"
     );
@@ -753,7 +889,9 @@
     return (
       '<div class="round-block">' +
       '<span class="round-block__time">🕐 ' + escapeHtml(round.label || "") + " 회차</span>" +
-      '<div class="panel">' + imageHTML + '<p class="q-text">' + nl2p(round.question || "아직 등록된 문제가 없습니다. 관리자 페이지에서 이 회차의 문제를 입력해 주세요.") + "</p>" + choicesHTML + "</div>" +
+      '<div class="panel">' + imageHTML + '<p class="q-text">' + nl2p(round.question || "아직 등록된 문제가 없습니다. 관리자 페이지에서 이 회차의 문제를 입력해 주세요.") + "</p>" + choicesHTML +
+      (round.hint ? '<p class="q-hint">💡 힌트: ' + escapeHtml(round.hint) + "</p>" : "") +
+      "</div>" +
       "</div>"
     );
   }
@@ -769,8 +907,8 @@
       "<details class=\"reveal\">" +
       "<summary class=\"reveal__button\">" + escapeHtml(round.label || "") + " 정답과 자세한 해설 보기</summary>" +
       '<div class="reveal__content">' +
-      '<span class="answer-badge">✅ 정답 · ' + escapeHtml(round.answer || "미등록") + "</span>" +
-      '<p class="explain-text">' + nl2p(round.explanation || "해설이 아직 등록되지 않았습니다.") + "</p>" +
+      '<span class="answer-badge">✅ 정답 · ' + escapeHtml(round.answer || round.pendingMessage || "미등록") + "</span>" +
+      '<p class="explain-text">' + renderRichText(round.explanation || "해설이 아직 등록되지 않았습니다.") + "</p>" +
       "</div>" +
       "</details>" +
       "</div>"
@@ -797,9 +935,13 @@
       : [];
     var roundLabels = isMultiRound ? app.roundSchedule.map(function (s) { return s.label; }) : [];
 
-    var title = isMultiRound
+    // 시트의 H(custom_title)에 값이 있으면 그대로 쓰고, 없으면(대부분의
+    // 경우) 실제 상위 노출 패턴에 맞춰 다듬어온 기존 제목 로직을 그대로
+    // 쓴다 — SEO 튜닝된 기본값을 함부로 덮어쓰지 않기 위해 명시적으로
+    // 채운 경우만 우선한다.
+    var title = today.customTitle || (isMultiRound
       ? app.name + " 정답 (" + dateLabel + ") " + roundLabels.join("·") + " 회차 | " + site.name
-      : app.name + " 정답 (" + dateLabel + ") | " + site.name;
+      : app.name + " 정답 (" + dateLabel + ") | " + site.name);
     var description = buildMetaDescription(app, isMultiRound, roundsMerged, today, dateLabel, exposeAnswer);
     var keywords = isMultiRound
       ? [app.name + " 정답", app.name + " 정답 오늘", app.name + " 회차", app.name + " " + dateLabel, site.name].join(", ")
@@ -930,7 +1072,9 @@
         adSlot("top", "광고 영역 A (상단)", site.adsense) +
         '<section class="section shell" id="question">' +
         '<h2 class="section__label"><span class="n">01</span>' + escapeHtml(app.name) + " 문제</h2>" +
-        '<div class="panel">' + imageHTML + '<p class="q-text">' + nl2p(today.question || "아직 등록된 문제가 없습니다. 관리자 페이지에서 오늘의 문제를 입력해 주세요.") + "</p>" + choicesHTML + "</div>" +
+        '<div class="panel">' + imageHTML + '<p class="q-text">' + nl2p(today.question || "아직 등록된 문제가 없습니다. 관리자 페이지에서 오늘의 문제를 입력해 주세요.") + "</p>" + choicesHTML +
+        (today.hint ? '<p class="q-hint">💡 힌트: ' + escapeHtml(today.hint) + "</p>" : "") +
+        "</div>" +
         "</section>" +
         '<section class="section shell" id="today-answer" style="padding-top:0;">' +
         '<h2 class="section__label"><span class="n">02</span>오늘의 정답</h2>' +
@@ -942,8 +1086,8 @@
         "<details class=\"reveal\">" +
         "<summary class=\"reveal__button\">정답과 자세한 해설 보기</summary>" +
         '<div class="reveal__content">' +
-        '<span class="answer-badge">✅ 정답 · ' + escapeHtml(today.answer || "미등록") + "</span>" +
-        '<p class="explain-text">' + nl2p(today.explanation || "해설이 아직 등록되지 않았습니다.") + "</p>" +
+        '<span class="answer-badge">✅ 정답 · ' + escapeHtml(today.answer || today.pendingMessage || "미등록") + "</span>" +
+        '<p class="explain-text">' + renderRichText(today.explanation || "해설이 아직 등록되지 않았습니다.") + "</p>" +
         "</div></details>" +
         "</section>" +
         '<section class="section shell" id="howto" style="padding-top:0;">' +
@@ -952,6 +1096,7 @@
         '<a class="cta-button" href="' + escapeHtml(app.appDeeplink || "#") + '">' + escapeHtml(app.name) + " 참여하러 가기 →</a>" +
         '<p class="path-steps">' + escapeHtml(app.participatePath || "") + "</p>" +
         renderHowtoTable(app) +
+        (today.promoBlurb ? '<div class="promo-blurb">' + renderRichText(today.promoBlurb) + "</div>" : "") +
         "</div></section>" +
         '<section class="section shell" id="archive" style="padding-top:0;">' +
         '<h2 class="section__label"><span class="n">05</span>지난 정답 모음</h2>' +
@@ -1088,8 +1233,13 @@
     parseCsv: parseCsv,
     csvToObjects: csvToObjects,
     sheetAppId: sheetAppId,
+    normalizeSheetCsvUrl: normalizeSheetCsvUrl,
+    normalizeSheetRow: normalizeSheetRow,
+    resolveSheetApp: resolveSheetApp,
     escapeHtml: escapeHtml,
     nl2p: nl2p,
+    isHtmlLike: isHtmlLike,
+    renderRichText: renderRichText,
     todayKST: todayKST,
     formatDateKo: formatDateKo,
     formatDateShort: formatDateShort,

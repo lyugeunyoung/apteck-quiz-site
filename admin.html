@@ -95,6 +95,16 @@
       바꿔주세요). 이미지는 원본 해상도 그대로 저장되며 리사이즈하지 않습니다.
     </p>
     <p class="admin-card__hint">
+      <code>app_id</code> 열이 없는 시트(예: <code>"A (구분/ID)"</code> 같은 괄호 라벨 헤더에 앱 이름만
+      적혀 있는 형식)도 지원합니다 — 이 경우 각 행이 어떤 앱인지는 이름으로 찾습니다(공백 차이는 무시).
+      시트에 적힌 이름이 앱의 실제 이름과 다르면 관리자 페이지의 앱 데이터에 <code>sheetName</code> 별칭을
+      추가해 맞출 수 있습니다. 시트에 있는 행이 어떤 앱과도 매칭되지 않으면(오타·미등록 앱) 그 행만
+      건너뛰고 나머지는 정상 반영됩니다 — 한 행 때문에 전체가 막히지 않습니다. <code>date</code> 열이
+      아예 없는 시트는 행 하나하나가 "지금 상태"로 취급되어 항상 반영 대상이 됩니다. 해설(E열 등)에
+      <code>&lt;b&gt;</code>/<code>&lt;br /&gt;</code>/<code>&lt;mark&gt;</code> 같은 HTML 서식이
+      들어있으면 그대로 굵게·줄바꿈·강조로 표시됩니다.
+    </p>
+    <p class="admin-card__hint">
       시트를 만든 뒤 <strong>파일 → 공유 → 공유</strong>에서 "링크가 있는 모든 사용자 – 뷰어"로 설정하고,
       아래 CSV 주소 형식을 사용하세요:<br>
       <code>https://docs.google.com/spreadsheets/d/시트ID/export?format=csv&amp;gid=시트탭ID</code>

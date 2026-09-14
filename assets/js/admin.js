@@ -301,16 +301,27 @@
   var SHEET_LS_KEY = "apteck-admin-sheet-url";
 
   // CSV parsing lives in template.js (QuizTemplates.parseCsv/csvToObjects/
-  // sheetAppId) so this browser tool and scripts/sync-sheet.js's automatic
-  // GitHub Actions sync read a sheet identically.
+  // sheetAppId/resolveSheetApp) so this browser tool and scripts/sync-sheet.js's
+  // automatic GitHub Actions sync read a sheet identically — including sheets
+  // that identify apps by display name instead of app_id (실사용 시트 형식).
   var csvToObjects = QuizTemplates.csvToObjects;
   var sheetAppId = QuizTemplates.sheetAppId;
 
-  function findSheetRow(appId, date) {
-    return state.sheetRows.filter(function (r) { return sheetAppId(r) === appId && r.date === date; })[0] || null;
+  function normalizedSheetRows() {
+    return state.sheetRows.map(function (r) { return QuizTemplates.normalizeSheetRow(r); });
   }
-  function findLatestSheetRow(appId) {
-    var rows = state.sheetRows.filter(function (r) { return sheetAppId(r) === appId; });
+  // date 열이 있는 행은 그 날짜가 today와 같을 때만, date 열이 아예 없는
+  // 행(실사용 시트)은 항상 "지금 상태"로 취급한다 — sync-sheet.js와 동일.
+  function rowIsCurrentlyRelevant(row, today) {
+    return !row.date || row.date === today;
+  }
+  function findSheetRow(app, date) {
+    return normalizedSheetRows().filter(function (r) {
+      return QuizTemplates.resolveSheetApp(r, [app]) === app && r.date === date;
+    })[0] || null;
+  }
+  function findLatestSheetRow(app) {
+    var rows = normalizedSheetRows().filter(function (r) { return QuizTemplates.resolveSheetApp(r, [app]) === app; });
     rows.sort(function (a, b) { return (b.date || "").localeCompare(a.date || ""); });
     return rows[0] || null;
   }
@@ -329,11 +340,12 @@
   }
 
   el["btn-sheet-load"].addEventListener("click", async function () {
-    var url = el["f-sheet-url"].value.trim();
+    var url = QuizTemplates.normalizeSheetCsvUrl(el["f-sheet-url"].value.trim());
     if (!url) {
       setStatus(el["sheet-status"], "시트 CSV 주소를 입력해 주세요.", "err");
       return;
     }
+    el["f-sheet-url"].value = url; // 편집 주소를 넣었다면 CSV 주소로 바뀐 걸 눈에 보이게 반영
     setStatus(el["sheet-status"], "시트 불러오는 중...", "busy");
     try {
       var rows = await fetchSheetRows(url);
@@ -352,11 +364,12 @@
   // same sheet on its own, without anyone opening this admin page — this is
   // the one-time step that turns "load manually" into "always in sync".
   el["btn-sheet-enable-auto"].addEventListener("click", async function () {
-    var url = el["f-sheet-url"].value.trim();
+    var url = QuizTemplates.normalizeSheetCsvUrl(el["f-sheet-url"].value.trim());
     if (!url) {
       setStatus(el["sheet-auto-status"], "먼저 시트 CSV 주소를 입력해 주세요.", "err");
       return;
     }
+    el["f-sheet-url"].value = url;
     el["btn-sheet-enable-auto"].disabled = true;
     setStatus(el["sheet-auto-status"], "data/quizzes.json에 시트 주소 저장 중...", "busy");
     try {
@@ -422,8 +435,10 @@
       el["sheet-match"].style.display = "none";
       return;
     }
-    var todayRow = findSheetRow(state.selectedId, todayISO());
-    var latestRow = todayRow || findLatestSheetRow(state.selectedId);
+    var selectedApp = appById(state.selectedId);
+    if (!selectedApp) { el["sheet-match"].style.display = "none"; return; }
+    var todayRow = findSheetRow(selectedApp, todayISO());
+    var latestRow = todayRow || findLatestSheetRow(selectedApp);
     if (!latestRow) {
       el["sheet-match"].style.display = "none";
       return;
@@ -467,16 +482,18 @@
     setStatus(el["bulk-status"], "시트 불러와 오늘 날짜 행을 앱별로 대조하는 중...", "busy");
     el["bulk-diff"].style.display = "none";
     try {
-      var rows = await fetchSheetRows(url);
-      state.sheetRows = rows;
+      var rawRows = await fetchSheetRows(url);
+      state.sheetRows = rawRows;
+      var rows = rawRows.map(function (r) { return QuizTemplates.normalizeSheetRow(r); });
       try { localStorage.setItem(SHEET_LS_KEY, url); } catch (e) {}
       var today = todayISO();
       var candidates = [];
+      var unresolvedCount = 0;
 
       state.data.apps.forEach(function (app) {
         var isMultiRound = !!(app.roundSchedule && app.roundSchedule.length);
         if (isMultiRound) {
-          var matches = rows.filter(function (r) { return sheetAppId(r) === app.id && r.date === today && r.round_time; });
+          var matches = rows.filter(function (r) { return QuizTemplates.resolveSheetApp(r, [app]) === app && rowIsCurrentlyRelevant(r, today) && r.round_time; });
           if (!matches.length) return;
           var prevRounds = (app.today && app.today.date === today) ? (app.today.rounds || []) : [];
           var nextRounds = QuizTemplates.computeMultiRoundToday(app, matches, today, prevRounds);
@@ -492,15 +509,23 @@
             changed: changed, errors: vErrors, warnings: vWarnings
           });
         } else {
-          var row = rows.find(function (r) { return sheetAppId(r) === app.id && r.date === today; });
+          var row = rows.find(function (r) { return QuizTemplates.resolveSheetApp(r, [app]) === app && rowIsCurrentlyRelevant(r, today); });
           if (!row) return;
           var nextToday = QuizTemplates.computeSingleRoundToday(row, today);
           var changed2 = !QuizTemplates.isSameSingleRoundToday(app.today, nextToday);
           var v2 = QuizTemplates.validateQuizContent({ question: nextToday.question, answer: nextToday.answer, explanation: nextToday.explanation, imageUrl: nextToday.imageUrl });
+          var deeplink2 = row.link && row.link.trim() && row.link.trim() !== app.appDeeplink ? row.link.trim() : null;
           candidates.push({
-            app: app, isMultiRound: false, nextToday: nextToday,
-            changed: changed2, errors: v2.errors, warnings: v2.warnings
+            app: app, isMultiRound: false, nextToday: nextToday, nextDeeplink: deeplink2,
+            changed: changed2 || !!deeplink2, errors: v2.errors, warnings: v2.warnings
           });
+        }
+      });
+
+      rows.forEach(function (r) {
+        if (!QuizTemplates.resolveSheetApp(r, state.data.apps)) {
+          var shownId = QuizTemplates.sheetAppId(r) || r["구분/id"] || r.name || "";
+          if (shownId) unresolvedCount++;
         }
       });
 
@@ -508,11 +533,12 @@
       renderBulkDiff();
 
       if (!candidates.length) {
-        setStatus(el["bulk-status"], "오늘(" + today + ") 날짜 행이 시트에 없습니다. app_id·date 열을 확인해 주세요.", "err");
+        setStatus(el["bulk-status"], "일치하는 앱 행을 찾지 못했습니다. 시트의 app_id(또는 이름) 열과 각 앱의 이름/sheetName이 맞는지 확인해 주세요." + (unresolvedCount ? " (등록되지 않은 이름 " + unresolvedCount + "건 발견 — 무시됨)" : ""), "err");
         return;
       }
       var changedCount = candidates.filter(function (c) { return c.changed; }).length;
-      setStatus(el["bulk-status"], "✅ 오늘 날짜 행 매칭 " + candidates.length + "개 앱 (실제 변경 " + changedCount + "개). 아래에서 검토 후 게시하세요.", "ok");
+      setStatus(el["bulk-status"], "✅ 시트 매칭 " + candidates.length + "개 앱 (실제 변경 " + changedCount + "개)." +
+        (unresolvedCount ? " 등록되지 않은 시트 행 " + unresolvedCount + "건은 무시됨." : "") + " 아래에서 검토 후 게시하세요.", "ok");
       el["bulk-diff"].style.display = "";
     } catch (e) {
       setStatus(el["bulk-status"], e.message || String(e), "err");
@@ -590,6 +616,8 @@
       var files = {};
       var names = [];
 
+      var normalizedRows = state.sheetRows.map(function (r) { return QuizTemplates.normalizeSheetRow(r); });
+
       selected.forEach(function (c) {
         var app = freshData.apps.filter(function (a) { return a.id === c.app.id; })[0];
         if (!app) return; // deleted since preview was built — skip rather than fail the whole batch
@@ -601,9 +629,10 @@
             app.history = app.history.slice(0, QuizTemplates.HISTORY_LIMIT);
           }
           var prevRounds = (app.today && app.today.date === today) ? (app.today.rounds || []) : [];
-          app.today = { date: today, rounds: QuizTemplates.computeMultiRoundToday(app, state.sheetRows.filter(function (r) { return sheetAppId(r) === app.id && r.date === today && r.round_time; }), today, prevRounds) };
+          var matches = normalizedRows.filter(function (r) { return QuizTemplates.resolveSheetApp(r, [app]) === app && rowIsCurrentlyRelevant(r, today) && r.round_time; });
+          app.today = { date: today, rounds: QuizTemplates.computeMultiRoundToday(app, matches, today, prevRounds) };
         } else {
-          var row = state.sheetRows.find(function (r) { return sheetAppId(r) === app.id && r.date === today; });
+          var row = normalizedRows.find(function (r) { return QuizTemplates.resolveSheetApp(r, [app]) === app && rowIsCurrentlyRelevant(r, today); });
           if (!row) return;
           var nextToday = QuizTemplates.computeSingleRoundToday(row, today);
           if (app.today && app.today.date && app.today.date !== today && app.today.question) {
@@ -612,6 +641,7 @@
             app.history = app.history.slice(0, QuizTemplates.HISTORY_LIMIT);
           }
           app.today = nextToday;
+          if (row.link && row.link.trim()) app.appDeeplink = row.link.trim();
         }
         app.updatedAt = today;
         names.push(app.name);

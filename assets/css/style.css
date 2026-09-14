@@ -513,6 +513,28 @@ ul { margin: 0; padding: 0; list-style: none; }
   text-align: center;
 }
 
+.q-hint {
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.promo-blurb {
+  margin-top: 14px;
+  padding: 14px;
+  background: var(--surface-sunken);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink-muted);
+  text-align: left;
+}
+.promo-blurb b, .promo-blurb strong { color: var(--ink); }
+
 .related-list {
   display: flex;
   flex-direction: column;
