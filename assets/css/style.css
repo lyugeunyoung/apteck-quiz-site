@@ -233,6 +233,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   display: grid;
   place-items: center;
   font-size: 22px;
+  object-fit: cover; /* app.thumbnailUrl이 있으면 <img>로 렌더링됨 */
 }
 .quiz-card__body { flex: 1; min-width: 0; display: block; }
 .quiz-card__top {
@@ -315,6 +316,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   place-items: center;
   font-size: 28px;
   box-shadow: var(--shadow-sm);
+  object-fit: cover;
 }
 .quiz-hero__statusbar {
   display: flex;
@@ -559,6 +561,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   display: grid;
   place-items: center;
   flex: none;
+  object-fit: cover;
 }
 .related-card__name { font-weight: 700; font-size: 14px; }
 .related-card__hint { font-size: 12px; color: var(--ink-muted); }
@@ -676,6 +679,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .q-image img {
   width: 100%;
+  height: auto; /* width/height 속성으로 잡은 원본 비율 유지(안 넣으면 세로가 원본 px로 고정돼 찌그러져 보임) */
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
   background: var(--surface-sunken);
@@ -849,6 +853,13 @@ ul { margin: 0; padding: 0; list-style: none; }
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+}
+img.app-link-pill__icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  object-fit: cover;
+  flex: none;
 }
 .app-link-pill {
   display: inline-flex;

@@ -582,6 +582,19 @@
     );
   }
 
+  // 앱 아이콘 자리(홈 카드, 상세 페이지 히어로, 관련 카드, 전체 목록
+  // pill)에 쓰는 배지 — app.thumbnailUrl이 있으면 실제 브랜드 이미지를,
+  // 없으면 기존처럼 이모지를 보여준다(대부분의 앱은 아직 이모지만 있음 —
+  // 하위 호환).
+  function renderAppBadge(app, className, basePrefix) {
+    if (app.thumbnailUrl) {
+      var w = app.thumbnailWidth || 100, h = app.thumbnailHeight || 100;
+      return '<img class="' + className + '" src="' + escapeHtml((basePrefix || "") + app.thumbnailUrl) +
+        '" alt="" loading="lazy" decoding="async" width="' + w + '" height="' + h + '">';
+    }
+    return '<span class="' + className + '" aria-hidden="true">' + escapeHtml(app.emoji || "🎯") + "</span>";
+  }
+
   function quizCardHTML(app, pagePrefix) {
     var fresh = isFresh(app);
     var statusClass = fresh ? "status-pill--fresh" : "status-pill--stale";
@@ -593,7 +606,10 @@
       '<div class="quiz-card"' + (app.brandColor ? ' style="--brand:' + escapeHtml(app.brandColor) + ';"' : "") + '>' +
       favoriteButtonHTML(app.id) +
       '<a class="quiz-card__link" href="' + pagePrefix + escapeHtml(app.page) + '">' +
-      '<span class="quiz-card__badge" aria-hidden="true">' + escapeHtml(app.emoji || "🎯") + "</span>" +
+      // pagePrefix는 pages/{app.page}로 가는 링크용 접두어("pages/")라
+      // 자산 경로에는 안 맞는다 — quizCardHTML은 항상 루트(index.html)에서만
+      // 쓰이므로 이미지 접두어는 빈 문자열이 맞다.
+      renderAppBadge(app, "quiz-card__badge", "") +
       '<span class="quiz-card__body">' +
       '<span class="quiz-card__top"><span class="quiz-card__name">' + escapeHtml(app.name) + "</span></span>" +
       '<span class="quiz-card__meta">' + escapeHtml(metaText) + "</span>" +
@@ -844,7 +860,10 @@
     var items = apps.filter(function (a) { return a.id !== currentId; }).map(function (a) {
       return (
         '<a class="app-link-pill"' + (a.brandColor ? ' style="--brand:' + escapeHtml(a.brandColor) + ';"' : "") + ' href="' + pagePrefix + escapeHtml(a.page) + '">' +
-        '<span aria-hidden="true">' + escapeHtml(a.emoji || "🎯") + "</span>" + escapeHtml(a.name) +
+        // renderAllAppsGrid는 항상 pages/*.html(renderAppPage) 안에서만
+        // 쓰이므로 자산 접두어는 pagePrefix(링크용, 보통 빈 문자열)와
+        // 무관하게 항상 "../"다.
+        renderAppBadge(a, "app-link-pill__icon", "../") + escapeHtml(a.name) +
         "</a>"
       );
     }).join("");
@@ -997,7 +1016,7 @@
     var featuredHTML = featured.map(function (r) {
       return (
         '<a class="related-card"' + (r.brandColor ? ' style="--brand:' + escapeHtml(r.brandColor) + ';"' : "") + ' href="' + escapeHtml(r.page) + '">' +
-        '<span class="related-card__badge" aria-hidden="true">' + escapeHtml(r.emoji || "🎯") + "</span>" +
+        renderAppBadge(r, "related-card__badge", "../") +
         '<span><span class="related-card__name">' + escapeHtml(r.name) + '</span><br>' +
         '<span class="related-card__hint">' + escapeHtml(r.rewardHint || "오늘의 정답 보기") + "</span></span>" +
         "</a>"
@@ -1010,7 +1029,7 @@
       '<span class="status-pill__dot"></span><span class="status-pill__text">' + (fresh ? "오늘 갱신됨" : "갱신 대기") + "</span></span>";
     var heroHTML =
       '<div class="quiz-hero shell"' + (brand ? ' style="--brand:' + escapeHtml(brand) + ';"' : "") + '>' +
-      '<div class="quiz-hero__row"><span class="quiz-hero__badge" aria-hidden="true">' + escapeHtml(app.emoji || "🎯") + "</span>" + favoriteButtonHTML(app.id) + "</div>" +
+      '<div class="quiz-hero__row">' + renderAppBadge(app, "quiz-hero__badge", "../") + favoriteButtonHTML(app.id) + "</div>" +
       '<div class="quiz-hero__statusbar">' + statusPillHTML +
       '<time datetime="' + escapeHtml(freshDatetime) + '">' + formatDateKo(today.date) + " 기준</time></div>" +
       '<span class="quiz-hero__cat">' + escapeHtml(app.category || "") + " · " + escapeHtml(app.schedule || "매일") + "</span>" +
