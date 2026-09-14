@@ -164,7 +164,7 @@
         "imageHeight": 300,
         "question": "",
         "choices": [],
-        "answer": "",
+        "answer": "O (그렇다)",
         "explanation": ""
       },
       "history": [
@@ -253,7 +253,7 @@
         "imageHeight": 300,
         "question": "",
         "choices": [],
-        "answer": "",
+        "answer": "X (아니다)",
         "explanation": ""
       },
       "history": [
