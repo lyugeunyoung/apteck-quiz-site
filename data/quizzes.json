@@ -95,7 +95,9 @@
       "updatedAt": "2026-09-16",
       "today": {
         "date": "2026-09-16",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "오늘 하나원큐 앱에서 오픈하는 대한민국 vs 에콰도르 국가대표 친선경기 티켓 예매는 저녁 몇 시부터 시작할까요?",
         "choices": [],
         "answer": "④ 19시",
