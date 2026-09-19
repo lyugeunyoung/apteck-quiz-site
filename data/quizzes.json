@@ -92,13 +92,13 @@
       "rewardHint": "원큐볼(하나머니) 최대 10,000",
       "participatePath": "하나원큐 앱 > 혜택 > 축구Play 퀴즈",
       "appDeeplink": "https://s.ppomppu.co.kr/?idno=coupon_118429&target=aHR0cHM6Ly9vcWYuaGFuYWJhbmsuY29tL29xZi9vbmVxZmlyc3QuanNwP3NjcmVlbklkPUxGTkwwNDAxMDAxNTAx&encode=on",
-      "updatedAt": "2026-09-19",
+      "updatedAt": "2026-09-20",
       "today": {
-        "date": "2026-09-19",
+        "date": "2026-09-20",
         "imageUrl": "",
         "question": "",
         "choices": [],
-        "answer": "④ 천안",
+        "answer": "③ 광주",
         "explanation": ""
       },
       "history": [
@@ -148,17 +148,23 @@
       "rewardHint": "카카오페이포인트 최대 10,000P",
       "participatePath": "카카오페이 앱 > 혜택 > 퀴즈타임",
       "appDeeplink": "https://link.kakaopay.com/_/PfLLf6_",
-      "updatedAt": "2026-09-19",
+      "updatedAt": "2026-09-20",
       "today": {
-        "date": "2026-09-19",
+        "date": "2026-09-20",
         "imageUrl": "",
-        "question": "머니건을 쏘면 □□□□□ 포인트 최대 3만P까지 받을 수 있어요!",
+        "question": "",
         "choices": [],
-        "answer": "카카오페이",
-        "explanation": "카카오페이 머니건은 송금·결제와 연계된 혜택형 서비스로, 이용 조건을 충족하면 포인트 보상을 받을 수 있는 구조입니다.<br /><br />• 문제 : 머니건을 쏘면 □□□□□ 포인트 최대 3만P까지 받을 수 있어요!<br />• 정답 : <mark>카카오페이</mark><br /><br /><b>정답 근거</b><br />문장의 빈칸에는 포인트를 제공하는 서비스명을 나타내는 ‘카카오페이’가 들어갑니다. 머니건은 카카오페이 서비스 안에서 이용되는 기능이므로, 보상 역시 카카오페이와 연결된 포인트 형태로 안내됩니다. 특히 문제에서는 최대 3만P까지 받을 수 있다는 혜택과 함께 서비스명을 묻고 있어 빈칸의 핵심은 카카오페이입니다. 따라서 정답은 ‘카카오페이’입니다.<br /><br /><b>관련 설명</b><br />포인트 혜택형 이벤트는 참여만으로 동일한 금액이 지급되는 방식과 조건 충족이나 추첨에 따라 지급액이 달라지는 방식이 구분될 수 있습니다. ‘최대 3만P’라는 표현은 받을 수 있는 최고 한도를 의미하며 모든 참여자가 3만P를 받는다는 뜻은 아닙니다. 실제 지급 포인트와 참여 횟수, 대상 조건, 유효기간 등은 이벤트 운영 기준에 따라 달라질 수 있습니다. 이용 전에는 카카오페이의 최신 이벤트 안내에서 참여 방법과 포인트 지급 조건을 함께 확인하는 것이 좋습니다.",
+        "answer": "",
+        "explanation": "",
         "hint": "<p>⏰ 다음 퀴즈가 곧 열려요! (오전 10시 오픈 예정)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>"
       },
       "history": [
+        {
+          "date": "2026-09-19",
+          "question": "머니건을 쏘면 □□□□□ 포인트 최대 3만P까지 받을 수 있어요!",
+          "answer": "카카오페이",
+          "explanation": "카카오페이 머니건은 송금·결제와 연계된 혜택형 서비스로, 이용 조건을 충족하면 포인트 보상을 받을 수 있는 구조입니다.<br /><br />• 문제 : 머니건을 쏘면 □□□□□ 포인트 최대 3만P까지 받을 수 있어요!<br />• 정답 : <mark>카카오페이</mark><br /><br /><b>정답 근거</b><br />문장의 빈칸에는 포인트를 제공하는 서비스명을 나타내는 ‘카카오페이’가 들어갑니다. 머니건은 카카오페이 서비스 안에서 이용되는 기능이므로, 보상 역시 카카오페이와 연결된 포인트 형태로 안내됩니다. 특히 문제에서는 최대 3만P까지 받을 수 있다는 혜택과 함께 서비스명을 묻고 있어 빈칸의 핵심은 카카오페이입니다. 따라서 정답은 ‘카카오페이’입니다.<br /><br /><b>관련 설명</b><br />포인트 혜택형 이벤트는 참여만으로 동일한 금액이 지급되는 방식과 조건 충족이나 추첨에 따라 지급액이 달라지는 방식이 구분될 수 있습니다. ‘최대 3만P’라는 표현은 받을 수 있는 최고 한도를 의미하며 모든 참여자가 3만P를 받는다는 뜻은 아닙니다. 실제 지급 포인트와 참여 횟수, 대상 조건, 유효기간 등은 이벤트 운영 기준에 따라 달라질 수 있습니다. 이용 전에는 카카오페이의 최신 이벤트 안내에서 참여 방법과 포인트 지급 조건을 함께 확인하는 것이 좋습니다."
+        },
         {
           "date": "2026-09-18",
           "question": "머니건을 쏘면 □□□□□ 포인트 최대 3만P까지 받을 수 있어요!\n\n카카오페이손해보험 □□□□□이 있다면 첫 달 이벤트로 새 폰을 알뜰하게 지킬 수 있어요",
@@ -203,13 +209,13 @@
       "rewardHint": "마이신한포인트",
       "participatePath": "신한 슈퍼SOL 앱 > 혜택 > 출석 퀴즈",
       "appDeeplink": "https://www.shinhan.com/",
-      "updatedAt": "2026-09-19",
+      "updatedAt": "2026-09-20",
       "today": {
-        "date": "2026-09-19",
+        "date": "2026-09-20",
         "imageUrl": "",
         "question": "",
         "choices": [],
-        "answer": "③ 3",
+        "answer": "",
         "explanation": "",
         "hint": "<p>⏰ 다음 퀴즈가 곧 열려요! (오전 03시 오픈 예정)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>"
       },
@@ -257,13 +263,13 @@
       "rewardHint": "마이신한포인트 최대 100P",
       "participatePath": "신한 슈퍼SOL 앱 > 혜택 > 야구/상식 쏠퀴즈",
       "appDeeplink": "https://nsol.shinhan.com/link.html?pr_id=CO0101S0010F01",
-      "updatedAt": "2026-09-19",
+      "updatedAt": "2026-09-20",
       "today": {
-        "date": "2026-09-19",
+        "date": "2026-09-20",
         "imageUrl": "",
         "question": "",
         "choices": [],
-        "answer": "④ 도미니카공화국",
+        "answer": "② 네이버페이 10만원권",
         "explanation": ""
       },
       "history": [
@@ -310,13 +316,13 @@
       "rewardHint": "마이신한포인트 최대 10,000P 랜덤",
       "participatePath": "신한 SOL페이 앱 > 혜택 > 퀴즈팡팡",
       "appDeeplink": "https://pay.shinhancard.com/pay/PAYFM005N/PAYFM005J01.shc?screenId=NATIVE%7CRBFNA8021X01",
-      "updatedAt": "2026-09-19",
+      "updatedAt": "2026-09-20",
       "today": {
-        "date": "2026-09-19",
+        "date": "2026-09-20",
         "imageUrl": "",
         "question": "",
         "choices": [],
-        "answer": "② 5,000 포인트 적립",
+        "answer": "③ r",
         "explanation": ""
       },
       "history": [
@@ -363,13 +369,13 @@
       "rewardHint": "기회소득(리워드)",
       "participatePath": "기후행동 기회소득 앱 > 오늘의 퀴즈",
       "appDeeplink": "https://www.ggaction.or.kr/",
-      "updatedAt": "2026-09-19",
+      "updatedAt": "2026-09-20",
       "today": {
-        "date": "2026-09-19",
+        "date": "2026-09-20",
         "imageUrl": "",
         "question": "",
         "choices": [],
-        "answer": "X (아니다)",
+        "answer": "O (그렇다)",
         "explanation": ""
       },
       "history": [
@@ -416,9 +422,9 @@
       "rewardHint": "NH포인트",
       "participatePath": "NH올원뱅크 앱 > 생활+ > 혜택 놀이터 > 데일리 퀴즈",
       "appDeeplink": "https://banking.nonghyup.com/servlet/content/ip/ne/ipne1710c.thtml",
-      "updatedAt": "2026-09-19",
+      "updatedAt": "2026-09-20",
       "today": {
-        "date": "2026-09-19",
+        "date": "2026-09-20",
         "imageUrl": "",
         "question": "⏰ 다음 퀴즈가 월요일(2월 23일)에 열려요! (수익은 계속됩니다)",
         "choices": [],
@@ -427,6 +433,12 @@
         "hint": "<p>⏰ 다음 퀴즈가 월요일(2월 23일)에 열려요! (수익은 계속됩니다)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>"
       },
       "history": [
+        {
+          "date": "2026-09-19",
+          "question": "⏰ 다음 퀴즈가 월요일(2월 23일)에 열려요! (수익은 계속됩니다)",
+          "answer": "다음 퀴즈가 월요일(9월 21일)에 열려요!",
+          "explanation": "<p>⏰ 다음 퀴즈가 월요일(2월 23일)에 열려요! (수익은 계속됩니다)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>"
+        },
         {
           "date": "2026-09-18",
           "question": "추석은 음력으로 매년 언제일까요?",
@@ -470,9 +482,9 @@
       "rewardHint": "닥터캐쉬 최대 10,000캐시",
       "participatePath": "토스 앱 > 혜택 > 나만의닥터 건강퀴즈",
       "appDeeplink": "https://my-doctor.io/?c=tm_invitation&af_xp=custom&af_dp=merakiyourdoctor%3A%2F%2Fnavigate%3Fscreen%3DCodeInputFullModal%26code%3DEEI1RZQS&deep_link_sub1=%7B%22merakiProps%22%3A%7B%22merakiChannel%22%3A%22Referral_FriendInvitation%22%2C%22merakiCampaign%22%3A%22tm_invitation%22%2C%22merakiKeyword%22%3A%22EEI1RZQS%22%7D%7D&pid=Referral_FriendInvitation",
-      "updatedAt": "2026-09-19",
+      "updatedAt": "2026-09-20",
       "today": {
-        "date": "2026-09-19",
+        "date": "2026-09-20",
         "imageUrl": "",
         "question": "",
         "choices": [],
@@ -523,9 +535,9 @@
       "rewardHint": "포인트 (실생활 사용 가능)",
       "participatePath": "닥터나우 앱 > 오늘의퀴즈",
       "appDeeplink": "https://doctornow.co.kr/?airbridge_referrer=airbridge%3Dtrue%26client_id%3D5a6aed34-939a-49dd-bbd2-7480847eaf46%26event_uuid%3De963a510-4387-42bc-96d1-7b094cb869fa%26referrer_timestamp%3D1789571243366%26short_id%3Dswsyvt%26channel%3Dreferralcode%26campaign%3Dfriends_share%26tracking_template_id%3D5ff2f57436318159ed923f96e5fa68e8%26ad_creative%3D4075201%26og_tag_id%3D821554216%26routing_short_id%3Dswsyvt&utm_source=referralcode&utm_campaign=friends_share",
-      "updatedAt": "2026-09-19",
+      "updatedAt": "2026-09-20",
       "today": {
-        "date": "2026-09-19",
+        "date": "2026-09-20",
         "imageUrl": "",
         "question": "",
         "choices": [],
@@ -576,9 +588,9 @@
       "rewardHint": "모니머니로 전환되는 젤리",
       "participatePath": "monimo 앱 > 모니스쿨",
       "appDeeplink": "https://www.monimo.co.kr/",
-      "updatedAt": "2026-09-19",
+      "updatedAt": "2026-09-20",
       "today": {
-        "date": "2026-09-19",
+        "date": "2026-09-20",
         "imageUrl": "",
         "question": "손톱에 나타나는 건강 이상 신호가 아닌 것은?",
         "choices": [],
@@ -586,6 +598,12 @@
         "explanation": "손톱은 색과 두께, 표면 상태의 변화가 건강 이상이나 손발톱 질환을 살펴보는 단서가 될 수 있으며, 이번 문항은 정상적인 손톱 상태를 구분하는 문제입니다.<br /><br />• 문제 : 손톱에 나타나는 건강 이상 신호가 아닌 것은?<br />• 정답 : <mark>분홍빛을 띠고 매끄럽다</mark><br /><br /><b>건강 이상 신호가 아닌 이유</b><br />건강한 손톱은 일반적으로 표면이 비교적 매끄럽고 색이 균일하게 보이는 특징이 있습니다. 개인의 피부색과 혈류 상태에 따라 손톱의 색조에는 차이가 있지만, 분홍빛을 띠면서 표면이 매끄러운 모습 자체는 흔히 정상 범위에서 관찰됩니다. 반대로 손톱이 반복적으로 부러지거나 갈라지고, 두꺼워지면서 노랗게 변하는 경우에는 손발톱 질환이나 다른 원인을 확인할 필요가 있습니다. 따라서 제시된 보기 가운데 건강 이상 신호가 아닌 것은 ‘분홍빛을 띠고 매끄럽다’입니다.<br /><br /><b>손톱 변화에서 확인할 사항</b><br />검은 세로선은 외상이나 색소 변화 등 여러 원인으로 나타날 수 있어 모든 경우가 질환을 뜻하는 것은 아닙니다. 다만 새롭게 생기거나 점점 짙어지고 넓어지는 검은 선은 피부과 진료가 필요한 변화일 수 있습니다. 손톱이 심하게 두꺼워지고 노랗게 변하거나 쉽게 부스러지는 증상은 손발톱 무좀에서도 나타날 수 있습니다. 손톱 상태만으로 특정 질환을 단정할 수는 없으므로 변화가 지속되거나 통증·부종이 동반되면 전문적인 진료를 받는 것이 좋습니다."
       },
       "history": [
+        {
+          "date": "2026-09-19",
+          "question": "손톱에 나타나는 건강 이상 신호가 아닌 것은?",
+          "answer": "② 분홍빛을 띠고 매끄럽다",
+          "explanation": "손톱은 색과 두께, 표면 상태의 변화가 건강 이상이나 손발톱 질환을 살펴보는 단서가 될 수 있으며, 이번 문항은 정상적인 손톱 상태를 구분하는 문제입니다.<br /><br />• 문제 : 손톱에 나타나는 건강 이상 신호가 아닌 것은?<br />• 정답 : <mark>분홍빛을 띠고 매끄럽다</mark><br /><br /><b>건강 이상 신호가 아닌 이유</b><br />건강한 손톱은 일반적으로 표면이 비교적 매끄럽고 색이 균일하게 보이는 특징이 있습니다. 개인의 피부색과 혈류 상태에 따라 손톱의 색조에는 차이가 있지만, 분홍빛을 띠면서 표면이 매끄러운 모습 자체는 흔히 정상 범위에서 관찰됩니다. 반대로 손톱이 반복적으로 부러지거나 갈라지고, 두꺼워지면서 노랗게 변하는 경우에는 손발톱 질환이나 다른 원인을 확인할 필요가 있습니다. 따라서 제시된 보기 가운데 건강 이상 신호가 아닌 것은 ‘분홍빛을 띠고 매끄럽다’입니다.<br /><br /><b>손톱 변화에서 확인할 사항</b><br />검은 세로선은 외상이나 색소 변화 등 여러 원인으로 나타날 수 있어 모든 경우가 질환을 뜻하는 것은 아닙니다. 다만 새롭게 생기거나 점점 짙어지고 넓어지는 검은 선은 피부과 진료가 필요한 변화일 수 있습니다. 손톱이 심하게 두꺼워지고 노랗게 변하거나 쉽게 부스러지는 증상은 손발톱 무좀에서도 나타날 수 있습니다. 손톱 상태만으로 특정 질환을 단정할 수는 없으므로 변화가 지속되거나 통증·부종이 동반되면 전문적인 진료를 받는 것이 좋습니다."
+        },
         {
           "date": "2026-09-18",
           "question": "손톱에 나타나는 건강 이상 신호가 아닌 것은?",
@@ -630,9 +648,9 @@
       "rewardHint": "참여자 전원 최대 1,000원 랜덤 캐시",
       "participatePath": "카카오뱅크 앱 > 하단 혜택 > 바로 받아요",
       "appDeeplink": "https://s.ppomppu.co.kr/?idno=coupon_105474&target=aHR0cHM6Ly9rYWthb2Jhbmsub25lbGluay5tZS8wcU1pL3lzeGtxYnVk&encode=on",
-      "updatedAt": "2026-09-19",
+      "updatedAt": "2026-09-20",
       "today": {
-        "date": "2026-09-19",
+        "date": "2026-09-20",
         "imageUrl": "",
         "question": "",
         "choices": [],
@@ -683,9 +701,9 @@
       "rewardHint": "하나머니 랜덤 캐시",
       "participatePath": "하나원큐 앱 > 혜택 > 슬기로운 금융생활 OX 게임",
       "appDeeplink": "https://oqf.hanabank.com/oqf/oneqfirst.jsp?screenId=LFNB0102005001&query=%7B%22pageType%22:%22oxQuiz%22%7D",
-      "updatedAt": "2026-09-19",
+      "updatedAt": "2026-09-20",
       "today": {
-        "date": "2026-09-19",
+        "date": "2026-09-20",
         "imageUrl": "",
         "question": "",
         "choices": [],
@@ -736,9 +754,9 @@
       "rewardHint": "토스포인트 (현금처럼 사용/출금)",
       "participatePath": "토스 앱 > 혜택 > 퀴즈타임",
       "appDeeplink": "https://toss.im/",
-      "updatedAt": "2026-09-19",
+      "updatedAt": "2026-09-20",
       "today": {
-        "date": "2026-09-19",
+        "date": "2026-09-20",
         "imageUrl": "",
         "question": "",
         "choices": [],
@@ -789,17 +807,23 @@
       "rewardHint": "포인트리",
       "participatePath": "KB Pay 앱 > 혜택 > 오늘의 퀴즈",
       "appDeeplink": "https://play.google.com/store/apps/details?id=com.kbcard.cxh.appcard&pcampaignid=web_share",
-      "updatedAt": "2026-09-19",
+      "updatedAt": "2026-09-20",
       "today": {
-        "date": "2026-09-19",
+        "date": "2026-09-20",
         "imageUrl": "",
         "question": ".",
         "choices": [],
-        "answer": "3번 500명",
+        "answer": "",
         "explanation": ".",
         "hint": "<p>⏰ 다음 퀴즈가 곧 열려요! (오전 10시 오픈 예정)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>"
       },
       "history": [
+        {
+          "date": "2026-09-19",
+          "question": ".",
+          "answer": "3번 500명",
+          "explanation": "."
+        },
         {
           "date": "2026-09-18",
           "question": "내 소비 정보 분석 및 마트·편의점·다이소 등 일상생활 할인쿠폰이 제공되는 이자이프케어의 월 이용료는?",
@@ -843,13 +867,13 @@
       "rewardHint": "스타포인트",
       "participatePath": "KB스타뱅킹 앱 > 혜택 > 도전미션 스타퀴즈",
       "appDeeplink": "https://www.kbstar.com/",
-      "updatedAt": "2026-09-19",
+      "updatedAt": "2026-09-20",
       "today": {
-        "date": "2026-09-19",
+        "date": "2026-09-20",
         "imageUrl": "",
         "question": "",
         "choices": [],
-        "answer": "① 10월 2일",
+        "answer": "④ TDF",
         "explanation": ""
       },
       "history": [
@@ -896,13 +920,13 @@
       "rewardHint": "스타포인트",
       "participatePath": "KB스타뱅킹 앱 > 혜택 > 한국사 매일 퀴즈",
       "appDeeplink": "https://www.kbstar.com/",
-      "updatedAt": "2026-09-19",
+      "updatedAt": "2026-09-20",
       "today": {
-        "date": "2026-09-19",
+        "date": "2026-09-20",
         "imageUrl": "",
         "question": "",
         "choices": [],
-        "answer": "④ 부산 외 2곳에 개항장이 설치되는 결과를 가져왔다",
+        "answer": "③ 을사늑약 체결에 반대하여 태인에서 의병을 일으켰다",
         "explanation": ""
       },
       "history": [
@@ -949,13 +973,13 @@
       "rewardHint": "현금 혜택 (누적 상금제)",
       "participatePath": "케이뱅크 앱 > 혜택 > AI 퀴즈 챌린지",
       "appDeeplink": "https://www.kbanknow.com/web/web-home/home/main",
-      "updatedAt": "2026-09-19",
+      "updatedAt": "2026-09-20",
       "today": {
-        "date": "2026-09-19",
+        "date": "2026-09-20",
         "imageUrl": "",
         "question": "",
         "choices": [],
-        "answer": "④ 핑크구아바",
+        "answer": "① 그레셤의 법칙",
         "explanation": "",
         "promoBlurb": "<p> 8.19(수) 오후 12:30에 시작되는 AI 퀴즈 챌린지의 라이브 퀴즈 우승 총 상금 <br><b><mark>1,000만원</mark></b><br><br>2026년 8월 19일 수요일에 진행되는 <b><mark>AI 퀴즈 챌린지</mark></b>의 역대급 보상. 이미지 중앙에 명시된 바와 같이, 라이브 퀴즈 우승자들에게 수여되는 총 상금은 <b><mark>1,000만원</mark></b>입니다. <b>AI 퀴즈 챌린지</b>는 인공지능 관련 지식이나 일반 상식을 실시간 라이브를 통해 풀어보는 참여형 이벤트로, 많은 참가자가 동시에 경쟁하며 정답을 맞힌 우승자들이 상금을 나누어 갖는 방식으로 운영됩니다. 고액의 상금이 걸린 만큼 라이브 시작 전 알림 설정을 통해 시간을 엄수하는 것이 중요하며, 한 문제만 틀려도 부활권을 사용할 수 있는 등의 추가 규칙을 미리 확인해두는 것이 유리합니다. 이처럼 대규모 상금 혜택이 주어지는 퀴즈 이벤트에 참여하여 실력을 발휘하는 것은 지적 즐거움과 함께 실질적인 <b><mark>자산</mark></b>을 형성하는 <b>앱테크</b>의 매우 매력적인 기회가 됩니다. </p>"
       },
@@ -1003,13 +1027,13 @@
       "rewardHint": "H.포인트",
       "participatePath": "H.Point 앱 > 오늘의 QUIZ",
       "appDeeplink": "https://www.h-point.co.kr/cma/invite.nhd?scheme=quizMain",
-      "updatedAt": "2026-09-19",
+      "updatedAt": "2026-09-20",
       "today": {
-        "date": "2026-09-19",
+        "date": "2026-09-20",
         "imageUrl": "",
         "question": "",
         "choices": [],
-        "answer": "② 사과",
+        "answer": "① 가매일식\n\n① 1day1message",
         "explanation": ""
       },
       "history": [
@@ -1056,13 +1080,13 @@
       "rewardHint": "코인 (실제 가상자산 교환 가능)",
       "participatePath": "비트버니 앱 > 혜택 > 오늘의 상식 퀴즈",
       "appDeeplink": "https://www.bitbunny.io/",
-      "updatedAt": "2026-09-19",
+      "updatedAt": "2026-09-20",
       "today": {
-        "date": "2026-09-19",
+        "date": "2026-09-20",
         "imageUrl": "",
         "question": "",
         "choices": [],
-        "answer": "파견근로",
+        "answer": "기초연금",
         "explanation": ""
       },
       "history": [
@@ -1109,13 +1133,13 @@
       "rewardHint": "코인 (실제 가상자산 교환 가능)",
       "participatePath": "비트버니 앱 > 혜택 > 오늘의 OX 퀴즈",
       "appDeeplink": "https://www.bitbunny.io/",
-      "updatedAt": "2026-09-19",
+      "updatedAt": "2026-09-20",
       "today": {
-        "date": "2026-09-19",
+        "date": "2026-09-20",
         "imageUrl": "",
         "question": "",
         "choices": [],
-        "answer": "X (아니에요)",
+        "answer": "O (맞아요)",
         "explanation": "",
         "pendingMessage": "O (맞아요)",
         "promoBlurb": "X (아니에요)"
