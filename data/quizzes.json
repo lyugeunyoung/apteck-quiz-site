@@ -96,10 +96,10 @@
       "today": {
         "date": "2026-09-20",
         "imageUrl": "",
-        "question": "",
+        "question": "오늘 K리그1 30라운드에서 전북과 맞붙는 무등산과 비엔날레로 유명한 호남 지역의 팀은 어디일까요?",
         "choices": [],
         "answer": "③ 광주",
-        "explanation": ""
+        "explanation": "하나은행 K리그1 2026 30라운드에서는 전북 현대와 광주FC가 맞붙으며, 호남 지역을 연고로 하는 상대 팀을 구분하는 것이 핵심입니다.<br /><br />• 문제 : 오늘 K리그1 30라운드에서 전북과 맞붙는 무등산과 비엔날레로 유명한 호남 지역의 팀은 어디일까요?<br />• 정답 : <mark>광주</mark><br /><br /><b>정답 근거</b><br />한국프로축구연맹이 발표한 하나은행 K리그1 2026 30라운드 일정에서 전북 현대의 상대 팀은 광주FC입니다. 전북과 광주의 경기는 9월 20일 전주월드컵경기장에서 열리는 일정으로 편성됐습니다. 광주는 무등산과 광주비엔날레로 잘 알려진 호남 지역 도시이므로 문제의 단서와도 정확히 연결됩니다. 따라서 울산, 포항, 서울이 아니라 ③ 광주가 정답입니다.<br /><br /><b>관련 설명</b><br />광주FC는 광주광역시를 연고로 하는 프로축구 구단으로 K리그1에 참가하고 있습니다. 전북 현대 역시 전북 지역을 대표하는 구단이어서 두 팀의 맞대결은 같은 호남권을 기반으로 한 경기라는 지역적 특징도 있습니다. 이번 30라운드 전북 대 광주 경기는 전주월드컵경기장에서 진행되며, 같은 라운드에는 강원-제주, 인천-대전, 포항-서울 등의 경기도 함께 예정돼 있습니다. 경기 일정은 라운드별로 달라질 수 있으므로 상대 팀과 개최지를 함께 확인하면 혼동을 줄일 수 있습니다."
       },
       "history": [
         {
@@ -151,7 +151,9 @@
       "updatedAt": "2026-09-20",
       "today": {
         "date": "2026-09-20",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "",
         "choices": [],
         "answer": "",
@@ -212,7 +214,9 @@
       "updatedAt": "2026-09-20",
       "today": {
         "date": "2026-09-20",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "",
         "choices": [],
         "answer": "",
@@ -266,7 +270,9 @@
       "updatedAt": "2026-09-20",
       "today": {
         "date": "2026-09-20",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "",
         "choices": [],
         "answer": "② 네이버페이 10만원권",
@@ -319,7 +325,9 @@
       "updatedAt": "2026-09-20",
       "today": {
         "date": "2026-09-20",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "",
         "choices": [],
         "answer": "③ r",
@@ -373,10 +381,10 @@
       "today": {
         "date": "2026-09-20",
         "imageUrl": "",
-        "question": "",
+        "question": "2025년 기준 우리나라의 신·재생에너지 발전비율은 전체의 20% 수준이다.",
         "choices": [],
         "answer": "O (그렇다)",
-        "explanation": ""
+        "explanation": "2025년 우리나라 신·재생에너지 발전 비중은 에너지 전환과 온실가스 감축 흐름을 이해할 때 발전설비 비중과 실제 발전량 비중을 구분해서 확인해야 합니다.<br /><br />• 문제 : 2025년 기준 우리나라의 신·재생에너지 발전비율은 전체의 20% 수준이다.<br />• 정답 : <mark>X (아니다)</mark><br /><br /><b>정답 근거</b><br />한국전력거래소가 공개한 제11차 전력수급기본계획의 연도별 신·재생에너지 발전량 전망에서 2025년 신·재생에너지 발전량은 77,273GWh이며 전체 발전량에서 차지하는 비중은 11.9%로 제시됩니다. 이 수치는 약 12% 수준으로, 문제에서 말한 20% 수준과는 차이가 큽니다. 따라서 ‘2025년 기준 발전비율이 전체의 20% 수준’이라는 설명은 발전량 비중을 기준으로 하면 맞지 않습니다. 정답은 X입니다.<br /><br /><b>관련 설명</b><br />신·재생에너지 통계를 볼 때는 발전설비 용량의 비중과 실제 전기를 생산한 발전량의 비중을 혼동하지 않는 것이 중요합니다. 태양광·풍력 설비가 늘어 설비용량 비중이 높아져도 이용률과 기상 조건 등에 따라 실제 발전량 비중은 그보다 낮게 나타날 수 있습니다. 제11차 전력수급기본계획에서는 신·재생에너지 발전량 비중이 2029년 18.9%, 2030년 21.7%로 확대되는 전망을 제시하고 있습니다. 따라서 20% 수준이라는 수치는 2025년보다 이후 시기의 목표·전망과 더 가깝습니다."
       },
       "history": [
         {
@@ -425,7 +433,9 @@
       "updatedAt": "2026-09-20",
       "today": {
         "date": "2026-09-20",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "⏰ 다음 퀴즈가 월요일(2월 23일)에 열려요! (수익은 계속됩니다)",
         "choices": [],
         "answer": "다음 퀴즈가 월요일(9월 21일)에 열려요!",
@@ -485,7 +495,9 @@
       "updatedAt": "2026-09-20",
       "today": {
         "date": "2026-09-20",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "",
         "choices": [],
         "answer": "",
@@ -538,7 +550,9 @@
       "updatedAt": "2026-09-20",
       "today": {
         "date": "2026-09-20",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "",
         "choices": [],
         "answer": "",
@@ -651,7 +665,9 @@
       "updatedAt": "2026-09-20",
       "today": {
         "date": "2026-09-20",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "",
         "choices": [],
         "answer": "X (아니다)",
@@ -704,7 +720,9 @@
       "updatedAt": "2026-09-20",
       "today": {
         "date": "2026-09-20",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "",
         "choices": [],
         "answer": "O (그렇다)",
@@ -757,7 +775,9 @@
       "updatedAt": "2026-09-20",
       "today": {
         "date": "2026-09-20",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "",
         "choices": [],
         "answer": "",
@@ -810,7 +830,9 @@
       "updatedAt": "2026-09-20",
       "today": {
         "date": "2026-09-20",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": ".",
         "choices": [],
         "answer": "",
@@ -870,7 +892,9 @@
       "updatedAt": "2026-09-20",
       "today": {
         "date": "2026-09-20",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "",
         "choices": [],
         "answer": "④ TDF",
@@ -923,7 +947,9 @@
       "updatedAt": "2026-09-20",
       "today": {
         "date": "2026-09-20",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "",
         "choices": [],
         "answer": "③ 을사늑약 체결에 반대하여 태인에서 의병을 일으켰다",
@@ -976,7 +1002,9 @@
       "updatedAt": "2026-09-20",
       "today": {
         "date": "2026-09-20",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "",
         "choices": [],
         "answer": "① 그레셤의 법칙",
@@ -1030,7 +1058,9 @@
       "updatedAt": "2026-09-20",
       "today": {
         "date": "2026-09-20",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "",
         "choices": [],
         "answer": "① 가매일식\n\n① 1day1message",
@@ -1083,7 +1113,9 @@
       "updatedAt": "2026-09-20",
       "today": {
         "date": "2026-09-20",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "",
         "choices": [],
         "answer": "기초연금",
@@ -1136,7 +1168,9 @@
       "updatedAt": "2026-09-20",
       "today": {
         "date": "2026-09-20",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "",
         "choices": [],
         "answer": "O (맞아요)",
