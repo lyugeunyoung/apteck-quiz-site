@@ -98,9 +98,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "현재 하나은행 K리그2 2026 1위인 수원 삼성 블루원즈는 15승을 넘어 OO승을 기록 중입니다. OO에 들어갈 정답은 무엇일까요?",
+        "question": "",
         "choices": [],
-        "answer": "④ 16",
+        "answer": "1. 테크니컬 에어리어",
         "explanation": ""
       },
       "history": [
@@ -212,7 +212,7 @@
         "imageHeight": 300,
         "question": ".",
         "choices": [],
-        "answer": "순수맞고",
+        "answer": "서울",
         "explanation": ".",
         "pendingMessage": "<p>⏰ 다음 퀴즈가 곧 열려요! (오전 10시 오픈 예정)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>"
       },
@@ -323,7 +323,7 @@
         "imageHeight": 300,
         "question": "",
         "choices": [],
-        "answer": "2번 리움·호암미술관",
+        "answer": "4. 과일 스매시",
         "explanation": "2번 리움·호암미술관",
         "pendingMessage": "<p>⏰ 다음 퀴즈가 곧 열려요! (오전 03시 오픈 예정)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>"
       },
@@ -419,9 +419,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "오늘은 하늘이 열린날을 의미하는 개천절로 단군왕검이 이 국가를 세운 것을 기념하는 날입니다. 한반도 최초의 고대 국가인 이 국가로 맞는 것은?",
+        "question": "",
         "choices": [],
-        "answer": "④  고조선",
+        "answer": "1. 삼성",
         "explanation": ""
       },
       "history": [
@@ -528,9 +528,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "오랜 전통을 새롭게 해석하고 즐기려는 소비자들 사이에 나타난 새로운 디저트 트렌드는 무엇일까요?",
+        "question": "",
         "choices": [],
-        "answer": "떡지순례",
+        "answer": "3. 10,000P",
         "explanation": ""
       },
       "history": [
@@ -637,9 +637,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "2026년 1월 1일부터 수도권 지역은 종량제봉투를 그대로 땅에 묻는 '직매립'이 금지되었다.",
+        "question": "",
         "choices": [],
-        "answer": "O (그렇다)",
+        "answer": "X (아니다)",
         "explanation": ""
       },
       "history": [
@@ -858,7 +858,7 @@
         "imageHeight": 300,
         "question": "",
         "choices": [],
-        "answer": "O (그렇다)",
+        "answer": "X (아니다)",
         "explanation": ""
       },
       "history": [
@@ -961,7 +961,7 @@
         "imageHeight": 300,
         "question": "",
         "choices": [],
-        "answer": "X (아니다)",
+        "answer": "O (그렇다)",
         "explanation": ""
       },
       "history": [
@@ -1171,9 +1171,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "카카오뱅크 착붙 신한카드로 받을 수 있는 월 최대 할인한도는 5만원이다.",
+        "question": "",
         "choices": [],
-        "answer": "O (그렇다)",
+        "answer": "X (아니다)",
         "explanation": ""
       },
       "history": [
@@ -1280,9 +1280,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "다른 은행의 자동이체를 하나은행 계좌로 한 번에 옮길 수 있다.",
+        "question": "",
         "choices": [],
-        "answer": "O (그렇다)",
+        "answer": "X (아니다)",
         "explanation": ""
       },
       "history": [
@@ -1482,7 +1482,7 @@
         "imageHeight": 300,
         "question": "",
         "choices": [],
-        "answer": "",
+        "answer": "1번 서울숲",
         "explanation": ""
       },
       "history": [
@@ -1589,9 +1589,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "개천절은 '하늘이 열린 날'이라는 의미의 국경일입니다. 개천절과 가장 관련 깊은 인물은 누구일까요?",
+        "question": "",
         "choices": [],
-        "answer": "④ 단군왕검",
+        "answer": "3번 리밸런싱",
         "explanation": ""
       },
       "history": [
@@ -1700,7 +1700,7 @@
         "imageHeight": 300,
         "question": "",
         "choices": [],
-        "answer": "O (그렇다)",
+        "answer": "4. 사비로 천도하고 국호를 남부여로 고쳤다",
         "explanation": ""
       },
       "history": [
@@ -1801,9 +1801,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "개천절이라는 이름에 담긴 '개천'의 뜻으로 알맞은 것은?",
+        "question": "",
         "choices": [],
-        "answer": "② 하늘이 열림",
+        "answer": "1번 한계효용 체감의 법칙",
         "explanation": "",
         "pendingMessage": "<p> 8.19(수) 오후 12:30에 시작되는 AI 퀴즈 챌린지의 라이브 퀴즈 우승 총 상금 <br><b><mark>1,000만원</mark></b><br><br>2026년 8월 19일 수요일에 진행되는 <b><mark>AI 퀴즈 챌린지</mark></b>의 역대급 보상. 이미지 중앙에 명시된 바와 같이, 라이브 퀴즈 우승자들에게 수여되는 총 상금은 <b><mark>1,000만원</mark></b>입니다. <b>AI 퀴즈 챌린지</b>는 인공지능 관련 지식이나 일반 상식을 실시간 라이브를 통해 풀어보는 참여형 이벤트로, 많은 참가자가 동시에 경쟁하며 정답을 맞힌 우승자들이 상금을 나누어 갖는 방식으로 운영됩니다. 고액의 상금이 걸린 만큼 라이브 시작 전 알림 설정을 통해 시간을 엄수하는 것이 중요하며, 한 문제만 틀려도 부활권을 사용할 수 있는 등의 추가 규칙을 미리 확인해두는 것이 유리합니다. 이처럼 대규모 상금 혜택이 주어지는 퀴즈 이벤트에 참여하여 실력을 발휘하는 것은 지적 즐거움과 함께 실질적인 <b><mark>자산</mark></b>을 형성하는 <b>앱테크</b>의 매우 매력적인 기회가 됩니다. </p>"
       },
@@ -1913,7 +1913,7 @@
         "imageHeight": 300,
         "question": "",
         "choices": [],
-        "answer": "② 현대백화점 울산점",
+        "answer": "2. 펠로우",
         "explanation": ""
       },
       "history": [
@@ -2014,9 +2014,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "OOOOOOO란, 새 아파트 분양가에 상한선을 둬 지나친 고분양을 막는 제도예요.",
+        "question": "",
         "choices": [],
-        "answer": "분양가상한제",
+        "answer": "토지거래허가제",
         "explanation": ""
       },
       "history": [
@@ -2123,9 +2123,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "계약갱신청구권을 사용하면 세입자는 기존 계약을 한 차례 더 연장해 거주 기간을 늘릴 수 있어요.",
+        "question": "",
         "choices": [],
-        "answer": "O (맞아요)",
+        "answer": "X (아니에요)",
         "explanation": "",
         "pendingMessage": "O (맞아요)",
         "promoBlurb": "X (아니에요)"
