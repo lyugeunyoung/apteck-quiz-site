@@ -98,9 +98,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "",
+        "question": "축구 선수가 다리를 보호하기 위해 양말 안에 착용하는 보호장비를 무엇이라고 할까요?",
         "choices": [],
-        "answer": "1. 테크니컬 에어리어",
+        "answer": "② 정강이 보호대",
         "explanation": ""
       },
       "history": [
@@ -212,7 +212,7 @@
         "imageHeight": 300,
         "question": ".",
         "choices": [],
-        "answer": "서울",
+        "answer": "500",
         "explanation": ".",
         "pendingMessage": "<p>⏰ 다음 퀴즈가 곧 열려요! (오전 10시 오픈 예정)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>"
       },
@@ -321,10 +321,10 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "",
+        "question": "에싸소파 신한카드 이벤트 행사지점이 아닌 곳은?",
         "choices": [],
-        "answer": "4. 과일 스매시",
-        "explanation": "2번 리움·호암미술관",
+        "answer": "④ 강남 플래그십스토어",
+        "explanation": "",
         "pendingMessage": "<p>⏰ 다음 퀴즈가 곧 열려요! (오전 03시 오픈 예정)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>"
       },
       "history": [
@@ -419,9 +419,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "",
+        "question": "2007년 오늘은 KBO 리그 최초 인천 연고 우승팀이자 통산 4회 우승에 빛났던 이 구단이 고별전을 치른 날입니다. 이 팀은 아래 중 어느 곳일까요?",
         "choices": [],
-        "answer": "1. 삼성",
+        "answer": "② 현대 유니콘스",
         "explanation": ""
       },
       "history": [
@@ -528,9 +528,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "",
+        "question": "()·XO·NEO·벤츠 카드로 떠나는 특별한 해외여행! 괄호 안에 들어갈 단어는 무엇일까요?",
         "choices": [],
-        "answer": "3. 10,000P",
+        "answer": "① Plan",
         "explanation": ""
       },
       "history": [
@@ -637,9 +637,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "",
+        "question": "2025년 7월, 경기도는 기후변화로 인한 사회적·경제적 불평등을 해소하기 위한 '경기도 기후격차 해소에 관한 기본조례'를 제정하였다.",
         "choices": [],
-        "answer": "X (아니다)",
+        "answer": "O (그렇다)",
         "explanation": ""
       },
       "history": [
@@ -746,10 +746,10 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "다음 퀴즈가 월요일(10월 5일)에 열려요!",
+        "question": "오케스트라에서 연주 시작 전, 일반적으로 기준음을 내는 악기는 무엇일까요?",
         "choices": [],
-        "answer": "다음 퀴즈가 월요일(10월 5일)에 열려요!",
-        "explanation": "<p>⏰ 다음 퀴즈가 월요일(10월 5일)에 열려요! (수익은 계속됩니다)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>",
+        "answer": "① 오보에",
+        "explanation": "",
         "pendingMessage": "<p>⏰ 다음 퀴즈가 월요일(2월 23일)에 열려요! (수익은 계속됩니다)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>"
       },
       "history": [
@@ -858,7 +858,7 @@
         "imageHeight": 300,
         "question": "",
         "choices": [],
-        "answer": "X (아니다)",
+        "answer": "O (그렇다)",
         "explanation": ""
       },
       "history": [
@@ -1171,7 +1171,7 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "",
+        "question": "카카오뱅크 착붙 신한카드로 스타벅스, 메가커피 등 인기 커피 브랜드만 할인을 받을 수 있다.",
         "choices": [],
         "answer": "X (아니다)",
         "explanation": ""
@@ -1280,7 +1280,7 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "",
+        "question": "하나원큐 놀이터에서 진행하는 출석체크 이벤트는 매일 참여 가능하다.",
         "choices": [],
         "answer": "X (아니다)",
         "explanation": ""
@@ -1389,10 +1389,10 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "MOUM에서 계좌개설하면 추첨을 통해 □□□ 명에게 하이닉스 주식 1주 드려요\n\nCJ더마켓 멤버스위크에서 5만원 이상 구매 고객에게 □□□□원 적립금을 드려요",
+        "question": "",
         "choices": [],
-        "answer": "100 / 300\n\n무료배송 / 5000 / 20",
-        "explanation": "메리츠증권 MOUM 계좌개설 이벤트에서 제공되는 SK하이닉스 주식 경품의 추첨 인원을 확인하는 문제입니다.<br /><br />• 문제 : MOUM에서 계좌개설하면 추첨을 통해 □□□ 명에게 하이닉스 주식 1주 드려요<br />• 정답 : <mark>100</mark><br /><br />이 문제의 핵심은 MOUM에서 계좌를 개설한 고객 가운데 추첨을 통해 하이닉스 주식 1주를 받을 수 있는 인원을 맞히는 것입니다. 해당 이벤트에서 제시된 당첨 인원은 총 100명으로, 세 자리 빈칸에도 숫자 ‘100’이 들어갑니다. 모든 계좌개설 고객에게 주식을 지급하는 방식이 아니라 정해진 대상자 가운데 추첨을 통해 경품을 제공한다는 점도 구분해야 합니다. 따라서 정답은 100입니다.<br /><br />MOUM은 메리츠증권의 투자 서비스와 연결된 플랫폼으로, 이번 행사는 신규 계좌개설과 주식 경품을 결합한 이벤트입니다. 문제에서 확인되는 혜택은 추첨을 통해 100명에게 하이닉스 주식 1주를 제공한다는 내용이며, 당첨 여부에 따라 실제 지급이 결정됩니다. 주식은 시장가격이 계속 변동하는 금융상품이므로 지급 이후의 평가금액이 일정하게 유지되는 것은 아닙니다. 또한 이벤트의 참여 대상, 응모 조건, 당첨자 선정 방식과 지급 일정 등은 별도의 행사 기준이 적용될 수 있으므로 실제 참여할 때는 메리츠증권의 해당 이벤트 안내를 함께 확인하는 것이 좋습니다.\n\nCJ더마켓 멤버스위크의 구매 금액별 적립 혜택 가운데 5만원 이상 구매 고객에게 제공되는 적립금을 확인하는 문제입니다.<br /><br />• 문제 : CJ더마켓 멤버스위크에서 5만원 이상 구매 고객에게 □□□□원 적립금을 드려요<br />• 정답 : <mark>5000</mark><br /><br />이 문제는 CJ더마켓 멤버스위크에서 일정 금액 이상 구매했을 때 받을 수 있는 적립금 규모를 묻고 있습니다. 제시된 조건은 ‘5만원 이상 구매 고객’이며, 이에 연결되는 적립금은 5,000원입니다. 따라서 네 자리 빈칸에는 숫자 ‘5000’이 들어가며, 금액으로 표현하면 5,000원 적립 혜택입니다. 구매 금액 기준과 제공되는 적립금 액수를 정확히 연결하는 것이 정답을 판단하는 핵심입니다.<br /><br />이처럼 쇼핑 이벤트의 적립 혜택은 일정 구매 금액을 충족했을 때 적용되는 경우가 많아 최종 결제금액의 인정 기준을 함께 확인하는 것이 중요합니다. 쿠폰이나 포인트를 사용했을 때 구매 금액 산정 방식이 달라질 수 있고, 일부 상품이 행사 대상에서 제외될 가능성도 있으므로 세부 구매 조건을 확인해야 합니다. 적립금의 지급 시점과 유효기간, 사용 가능한 상품 범위 역시 이벤트별로 다를 수 있습니다. 문제에서 확인되는 핵심 혜택은 CJ더마켓 멤버스위크에서 5만원 이상 구매 시 5,000원의 적립금을 제공한다는 내용입니다."
+        "answer": "",
+        "explanation": ""
       },
       "history": [
         {
@@ -1486,9 +1486,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "",
+        "question": "해외여행 중 카드를 꺼낼 필 요 없이 KB Pay 로 결제할 수 있는 서비스는?",
         "choices": [],
-        "answer": "1번 서울숲",
+        "answer": "③ 해외현장결제",
         "explanation": ""
       },
       "history": [
@@ -1595,9 +1595,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "",
+        "question": "치과 치료 중 일반적으로 실손보험에서 보장되지 않는 항목은 무엇일까요?",
         "choices": [],
-        "answer": "3번 리밸런싱",
+        "answer": "④ 치아 교정",
         "explanation": ""
       },
       "history": [
@@ -1704,9 +1704,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "",
+        "question": "다음 자료에 나타난 상황 이후에 있었던 사실로 옳은 것은?",
         "choices": [],
-        "answer": "4. 사비로 천도하고 국호를 남부여로 고쳤다",
+        "answer": "④ 검모잠이 안승을 왕으로 추대하고 부흥 운동을 전개하였다",
         "explanation": ""
       },
       "history": [
@@ -1807,9 +1807,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "",
+        "question": "인도에서 사용하는 화폐 단위는?",
         "choices": [],
-        "answer": "1번 한계효용 체감의 법칙",
+        "answer": "③ 루피",
         "explanation": "",
         "pendingMessage": "<p> 8.19(수) 오후 12:30에 시작되는 AI 퀴즈 챌린지의 라이브 퀴즈 우승 총 상금 <br><b><mark>1,000만원</mark></b><br><br>2026년 8월 19일 수요일에 진행되는 <b><mark>AI 퀴즈 챌린지</mark></b>의 역대급 보상. 이미지 중앙에 명시된 바와 같이, 라이브 퀴즈 우승자들에게 수여되는 총 상금은 <b><mark>1,000만원</mark></b>입니다. <b>AI 퀴즈 챌린지</b>는 인공지능 관련 지식이나 일반 상식을 실시간 라이브를 통해 풀어보는 참여형 이벤트로, 많은 참가자가 동시에 경쟁하며 정답을 맞힌 우승자들이 상금을 나누어 갖는 방식으로 운영됩니다. 고액의 상금이 걸린 만큼 라이브 시작 전 알림 설정을 통해 시간을 엄수하는 것이 중요하며, 한 문제만 틀려도 부활권을 사용할 수 있는 등의 추가 규칙을 미리 확인해두는 것이 유리합니다. 이처럼 대규모 상금 혜택이 주어지는 퀴즈 이벤트에 참여하여 실력을 발휘하는 것은 지적 즐거움과 함께 실질적인 <b><mark>자산</mark></b>을 형성하는 <b>앱테크</b>의 매우 매력적인 기회가 됩니다. </p>"
       },
@@ -1917,9 +1917,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "",
+        "question": "현대출쇼핑의 하반기 최대 쇼핑 축제 현대슈퍼워크! 0번 행사에서는 350억 상당 선착순 쿠폰팩, 매일 10% 적립은 물론, 구매사은품 혜택까지 준비되어 있는데요. 그렇다면 방송 상품 30만원 구매 사은품으로, 3만원 적립금과 함께 선택 가능한사은품의 이름은 무엇일까요?",
         "choices": [],
-        "answer": "2. 펠로우",
+        "answer": "② 올인원 에어프라이어",
         "explanation": ""
       },
       "history": [
@@ -2020,9 +2020,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "",
+        "question": "OOOOOO란, 사람들이 이자를 포기하면서까지 현금을 손에 쥐고 싶어 하는 심리예요.",
         "choices": [],
-        "answer": "토지거래허가제",
+        "answer": "유동성선호",
         "explanation": ""
       },
       "history": [
@@ -2129,7 +2129,7 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "",
+        "question": "종합부동산세는 부동산 보유 여부와 관계없이 모든 국민에게 동일한 금액이 부과돼요.",
         "choices": [],
         "answer": "X (아니에요)",
         "explanation": "",
