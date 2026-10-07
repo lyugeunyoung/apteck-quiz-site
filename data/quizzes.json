@@ -1395,9 +1395,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "",
+        "question": "자전거 퀵보드 캐시백",
         "choices": [],
-        "answer": "",
+        "answer": "100",
         "explanation": ""
       },
       "history": [
