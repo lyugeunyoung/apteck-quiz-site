@@ -98,9 +98,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "오늘 K리그1 31라운드에서 전북과 맞붙는 '2026 대전 빵축제'로 유명한 지역의 팀은 어디일까요?",
+        "question": "",
         "choices": [],
-        "answer": "④ 대전",
+        "answer": "3. 천안 vs 경남",
         "explanation": ""
       },
       "history": [
@@ -210,7 +210,7 @@
         "imageUrl": "",
         "question": "",
         "choices": [],
-        "answer": "카삼페",
+        "answer": "",
         "explanation": "",
         "pendingMessage": "<p>⏰ 다음 퀴즈가 곧 열려요! (오전 10시 오픈 예정)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>"
       },
@@ -321,7 +321,7 @@
         "imageHeight": 300,
         "question": "",
         "choices": [],
-        "answer": "4. 무료",
+        "answer": "O (그렇다)",
         "explanation": "",
         "pendingMessage": "<p>⏰ 다음 퀴즈가 곧 열려요! (오전 03시 오픈 예정)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>"
       },
@@ -429,9 +429,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "20년간 선수로 뛰었던 베테랑 내야수 김민성 선수의 은퇴식이 오늘(9일) 사직야구장에서 열릴 예정입니다. 김민성 선수의 데뷔 팀이자 선수 생활을 마무리하게 된 팀은 어디일까요?",
+        "question": "",
         "choices": [],
-        "answer": "② 롯데 자이언츠",
+        "answer": "2게임",
         "explanation": ""
       },
       "history": [
@@ -538,9 +538,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "성능과 가격뿐만 아니라 시간과 편의성을 고려한 소비로, 시간도 돈으로 환산하는 최신 소비 경향은 무엇일까요?",
+        "question": "",
         "choices": [],
-        "answer": "③ 시성비",
+        "answer": "던킨",
         "explanation": ""
       },
       "history": [
@@ -647,9 +647,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "2024년 질병관리청은 기후변화로부터 국민의 건강을 보호하기 위한 중장기계획을 발표했다.",
+        "question": "",
         "choices": [],
-        "answer": "O (그렇다)",
+        "answer": "X (아니다)",
         "explanation": ""
       },
       "history": [
@@ -756,9 +756,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "훈민정음 해례본은 한글의 창제 원리와 사용법을 상세히 설명하고 있어 역사적 가치가 매우 높습니다. 이 자료는 1997년 어디에 등재되었을까요?",
+        "question": "",
         "choices": [],
-        "answer": "① 유네스코 세계기록유산",
+        "answer": "",
         "explanation": "",
         "pendingMessage": "<p>⏰ 다음 퀴즈가 월요일(2월 23일)에 열려요! (수익은 계속됩니다)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>"
       },
@@ -868,7 +868,7 @@
         "imageHeight": 300,
         "question": "",
         "choices": [],
-        "answer": "X (아니다)",
+        "answer": "O (그렇다)",
         "explanation": ""
       },
       "history": [
@@ -1193,9 +1193,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "타인 명의 카드로 디지털 온누리상품권을 사용할 수 있다.",
+        "question": "",
         "choices": [],
-        "answer": "X (아니다)",
+        "answer": "O (그렇다)",
         "explanation": ""
       },
       "history": [
@@ -1302,7 +1302,7 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "하나원큐 축구Play의 퀴즈HANA 문제를 맞히면 랜덤으로 원큐볼을 받을 수 있다.",
+        "question": "",
         "choices": [],
         "answer": "O (그렇다)",
         "explanation": ""
@@ -1516,7 +1516,7 @@
         "imageHeight": 300,
         "question": "",
         "choices": [],
-        "answer": "3번 10%",
+        "answer": "",
         "explanation": ""
       },
       "history": [
@@ -1623,9 +1623,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "한글의 소중함과 우수성을 되새기는 '한글날'은 우리나라의 몇 대 국경일 중 하나에 해당될까요?",
+        "question": "",
         "choices": [],
-        "answer": "③ 5대",
+        "answer": "3번 말",
         "explanation": ""
       },
       "history": [
@@ -1732,9 +1732,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "빈칸에 들아갈 알맞은 말을 쓰시오.",
+        "question": "",
         "choices": [],
-        "answer": "훈민정음",
+        "answer": "3. 동북 9성을 축조하였다",
         "explanation": ""
       },
       "history": [
@@ -1841,9 +1841,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "세종대왕 때 학자들이 모여 학문을 연구하고 여러 서적의 편찬을 담당했던 왕립 학술기관은?",
+        "question": "",
         "choices": [],
-        "answer": "① 집현전",
+        "answer": "3번 에스컬레이션",
         "explanation": "",
         "pendingMessage": "<p> 8.19(수) 오후 12:30에 시작되는 AI 퀴즈 챌린지의 라이브 퀴즈 우승 총 상금 <br><b><mark>1,000만원</mark></b><br><br>2026년 8월 19일 수요일에 진행되는 <b><mark>AI 퀴즈 챌린지</mark></b>의 역대급 보상. 이미지 중앙에 명시된 바와 같이, 라이브 퀴즈 우승자들에게 수여되는 총 상금은 <b><mark>1,000만원</mark></b>입니다. <b>AI 퀴즈 챌린지</b>는 인공지능 관련 지식이나 일반 상식을 실시간 라이브를 통해 풀어보는 참여형 이벤트로, 많은 참가자가 동시에 경쟁하며 정답을 맞힌 우승자들이 상금을 나누어 갖는 방식으로 운영됩니다. 고액의 상금이 걸린 만큼 라이브 시작 전 알림 설정을 통해 시간을 엄수하는 것이 중요하며, 한 문제만 틀려도 부활권을 사용할 수 있는 등의 추가 규칙을 미리 확인해두는 것이 유리합니다. 이처럼 대규모 상금 혜택이 주어지는 퀴즈 이벤트에 참여하여 실력을 발휘하는 것은 지적 즐거움과 함께 실질적인 <b><mark>자산</mark></b>을 형성하는 <b>앱테크</b>의 매우 매력적인 기회가 됩니다. </p>"
       },
@@ -1951,9 +1951,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "클럽 세이푸디에서는 매월 현대식품관의 다양한 상품을 소개하는 코너를 운영하고 있습니다.\r\n다음 중 현재 운영하고 있지 않은 코너는 무엇일까요?",
+        "question": "",
         "choices": [],
-        "answer": "④ 냉동간식 코너",
+        "answer": "캡슐",
         "explanation": ""
       },
       "history": [
@@ -2060,9 +2060,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "OOOOOOO란, 경기보다 앞서 움직여 앞으로의 경기 흐름을 예측하는 데 쓰는 지표예요.",
+        "question": "",
         "choices": [],
-        "answer": "선행종합지수",
+        "answer": "실질임금",
         "explanation": ""
       },
       "history": [
@@ -2169,9 +2169,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "마이너스 금리 정책은 중앙은행이 시중은행에 돈을 맡기면 오히려 이자를 받아가는 방식이에요.",
+        "question": "",
         "choices": [],
-        "answer": "X (아니에요)",
+        "answer": "O (맞아요)",
         "explanation": "",
         "pendingMessage": "O (맞아요)",
         "promoBlurb": "X (아니에요)"
