@@ -205,12 +205,10 @@
       "updatedAt": "2026-10-19",
       "today": {
         "date": "2026-10-19",
-        "imageUrl": "assets/img/coming-soon.webp",
-        "imageWidth": 300,
-        "imageHeight": 300,
-        "question": "",
+        "imageUrl": "",
+        "question": "내 보험 탐험의 ☐☐☐ 탐험을 참여하면 내 보험을 더 자세히 확인할 수 있어요",
         "choices": [],
-        "answer": "",
+        "answer": "보너스",
         "explanation": "",
         "pendingMessage": "<p>⏰ 다음 퀴즈가 곧 열려요! (오전 10시 오픈 예정)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>"
       },
@@ -424,9 +422,7 @@
       "updatedAt": "2026-10-19",
       "today": {
         "date": "2026-10-19",
-        "imageUrl": "assets/img/coming-soon.webp",
-        "imageWidth": 300,
-        "imageHeight": 300,
+        "imageUrl": "",
         "question": "급여클럽 플러스 회원에게 더 큰 혜택을 제공하는 쏠가전에서 10월 진행 중인 기획전이 아닌 것은 무엇일까요?",
         "choices": [],
         "answer": "④ 럭셔리 패션 브랜드 초대전",
@@ -855,10 +851,8 @@
       "updatedAt": "2026-10-19",
       "today": {
         "date": "2026-10-19",
-        "imageUrl": "assets/img/coming-soon.webp",
-        "imageWidth": 300,
-        "imageHeight": 300,
-        "question": "",
+        "imageUrl": "",
+        "question": "동맥경화는 혈관이 꽤 좁아질 때까지 아무 증상이 없을 수 있다",
         "choices": [],
         "answer": "O (그렇다)",
         "explanation": ""
@@ -964,10 +958,8 @@
       "updatedAt": "2026-10-19",
       "today": {
         "date": "2026-10-19",
-        "imageUrl": "assets/img/coming-soon.webp",
-        "imageWidth": 300,
-        "imageHeight": 300,
-        "question": "",
+        "imageUrl": "",
+        "question": "이소티논은 피지 분비를 근본적으로 줄이는 먹는 여드름 치료제다",
         "choices": [],
         "answer": "O (그렇다)",
         "explanation": ""
@@ -1505,12 +1497,10 @@
       "updatedAt": "2026-10-19",
       "today": {
         "date": "2026-10-19",
-        "imageUrl": "assets/img/coming-soon.webp",
-        "imageWidth": 300,
-        "imageHeight": 300,
-        "question": "",
+        "imageUrl": "",
+        "question": "해외가맹점 할인과 무료환전·해외 이용 혜택을 담은 KB국민 'OOOOO' 체크카드는 무엇일까요? (준법감시인 심의필 261014-03386-KOP)",
         "choices": [],
-        "answer": "",
+        "answer": "② 트래블러스",
         "explanation": ""
       },
       "history": [
@@ -1721,10 +1711,8 @@
       "updatedAt": "2026-10-19",
       "today": {
         "date": "2026-10-19",
-        "imageUrl": "assets/img/coming-soon.webp",
-        "imageWidth": 300,
-        "imageHeight": 300,
-        "question": "",
+        "imageUrl": "",
+        "question": "다음 설명에 대한 O/X 정답으로 올바른 것은?",
         "choices": [],
         "answer": "O (그렇다)",
         "explanation": ""
@@ -2045,9 +2033,7 @@
       "updatedAt": "2026-10-19",
       "today": {
         "date": "2026-10-19",
-        "imageUrl": "assets/img/coming-soon.webp",
-        "imageWidth": 300,
-        "imageHeight": 300,
+        "imageUrl": "",
         "question": "OOOOOO란, 물건을 사고팔 때마다 값에 붙어 최종 소비자가 부담하는 대표적인 간접세예요.",
         "choices": [],
         "answer": "부가가치세",
@@ -2154,9 +2140,7 @@
       "updatedAt": "2026-10-19",
       "today": {
         "date": "2026-10-19",
-        "imageUrl": "assets/img/coming-soon.webp",
-        "imageWidth": 300,
-        "imageHeight": 300,
+        "imageUrl": "",
         "question": "기펜재는 소득이 늘면 소비도 함께 늘어나는 대표적인 사치재예요.",
         "choices": [],
         "answer": "X (아니에요)",
