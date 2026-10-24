@@ -92,9 +92,9 @@
       "rewardHint": "원큐볼(하나머니) 최대 10,000",
       "participatePath": "하나원큐 앱 > 혜택 > 축구Play 퀴즈",
       "appDeeplink": "https://s.ppomppu.co.kr/?idno=coupon_118429&target=aHR0cHM6Ly9vcWYuaGFuYWJhbmsuY29tL29xZi9vbmVxZmlyc3QuanNwP3NjcmVlbklkPUxGTkwwNDAxMDAxNTAx&encode=on",
-      "updatedAt": "2026-10-24",
+      "updatedAt": "2026-10-25",
       "today": {
-        "date": "2026-10-24",
+        "date": "2026-10-25",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -204,9 +204,9 @@
       "rewardHint": "카카오페이포인트 최대 10,000P",
       "participatePath": "카카오페이 앱 > 혜택 > 퀴즈타임",
       "appDeeplink": "https://link.kakaopay.com/_/bgH_hih",
-      "updatedAt": "2026-10-24",
+      "updatedAt": "2026-10-25",
       "today": {
-        "date": "2026-10-24",
+        "date": "2026-10-25",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -315,9 +315,9 @@
       "rewardHint": "마이신한포인트",
       "participatePath": "신한 슈퍼SOL 앱 > 혜택 > 출석 퀴즈",
       "appDeeplink": "1. 보장에너지",
-      "updatedAt": "2026-10-24",
+      "updatedAt": "2026-10-25",
       "today": {
-        "date": "2026-10-24",
+        "date": "2026-10-25",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -425,9 +425,9 @@
       "rewardHint": "마이신한포인트 최대 100P",
       "participatePath": "신한 슈퍼SOL 앱 > 혜택 > 야구/상식 쏠퀴즈",
       "appDeeplink": "https://nsol.shinhan.com/link.html?pr_id=CO0101S0010F01",
-      "updatedAt": "2026-10-24",
+      "updatedAt": "2026-10-25",
       "today": {
-        "date": "2026-10-24",
+        "date": "2026-10-25",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -534,9 +534,9 @@
       "rewardHint": "마이신한포인트 최대 10,000P 랜덤",
       "participatePath": "신한 SOL페이 앱 > 혜택 > 퀴즈팡팡",
       "appDeeplink": "https://pay.shinhancard.com/pay/PAYFM005N/PAYFM005J01.shc?screenId=NATIVE%7CRBFNA8021X01",
-      "updatedAt": "2026-10-24",
+      "updatedAt": "2026-10-25",
       "today": {
-        "date": "2026-10-24",
+        "date": "2026-10-25",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -643,9 +643,9 @@
       "rewardHint": "기회소득(리워드)",
       "participatePath": "기후행동 기회소득 앱 > 오늘의 퀴즈",
       "appDeeplink": "https://www.ggaction.or.kr/",
-      "updatedAt": "2026-10-24",
+      "updatedAt": "2026-10-25",
       "today": {
-        "date": "2026-10-24",
+        "date": "2026-10-25",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -752,9 +752,9 @@
       "rewardHint": "NH포인트",
       "participatePath": "NH올원뱅크 앱 > 생활+ > 혜택 놀이터 > 데일리 퀴즈",
       "appDeeplink": "https://banking.nonghyup.com/servlet/content/ip/ne/ipne1710c.thtml",
-      "updatedAt": "2026-10-24",
+      "updatedAt": "2026-10-25",
       "today": {
-        "date": "2026-10-24",
+        "date": "2026-10-25",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -765,6 +765,12 @@
         "pendingMessage": "<p>⏰ 다음 퀴즈가 월요일(2월 23일)에 열려요! (수익은 계속됩니다)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>"
       },
       "history": [
+        {
+          "date": "2026-10-24",
+          "question": "원/달러 환율이 1달러당 1,300원에서 1,400원 으로 상승했다면, 일반적으로 원화의 가치는 달러 대비 하락했다고 볼 수 있다.",
+          "answer": "O (그렇다)",
+          "explanation": ""
+        },
         {
           "date": "2026-10-23",
           "question": "원/달러 환율이 1달러당 1,300원에서 1,400원 으로 상승했다면, 일반적으로 원화의 가치는 달러 대비 하락했다고 볼 수 있다.",
@@ -842,12 +848,6 @@
           "question": "NH올원뱅크의 이어달리기 게임의 최종 완주 단계는 총 10바퀴이다.",
           "answer": "X (아니다)",
           "explanation": "NH올원뱅크 이어달리기 게임은 단계별 완주 조건이 정해져 있어 최종 단계의 실제 기준을 정확히 구분하는 것이 중요한 퀴즈입니다.<br /><br />• 문제 : NH올원뱅크의 이어달리기 게임의 최종 완주 단계는 총 10바퀴이다.<br />• 정답 : <mark>X (아니다)</mark><br /><br />이 문제에서 판단해야 할 핵심은 이어달리기 게임의 ‘최종 완주 단계’가 총 10바퀴인지 여부입니다. 정답은 X로, 최종 완주 조건을 10바퀴라고 설명한 내용은 실제 게임 기준과 일치하지 않습니다. 따라서 게임을 진행하면서 거쳐 가는 중간 단계의 바퀴 수와 모든 과정을 끝내는 최종 단계의 조건을 서로 혼동하지 않는 것이 중요합니다. 이번 문장은 ‘총 10바퀴’라는 수치가 잘못되었기 때문에 ‘아니다’를 선택해야 합니다.<br /><br />이어달리기처럼 진행 단계가 있는 게임형 이벤트에서는 시작 단계, 중간 목표, 최종 완주 조건이 각각 다르게 설정될 수 있습니다. 특히 화면에 표시되는 현재 진행 횟수나 누적 바퀴 수를 최종 완주 기준과 같은 값으로 해석하면 정답을 혼동하기 쉽습니다. 이벤트 참여 시에는 현재 단계에서 요구하는 목표와 전체 게임이 종료되는 최종 조건을 따로 확인하는 것이 좋습니다. 또한 게임 규칙이나 포인트 지급 기준은 이벤트 운영 시기에 따라 변경될 수 있으므로 실제 참여할 때는 NH올원뱅크의 해당 회차 안내와 게임 규칙을 기준으로 확인해야 합니다."
-        },
-        {
-          "date": "2026-10-06",
-          "question": "악보에서 ‘아다지오(Adagio)’라는 빠르기말이 나타났다면 갑자기 강하게 연주해야 한다.",
-          "answer": "X (아니다)",
-          "explanation": "아다지오(Adagio)는 음악에서 연주의 빠르기를 나타내는 용어로, 음의 세기와는 다른 요소를 지시합니다.<br /><br />• 문제 : 악보에서 ‘아다지오(Adagio)’라는 빠르기말이 나타났다면 갑자기 강하게 연주해야 한다.<br />• 정답 : <mark>X (아니다)</mark><br /><br />아다지오는 악곡의 템포를 느리게 연주하라는 뜻으로 사용되는 빠르기말입니다. 따라서 악보에 Adagio가 적혀 있다고 해서 소리를 갑자기 크게 내거나 강한 힘으로 연주해야 한다는 의미는 아닙니다. 연주의 빠르기와 소리의 세기는 서로 다른 음악 요소이며, 세기는 별도의 셈여림표를 통해 지시됩니다. 그러므로 아다지오를 ‘갑자기 강하게 연주하라’는 뜻으로 해석한 문장은 옳지 않습니다.<br /><br />악보에서 소리를 강하게 연주하라는 뜻은 보통 포르테(f), 더욱 강하게는 포르티시모(ff)처럼 셈여림표로 표시합니다. 반대로 피아노(p)는 여리게, 피아니시모(pp)는 매우 여리게 연주하라는 의미입니다. 빠르기말에는 라르고, 아다지오, 안단테, 알레그로 등처럼 연주 속도를 나타내는 표현이 있으며, 각각의 용도는 셈여림표와 구분됩니다. 따라서 Adagio가 등장했을 때는 우선 느린 템포를 유지해야 하며, 실제 음량은 함께 적힌 셈여림표와 악곡의 흐름에 따라 판단해야 합니다."
         }
       ],
       "brandColor": "#04A94D"
@@ -862,9 +862,9 @@
       "rewardHint": "닥터캐쉬 최대 10,000캐시",
       "participatePath": "토스 앱 > 혜택 > 나만의닥터 건강퀴즈",
       "appDeeplink": "https://my-doctor.io/?c=tm_invitation&af_xp=custom&af_dp=merakiyourdoctor%3A%2F%2Fnavigate%3Fscreen%3DCodeInputFullModal%26code%3DEEI1RZQS&deep_link_sub1=%7B%22merakiProps%22%3A%7B%22merakiChannel%22%3A%22Referral_FriendInvitation%22%2C%22merakiCampaign%22%3A%22tm_invitation%22%2C%22merakiKeyword%22%3A%22EEI1RZQS%22%7D%7D&pid=Referral_FriendInvitation",
-      "updatedAt": "2026-10-24",
+      "updatedAt": "2026-10-25",
       "today": {
-        "date": "2026-10-24",
+        "date": "2026-10-25",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -971,9 +971,9 @@
       "rewardHint": "포인트 (실생활 사용 가능)",
       "participatePath": "닥터나우 앱 > 오늘의퀴즈",
       "appDeeplink": "https://doctornow.co.kr/?airbridge_referrer=airbridge%3Dtrue%26client_id%3D5a6aed34-939a-49dd-bbd2-7480847eaf46%26event_uuid%3De963a510-4387-42bc-96d1-7b094cb869fa%26referrer_timestamp%3D1789571243366%26short_id%3Dswsyvt%26channel%3Dreferralcode%26campaign%3Dfriends_share%26tracking_template_id%3D5ff2f57436318159ed923f96e5fa68e8%26ad_creative%3D4075201%26og_tag_id%3D821554216%26routing_short_id%3Dswsyvt&utm_source=referralcode&utm_campaign=friends_share",
-      "updatedAt": "2026-10-24",
+      "updatedAt": "2026-10-25",
       "today": {
-        "date": "2026-10-24",
+        "date": "2026-10-25",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -1080,9 +1080,9 @@
       "rewardHint": "모니머니로 전환되는 젤리",
       "participatePath": "monimo 앱 > 모니스쿨",
       "appDeeplink": "https://www.monimo.co.kr/",
-      "updatedAt": "2026-10-24",
+      "updatedAt": "2026-10-25",
       "today": {
-        "date": "2026-10-24",
+        "date": "2026-10-25",
         "imageUrl": "",
         "question": "신용카드 결제를 취소하면, 취소한 금액만큼 카드 이용한도가 실시간으로 \"무조건\" 복원된다.",
         "choices": [],
@@ -1091,6 +1091,12 @@
         "pendingMessage": "<p>⏰ 다음 퀴즈가 곧 열려요! (오전 10시 오픈 예정)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>"
       },
       "history": [
+        {
+          "date": "2026-10-24",
+          "question": "신용카드 결제를 취소하면, 취소한 금액만큼 카드 이용한도가 실시간으로 \"무조건\" 복원된다.",
+          "answer": "X (아니요)",
+          "explanation": "신용카드 결제 취소는 승인 취소 정보가 카드사에 정상적으로 접수·처리된 뒤 이용한도에 반영되므로, 취소와 동시에 언제나 한도가 복원되는 것은 아닙니다.<br /><br />• 문제 : 신용카드 결제를 취소하면, 취소한 금액만큼 카드 이용한도가 실시간으로 \"무조건\" 복원된다.<br />• 정답 : <mark>X (아니요)</mark><br /><br />신용카드 결제를 취소하면 일반적으로 취소 금액이 반영된 후 사용 가능한 이용한도가 다시 늘어납니다. 하지만 가맹점에서 취소한 시점과 카드사가 취소 정보를 접수해 처리하는 시점에는 차이가 생길 수 있습니다. 특히 매입이 이미 완료된 거래나 일부 온라인·해외 결제 등은 취소 처리 과정에 시간이 걸릴 수 있어 즉시 한도가 돌아오지 않을 수 있습니다. 따라서 문제처럼 ‘실시간으로 무조건 복원된다’고 단정한 설명은 맞지 않으며 정답은 X입니다.<br /><br />카드 이용한도는 카드사가 회원에게 부여한 신용공여 한도에서 사용한 금액을 반영해 관리됩니다. 정상적으로 취소가 완료되면 해당 금액이 한도에 다시 반영되지만, 처리 시점은 거래 상태와 가맹점의 취소 전표 접수, 카드사 업무 절차 등에 따라 달라질 수 있습니다. 일부 카드 상품의 할인한도 역시 결제 취소 후 복원까지 며칠이 걸릴 수 있으므로 이용한도와 할인한도는 구분해야 합니다. 급하게 한도를 사용해야 한다면 카드 앱의 취소 내역과 현재 이용 가능 한도를 직접 확인하는 것이 가장 정확합니다."
+        },
         {
           "date": "2026-10-23",
           "question": "신용카드 결제를 취소하면, 취소한 금액만큼 카드 이용한도가 실시간으로 \"무조건\" 복원된다.",
@@ -1168,12 +1174,6 @@
           "question": "일반보험에 비해 가입 심사를 간소화해, 일정한 조건을 충족하면 나이가 많거나 과거 병력이 있어도 가입할 수 있는 '이 보험'은 무엇일까요?",
           "answer": "② 간편보험",
           "explanation": "간편보험은 일반보험보다 가입 심사와 고지 절차를 간소화해 고령자나 과거 병력이 있는 사람도 일정한 조건을 충족하면 가입을 검토할 수 있도록 설계된 보험입니다.<br /><br />• 문제 : 일반보험에 비해 가입 심사를 간소화해, 일정한 조건을 충족하면 나이가 많거나 과거 병력이 있어도 가입할 수 있는 '이 보험'은 무엇일까요?<br />• 정답 : <mark>간편보험</mark><br /><br />간편보험은 일반적인 보험상품보다 보험 가입 과정에서 확인하는 건강 관련 질문을 줄이거나 심사 기준을 단순화한 상품을 말합니다. 생명보험협회도 고령자보험과 유병자보험에서 간편심사를 활용해 가입 문턱을 낮춘 상품이 운영되고 있다고 안내하고 있습니다. 따라서 연령이 높거나 과거 질병 치료 이력이 있다는 이유만으로 일반보험 가입이 어려웠던 사람도 상품에서 정한 고지 조건을 충족하면 가입 심사를 받을 수 있습니다. 문제에서 설명한 특징에 해당하는 정답은 간편보험입니다.<br /><br />다만 간편보험이라고 해서 누구나 조건 없이 가입할 수 있다는 뜻은 아닙니다. 상품별로 최근 입원·수술 여부, 추가검사 필요 소견, 중대질환 진단·치료 이력 등 정해진 질문에 사실대로 답해야 하며 그 결과에 따라 가입 가능 여부가 결정됩니다. 일반 상품보다 심사 절차가 간단한 대신 보험료나 보장 범위가 다르게 설정될 수 있으므로 가입 전에는 보장 내용과 보험료, 면책·감액 조건을 함께 비교해야 합니다. 또한 같은 ‘간편보험’이라도 보험회사와 상품에 따라 가입 기준이 서로 다르므로 자신의 병력에 맞는 실제 조건을 확인하는 것이 중요합니다."
-        },
-        {
-          "date": "2026-10-10",
-          "question": "일반보험에 비해 가입 심사를 간소화해, 일정한 조건을 충족하면 나이가 많거나 과거 병력이 있어도 가입할 수 있는 '이 보험'은 무엇일까요?",
-          "answer": "② 간편보험",
-          "explanation": "간편보험은 일반보험보다 가입 심사와 고지 절차를 간소화해 고령자나 과거 병력이 있는 사람도 일정한 조건을 충족하면 가입을 검토할 수 있도록 설계된 보험입니다.<br /><br />• 문제 : 일반보험에 비해 가입 심사를 간소화해, 일정한 조건을 충족하면 나이가 많거나 과거 병력이 있어도 가입할 수 있는 '이 보험'은 무엇일까요?<br />• 정답 : <mark>간편보험</mark><br /><br />간편보험은 일반적인 보험상품보다 보험 가입 과정에서 확인하는 건강 관련 질문을 줄이거나 심사 기준을 단순화한 상품을 말합니다. 생명보험협회도 고령자보험과 유병자보험에서 간편심사를 활용해 가입 문턱을 낮춘 상품이 운영되고 있다고 안내하고 있습니다. 따라서 연령이 높거나 과거 질병 치료 이력이 있다는 이유만으로 일반보험 가입이 어려웠던 사람도 상품에서 정한 고지 조건을 충족하면 가입 심사를 받을 수 있습니다. 문제에서 설명한 특징에 해당하는 정답은 간편보험입니다.<br /><br />다만 간편보험이라고 해서 누구나 조건 없이 가입할 수 있다는 뜻은 아닙니다. 상품별로 최근 입원·수술 여부, 추가검사 필요 소견, 중대질환 진단·치료 이력 등 정해진 질문에 사실대로 답해야 하며 그 결과에 따라 가입 가능 여부가 결정됩니다. 일반 상품보다 심사 절차가 간단한 대신 보험료나 보장 범위가 다르게 설정될 수 있으므로 가입 전에는 보장 내용과 보험료, 면책·감액 조건을 함께 비교해야 합니다. 또한 같은 ‘간편보험’이라도 보험회사와 상품에 따라 가입 기준이 서로 다르므로 자신의 병력에 맞는 실제 조건을 확인하는 것이 중요합니다."
         }
       ],
       "brandColor": "#1428A0",
@@ -1189,9 +1189,9 @@
       "rewardHint": "참여자 전원 최대 1,000원 랜덤 캐시",
       "participatePath": "카카오뱅크 앱 > 하단 혜택 > 바로 받아요",
       "appDeeplink": "https://s.ppomppu.co.kr/?idno=coupon_105474&target=aHR0cHM6Ly9rYWthb2Jhbmsub25lbGluay5tZS8wcU1pL3lzeGtxYnVk&encode=on",
-      "updatedAt": "2026-10-24",
+      "updatedAt": "2026-10-25",
       "today": {
-        "date": "2026-10-24",
+        "date": "2026-10-25",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -1298,9 +1298,9 @@
       "rewardHint": "하나머니 랜덤 캐시",
       "participatePath": "하나원큐 앱 > 혜택 > 슬기로운 금융생활 OX 게임",
       "appDeeplink": "https://oqf.hanabank.com/oqf/oneqfirst.jsp?screenId=LFNB0102005001&query=%7B%22pageType%22:%22oxQuiz%22%7D",
-      "updatedAt": "2026-10-24",
+      "updatedAt": "2026-10-25",
       "today": {
-        "date": "2026-10-24",
+        "date": "2026-10-25",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -1407,9 +1407,9 @@
       "rewardHint": "토스포인트 (현금처럼 사용/출금)",
       "participatePath": "토스 앱 > 혜택 > 퀴즈타임",
       "appDeeplink": "https://toss.im/",
-      "updatedAt": "2026-10-24",
+      "updatedAt": "2026-10-25",
       "today": {
-        "date": "2026-10-24",
+        "date": "2026-10-25",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -1516,9 +1516,9 @@
       "rewardHint": "포인트리",
       "participatePath": "KB Pay 앱 > 혜택 > 오늘의 퀴즈",
       "appDeeplink": "https://play.google.com/store/apps/details?id=com.kbcard.cxh.appcard&pcampaignid=web_share",
-      "updatedAt": "2026-10-24",
+      "updatedAt": "2026-10-25",
       "today": {
-        "date": "2026-10-24",
+        "date": "2026-10-25",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -1625,9 +1625,9 @@
       "rewardHint": "스타포인트",
       "participatePath": "KB스타뱅킹 앱 > 혜택 > 도전미션 스타퀴즈",
       "appDeeplink": "https://play.google.com/store/apps/details?id=com.kbstar.kbbank&pcampaignid=web_share",
-      "updatedAt": "2026-10-24",
+      "updatedAt": "2026-10-25",
       "today": {
-        "date": "2026-10-24",
+        "date": "2026-10-25",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -1734,9 +1734,9 @@
       "rewardHint": "스타포인트",
       "participatePath": "KB스타뱅킹 앱 > 혜택 > 한국사 매일 퀴즈",
       "appDeeplink": "https://www.kbstar.com/",
-      "updatedAt": "2026-10-24",
+      "updatedAt": "2026-10-25",
       "today": {
-        "date": "2026-10-24",
+        "date": "2026-10-25",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -1843,9 +1843,9 @@
       "rewardHint": "현금 혜택 (누적 상금제)",
       "participatePath": "케이뱅크 앱 > 혜택 > AI 퀴즈 챌린지",
       "appDeeplink": "https://www.kbanknow.com/web/web-home/home/main",
-      "updatedAt": "2026-10-24",
+      "updatedAt": "2026-10-25",
       "today": {
-        "date": "2026-10-24",
+        "date": "2026-10-25",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -1953,9 +1953,9 @@
       "rewardHint": "H.포인트",
       "participatePath": "H.Point 앱 > 오늘의 QUIZ",
       "appDeeplink": "https://www.h-point.co.kr/cma/invite.nhd?scheme=quizMain",
-      "updatedAt": "2026-10-24",
+      "updatedAt": "2026-10-25",
       "today": {
-        "date": "2026-10-24",
+        "date": "2026-10-25",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -2062,9 +2062,9 @@
       "rewardHint": "코인 (실제 가상자산 교환 가능)",
       "participatePath": "비트버니 앱 > 혜택 > 오늘의 상식 퀴즈",
       "appDeeplink": "https://www.bitbunny.io/",
-      "updatedAt": "2026-10-24",
+      "updatedAt": "2026-10-25",
       "today": {
-        "date": "2026-10-24",
+        "date": "2026-10-25",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -2171,9 +2171,9 @@
       "rewardHint": "코인 (실제 가상자산 교환 가능)",
       "participatePath": "비트버니 앱 > 혜택 > 오늘의 OX 퀴즈",
       "appDeeplink": "https://www.bitbunny.io/",
-      "updatedAt": "2026-10-24",
+      "updatedAt": "2026-10-25",
       "today": {
-        "date": "2026-10-24",
+        "date": "2026-10-25",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
