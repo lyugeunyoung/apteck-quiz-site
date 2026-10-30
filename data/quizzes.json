@@ -95,11 +95,13 @@
       "updatedAt": "2026-10-31",
       "today": {
         "date": "2026-10-31",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "오늘 전주월드컵경기장에서 열리는 하나은행 K리그1 2026 파이널라운드 경기는 어느 두 팀의 맞대결일까요?",
         "choices": [],
         "answer": "③ 전북 vs 대전",
-        "explanation": ""
+        "explanation": "오늘 전주월드컵경기장에서 열리는 하나은행 K리그1 2026 파이널라운드 경기는 어느 두 팀의 맞대결일까요?.<br />• 정답 : <mark>③ 전북 vs 대전</mark>"
       },
       "history": [
         {
@@ -205,7 +207,9 @@
       "updatedAt": "2026-10-31",
       "today": {
         "date": "2026-10-31",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "",
         "choices": [],
         "answer": "",
@@ -314,7 +318,9 @@
       "updatedAt": "2026-10-31",
       "today": {
         "date": "2026-10-31",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "",
         "choices": [],
         "answer": "",
@@ -422,7 +428,9 @@
       "updatedAt": "2026-10-31",
       "today": {
         "date": "2026-10-31",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "2026 NPB 일본시리즈에서 요코하마 DeNA 베이스스타즈를 꺾고 통합 우승을 차지한 소프트뱅크 호크스의 연고지는 어디일까요?",
         "choices": [],
         "answer": "④ 후쿠오카",
@@ -529,7 +537,9 @@
       "updatedAt": "2026-10-31",
       "today": {
         "date": "2026-10-31",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "신한카드 이벤트 신청 후 템퍼침대 행사 매장에서 결제 시 받을 수 있는 최대 캐시백율은?",
         "choices": [],
         "answer": "② 2%",
@@ -636,7 +646,9 @@
       "updatedAt": "2026-10-31",
       "today": {
         "date": "2026-10-31",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "2024년 경기도는 생물다양성 보전과 지속가능한 이용을 위한 '제1차 경기도 생물다양성전략'을 수립하였다.",
         "choices": [],
         "answer": "O (그렇다)",
@@ -743,12 +755,14 @@
       "updatedAt": "2026-10-31",
       "today": {
         "date": "2026-10-31",
-        "imageUrl": "",
-        "question": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
+        "question": "다음 퀴즈가 월요일(11월 2일)에 열려요!",
         "choices": [],
-        "answer": "",
-        "explanation": "",
-        "pendingMessage": "<p>⏰ 다음 퀴즈가 월요일(2월 23일)에 열려요! (수익은 계속됩니다)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>"
+        "answer": "다음 퀴즈가 월요일(11월 2일)에 열려요!",
+        "explanation": "<p>⏰ 다음 퀴즈가 월요일(11월 2일)에 열려요! (수익은 계속됩니다)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>",
+        "pendingMessage": "<p>⏰ 다음 퀴즈가 월요일(11월 2일)에 열려요! (수익은 계속됩니다)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>"
       },
       "history": [
         {
@@ -851,7 +865,9 @@
       "updatedAt": "2026-10-31",
       "today": {
         "date": "2026-10-31",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "철분제나 칼슘보충제도 변비의 원인이 될 수 있다",
         "choices": [],
         "answer": "O (그렇다)",
@@ -958,10 +974,12 @@
       "updatedAt": "2026-10-31",
       "today": {
         "date": "2026-10-31",
-        "imageUrl": "",
-        "question": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
+        "question": "MD크림은 로션보다 보습력이 높다",
         "choices": [],
-        "answer": "",
+        "answer": "O (그렇다)",
         "explanation": ""
       },
       "history": [
@@ -1174,7 +1192,9 @@
       "updatedAt": "2026-10-31",
       "today": {
         "date": "2026-10-31",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "매일 용돈 받기 출석체크를 놓친 일자가 있다면 보너스 용돈을 받을 수 없다.",
         "choices": [],
         "answer": "X (아니다)",
@@ -1281,7 +1301,9 @@
       "updatedAt": "2026-10-31",
       "today": {
         "date": "2026-10-31",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "타행 OTP를 하나은행에서 사용하려면 영업점에 방문해서 등록을 신청해야 한다.",
         "choices": [],
         "answer": "X (아니다)",
@@ -1388,7 +1410,9 @@
       "updatedAt": "2026-10-31",
       "today": {
         "date": "2026-10-31",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "",
         "choices": [],
         "answer": "",
@@ -1495,7 +1519,9 @@
       "updatedAt": "2026-10-31",
       "today": {
         "date": "2026-10-31",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "",
         "choices": [],
         "answer": "",
@@ -1602,7 +1628,9 @@
       "updatedAt": "2026-10-31",
       "today": {
         "date": "2026-10-31",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "상속 업무 위임 시 영업점 방문이 어려울 때, KB스타뱅킹으로 간편하게 위임장을 제출할 수 있다",
         "choices": [],
         "answer": "O (그렇다)",
@@ -1709,7 +1737,9 @@
       "updatedAt": "2026-10-31",
       "today": {
         "date": "2026-10-31",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "(가)!(라)는 강화도 문화유산이다. 이에 대한 설명으로 옳지 않은 것은?",
         "choices": [],
         "answer": "① {가}",
@@ -1816,7 +1846,9 @@
       "updatedAt": "2026-10-31",
       "today": {
         "date": "2026-10-31",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "할로윈 밤에 아이들이 집집마다 돌며 외치는 말은?",
         "choices": [],
         "answer": "③ Trick or Treat",
@@ -1924,7 +1956,9 @@
       "updatedAt": "2026-10-31",
       "today": {
         "date": "2026-10-31",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "[ CHRISTMAS IN NEW YORK [11..~1.31]\n잠들지 않는 뉴욕의 크리스마스, 2026년 현대백화점의 특별한 크리스마 스 빌리지엔 산타와 000들이 도시 곳곳 을 누비는데요, \n이때 000는 무엇일까요?",
         "choices": [],
         "answer": "② 고양이",
@@ -2031,7 +2065,9 @@
       "updatedAt": "2026-10-31",
       "today": {
         "date": "2026-10-31",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "OOO란, 한쪽 값이 오르면 대신 찾게 되는 서로 바꿔 쓸 수 있는 재화예요.",
         "choices": [],
         "answer": "대체재",
@@ -2138,7 +2174,9 @@
       "updatedAt": "2026-10-31",
       "today": {
         "date": "2026-10-31",
-        "imageUrl": "",
+        "imageUrl": "assets/img/coming-soon.webp",
+        "imageWidth": 300,
+        "imageHeight": 300,
         "question": "편의점 ATM에서 현금을 인출하면 은행 영업점 ATM보다 수수료가 더 비쌀 수 있어요.",
         "choices": [],
         "answer": "O (그렇다)",
