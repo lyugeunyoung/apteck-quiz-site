@@ -1391,9 +1391,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "",
+        "question": "미글로우 퀴즈",
         "choices": [],
-        "answer": "",
+        "answer": "마이크로웨이브  /  핌",
         "explanation": ""
       },
       "history": [
