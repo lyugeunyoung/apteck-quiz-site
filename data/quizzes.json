@@ -208,9 +208,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "",
+        "question": "내 보험 탐험의 □□□ 탐험을 참여하면 내 보험을 더 자세히 확인할 수 있어요",
         "choices": [],
-        "answer": "",
+        "answer": "보너스",
         "explanation": "",
         "pendingMessage": "<p>⏰ 다음 퀴즈가 곧 열려요! (오전 10시 오픈 예정)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>"
       },
@@ -319,7 +319,7 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "",
+        "question": "다음 중 슈퍼SOL 앱의 전체계좌조회에서 알 수 없는 정보는?",
         "choices": [],
         "answer": "4. 포인트 잔액",
         "explanation": "",
@@ -1399,7 +1399,7 @@
         "imageHeight": 300,
         "question": "",
         "choices": [],
-        "answer": "",
+        "answer": "2000",
         "explanation": ""
       },
       "history": [
@@ -1506,9 +1506,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "",
+        "question": "온라인 간편결제와 스타벅스에서 할인 받을 수 있는 '마루는 강쥐' 캐릭터 체크카드는 무엇일까요?",
         "choices": [],
-        "answer": "",
+        "answer": "1번 첵첵 체크카드",
         "explanation": ""
       },
       "history": [
