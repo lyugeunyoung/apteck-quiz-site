@@ -92,9 +92,9 @@
       "rewardHint": "원큐볼(하나머니) 최대 10,000",
       "participatePath": "하나원큐 앱 > 혜택 > 축구Play 퀴즈",
       "appDeeplink": "https://s.ppomppu.co.kr/?idno=coupon_118429&target=aHR0cHM6Ly9vcWYuaGFuYWJhbmsuY29tL29xZi9vbmVxZmlyc3QuanNwP3NjcmVlbklkPUxGTkwwNDAxMDAxNTAx&encode=on",
-      "updatedAt": "2026-11-14",
+      "updatedAt": "2026-11-15",
       "today": {
-        "date": "2026-11-14",
+        "date": "2026-11-15",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -104,6 +104,12 @@
         "explanation": ""
       },
       "history": [
+        {
+          "date": "2026-11-14",
+          "question": "하나은행 K리그1 2026 시즌 36 라운드 경기는 언제 시작 될까요?",
+          "answer": "① 11월 21일(토)",
+          "explanation": ""
+        },
         {
           "date": "2026-11-13",
           "question": "오늘 열리는 대한민국 축구국가대표팀 친선경기의 중동 지역 상대 국가는 어디일까요?",
@@ -181,12 +187,6 @@
           "question": "오늘 광양축구전용구장에서 열리는 하나은행 K리그2 2026 31라운드 경기는 어느 두 팀의 맞대결일까요?",
           "answer": "④ 전남 vs 성남",
           "explanation": "오늘 광양축구전용구장에서 열리는 하나은행 K리그2 2026 31라운드 경기는 어느 두 팀의 맞대결일까요?<br />• 정답 : <mark>④ 전남 vs 성남</mark>"
-        },
-        {
-          "date": "2026-10-31",
-          "question": "오늘 전주월드컵경기장에서 열리는 하나은행 K리그1 2026 파이널라운드 경기는 어느 두 팀의 맞대결일까요?",
-          "answer": "③ 전북 vs 대전",
-          "explanation": "오늘 전주월드컵경기장에서 열리는 하나은행 K리그1 2026 파이널라운드 경기는 어느 두 팀의 맞대결일까요?.<br />• 정답 : <mark>③ 전북 vs 대전</mark>"
         }
       ],
       "brandColor": "#009490",
@@ -204,9 +204,9 @@
       "rewardHint": "카카오페이포인트 최대 10,000P",
       "participatePath": "카카오페이 앱 > 혜택 > 퀴즈타임",
       "appDeeplink": "https://link.kakaopay.com/_/OPW-N44",
-      "updatedAt": "2026-11-14",
+      "updatedAt": "2026-11-15",
       "today": {
-        "date": "2026-11-14",
+        "date": "2026-11-15",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -315,9 +315,9 @@
       "rewardHint": "마이신한포인트",
       "participatePath": "신한 슈퍼SOL 앱 > 혜택 > 출석 퀴즈",
       "appDeeplink": "1. 보장에너지",
-      "updatedAt": "2026-11-14",
+      "updatedAt": "2026-11-15",
       "today": {
-        "date": "2026-11-14",
+        "date": "2026-11-15",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -328,6 +328,12 @@
         "pendingMessage": "<p>⏰ 다음 퀴즈가 곧 열려요! (오전 03시 오픈 예정)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>"
       },
       "history": [
+        {
+          "date": "2026-11-14",
+          "question": "매달 다른 테마로 매력적인 브랜드를 특가로 선보이는 '신한카드 비스커러데이'11월 떡지순례 상품이 아닌 것은 무엇일까요?",
+          "answer": "② 가래떡",
+          "explanation": ""
+        },
         {
           "date": "2026-11-13",
           "question": "AI영양분석으로 알 수 있는 것은?",
@@ -405,12 +411,6 @@
           "question": "10월 29일 오전 5시 30분에 (한국시간) 어닝콜 라이브가 진행되는(진행된) 종목은?",
           "answer": "① 구글",
           "explanation": "10월 29일 어닝 라이브는 주요 미국 기업의 실적 발표 일정을 확인하는 콘텐츠로, 이번 문제에서는 한국시간 오전 5시 30분에 진행되는 기업을 구분하는 것이 핵심입니다.<br /><br />• 문제 : 10월 29일 오전 5시 30분에 (한국시간) 어닝콜 라이브가 진행되는(진행된) 종목은?<br />• 정답 : <mark>① 구글</mark><br /><br />이번 문제에서 제시된 시간인 10월 29일 오전 5시 30분과 연결되는 종목은 구글입니다. 선택지에는 구글, 엔비디아, AMD, 월마트가 제시되어 있지만 해당 시간의 어닝콜 라이브 일정에 맞는 기업은 구글이므로 정답은 ①번입니다. 어닝콜은 기업이 분기 실적을 발표한 뒤 경영진이 매출과 이익, 주요 사업 성과 등을 설명하고 투자자와 애널리스트의 질문에 답하는 자리입니다. 따라서 기업명뿐 아니라 발표 시각을 함께 확인해야 정확하게 구분할 수 있습니다.<br /><br />구글의 모회사인 알파벳은 검색과 광고, 유튜브, 클라우드 등 여러 사업 부문의 실적을 정기적으로 공개합니다. 어닝콜에서는 이미 발표된 재무제표의 숫자뿐 아니라 각 사업의 성장 상황과 비용, 투자 계획 등에 대한 설명도 이어질 수 있습니다. 다만 경영진이 언급하는 향후 전망은 확정된 수익을 의미하지 않으며 시장 환경에 따라 달라질 수 있습니다. 이번 퀴즈에서는 다른 미국 기술기업과 혼동하지 않고 ‘10월 29일 오전 5시 30분-구글’이라는 일정을 연결해 기억하면 됩니다."
-        },
-        {
-          "date": "2026-10-28",
-          "question": "신한 슈퍼SOL 급여클럽+에서 봉투 모으기 미션이 아닌 것은 무엇일까요?",
-          "answer": "③ 신용카드 가입",
-          "explanation": "신한 슈퍼SOL 급여클럽+의 봉투 모으기는 지정된 금융서비스 가입이나 콘텐츠 참여를 통해 봉투를 모으는 미션으로 구성되어 있습니다.<br /><br />• 문제 : 신한 슈퍼SOL 급여클럽+에서 봉투 모으기 미션이 아닌 것은 무엇일까요?<br />• 정답 : <mark>③ 신용카드 가입</mark><br /><br />이번 문제에서는 네 가지 활동 가운데 급여클럽+의 봉투 모으기 미션에 포함되지 않은 항목을 구분해야 합니다. 모임통장 가입, 청약통장 가입, SOL 판타지 야구 참여는 해당 미션으로 제시되는 활동이지만 신용카드 가입은 봉투 모으기 대상에 포함되지 않습니다. 따라서 네 선택지 중 미션이 아닌 것은 ③ 신용카드 가입입니다. 금융상품 가입이라는 공통점만 보고 판단하기보다 서비스에서 지정한 개별 미션인지 확인하는 것이 핵심입니다.<br /><br />급여클럽+처럼 앱에서 운영되는 참여형 혜택은 특정 상품 가입뿐 아니라 게임이나 콘텐츠 참여 등 서로 다른 활동을 하나의 미션 체계로 구성할 수 있습니다. 같은 신한금융 서비스와 관련된 활동이라도 자동으로 모두 봉투 획득 조건이 되는 것은 아닙니다. 또한 이벤트 미션은 운영 시점에 따라 추가되거나 변경될 수 있으므로 실제 참여할 때는 현재 표시되는 미션 목록과 완료 기준을 확인하는 것이 좋습니다. 이번 문제에서는 ‘신용카드 가입은 봉투 모으기 미션이 아니다’라는 구분을 기억하면 됩니다."
         }
       ],
       "brandColor": "#0046FF"
@@ -425,9 +425,9 @@
       "rewardHint": "마이신한포인트 최대 100P",
       "participatePath": "신한 슈퍼SOL 앱 > 혜택 > 야구/상식 쏠퀴즈",
       "appDeeplink": "https://nsol.shinhan.com/link.html?pr_id=CO0101S0010F01",
-      "updatedAt": "2026-11-14",
+      "updatedAt": "2026-11-15",
       "today": {
-        "date": "2026-11-14",
+        "date": "2026-11-15",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -437,6 +437,12 @@
         "explanation": ""
       },
       "history": [
+        {
+          "date": "2026-11-14",
+          "question": "LG 트윈스가 외국인 타자 오스틴 딘 선수와 2027시즌 재계약을 완료했습니다. 2026 KBO 정규시즌에서 오스틴 딘 선수가 출전한 총 경기 수는 몇 경기일까요?",
+          "answer": "④ 144경기",
+          "explanation": ""
+        },
         {
           "date": "2026-11-13",
           "question": "2026 아시아 프로야구 챔피언십 참가국이 아닌 나라는 어디일까요?",
@@ -514,12 +520,6 @@
           "question": "2026 월드시리즈에서 창단 최초로 우승을 차지한 밀워키 브루어스는 MLB 어느 지구 소속일까요?",
           "answer": "④ 내셔널리그 중부지구",
           "explanation": ""
-        },
-        {
-          "date": "2026-10-31",
-          "question": "2026 NPB 일본시리즈에서 요코하마 DeNA 베이스스타즈를 꺾고 통합 우승을 차지한 소프트뱅크 호크스의 연고지는 어디일까요?",
-          "answer": "④ 후쿠오카",
-          "explanation": ""
         }
       ],
       "brandColor": "#0046FF"
@@ -534,9 +534,9 @@
       "rewardHint": "마이신한포인트 최대 10,000P 랜덤",
       "participatePath": "신한 SOL페이 앱 > 혜택 > 퀴즈팡팡",
       "appDeeplink": "https://pay.shinhancard.com/pay/PAYFM005N/PAYFM005J01.shc?screenId=NATIVE%7CRBFNA8021X01",
-      "updatedAt": "2026-11-14",
+      "updatedAt": "2026-11-15",
       "today": {
-        "date": "2026-11-14",
+        "date": "2026-11-15",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -546,6 +546,12 @@
         "explanation": ""
       },
       "history": [
+        {
+          "date": "2026-11-14",
+          "question": "한진트래블 이집트 전세기 사전 예약 시 받을 수 있는 최대 할인율은 얼마일까요?",
+          "answer": "③ 8%",
+          "explanation": ""
+        },
         {
           "date": "2026-11-13",
           "question": "매달 색다른 테마로 매력적인 브랜드를 특가에 선보이는 '디스커버데이(D-Day)'! 11월 테마는 무엇일까요?",
@@ -623,12 +629,6 @@
           "question": "1일부터 3일까지 진행되는 마이샵데이의 참여 브랜드가 아닌 것은?",
           "answer": "③ \n올리브영",
           "explanation": ""
-        },
-        {
-          "date": "2026-10-31",
-          "question": "신한카드 이벤트 신청 후 템퍼침대 행사 매장에서 결제 시 받을 수 있는 최대 캐시백율은?",
-          "answer": "② 2%",
-          "explanation": ""
         }
       ],
       "brandColor": "#0046FF"
@@ -643,9 +643,9 @@
       "rewardHint": "기회소득(리워드)",
       "participatePath": "기후행동 기회소득 앱 > 오늘의 퀴즈",
       "appDeeplink": "https://www.ggaction.or.kr/",
-      "updatedAt": "2026-11-14",
+      "updatedAt": "2026-11-15",
       "today": {
-        "date": "2026-11-14",
+        "date": "2026-11-15",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -655,6 +655,12 @@
         "explanation": ""
       },
       "history": [
+        {
+          "date": "2026-11-14",
+          "question": "제품에 환경관련 문구, 환경 이미지가 있으면 녹색제품이므로 구입시 탄소감축에 도움이 된다.",
+          "answer": "X (아니다)",
+          "explanation": ""
+        },
         {
           "date": "2026-11-13",
           "question": "대기오염과 기후변화는 아무런 관련이 없다.",
@@ -732,12 +738,6 @@
           "question": "경기도는 기후위기에 대응하기 위해 환경보건부문(기후보건)을 추진하고 있다.",
           "answer": "O (그렇다)",
           "explanation": ""
-        },
-        {
-          "date": "2026-10-31",
-          "question": "2024년 경기도는 생물다양성 보전과 지속가능한 이용을 위한 '제1차 경기도 생물다양성전략'을 수립하였다.",
-          "answer": "O (그렇다)",
-          "explanation": ""
         }
       ],
       "brandColor": "#2E7D32"
@@ -752,9 +752,9 @@
       "rewardHint": "NH포인트",
       "participatePath": "NH올원뱅크 앱 > 생활+ > 혜택 놀이터 > 데일리 퀴즈",
       "appDeeplink": "https://banking.nonghyup.com/servlet/content/ip/ne/ipne1710c.thtml",
-      "updatedAt": "2026-11-14",
+      "updatedAt": "2026-11-15",
       "today": {
-        "date": "2026-11-14",
+        "date": "2026-11-15",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -765,6 +765,12 @@
         "pendingMessage": "<p>⏰ 다음 퀴즈가 월요일(11월 2일)에 열려요! (수익은 계속됩니다)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>"
       },
       "history": [
+        {
+          "date": "2026-11-14",
+          "question": "다음 퀴즈가 월요일(11월 16일)에 열려요!",
+          "answer": "다음 퀴즈가 월요일(11월 16일)에 열려요!",
+          "explanation": "<p>⏰ 다음 퀴즈가 월요일(11월 16일)에 열려요! (수익은 계속됩니다)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>"
+        },
         {
           "date": "2026-11-13",
           "question": "퇴직연금은 나이가 많은 사람만 관심을 가지면 된다.",
@@ -842,12 +848,6 @@
           "question": "다음 퀴즈가 월요일(11월 2일)에 열려요!",
           "answer": "다음 퀴즈가 월요일(11월 2일)에 열려요!",
           "explanation": "<p>⏰ 다음 퀴즈가 월요일(11월 2일)에 열려요! (수익은 계속됩니다)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>"
-        },
-        {
-          "date": "2026-10-31",
-          "question": "다음 퀴즈가 월요일(11월 2일)에 열려요!",
-          "answer": "다음 퀴즈가 월요일(11월 2일)에 열려요!",
-          "explanation": "<p>⏰ 다음 퀴즈가 월요일(11월 2일)에 열려요! (수익은 계속됩니다)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>"
         }
       ],
       "brandColor": "#04A94D"
@@ -862,9 +862,9 @@
       "rewardHint": "닥터캐쉬 최대 10,000캐시",
       "participatePath": "토스 앱 > 혜택 > 나만의닥터 건강퀴즈",
       "appDeeplink": "https://my-doctor.io/?c=tm_invitation&af_xp=custom&af_dp=merakiyourdoctor%3A%2F%2Fnavigate%3Fscreen%3DCodeInputFullModal%26code%3DEEI1RZQS&deep_link_sub1=%7B%22merakiProps%22%3A%7B%22merakiChannel%22%3A%22Referral_FriendInvitation%22%2C%22merakiCampaign%22%3A%22tm_invitation%22%2C%22merakiKeyword%22%3A%22EEI1RZQS%22%7D%7D&pid=Referral_FriendInvitation",
-      "updatedAt": "2026-11-14",
+      "updatedAt": "2026-11-15",
       "today": {
-        "date": "2026-11-14",
+        "date": "2026-11-15",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -874,6 +874,12 @@
         "explanation": ""
       },
       "history": [
+        {
+          "date": "2026-11-14",
+          "question": "실손보험금으로 돌려받은 금액은 연말정산 의료비 신고에서 빼야 한다.",
+          "answer": "O (그렇다)",
+          "explanation": ""
+        },
         {
           "date": "2026-11-13",
           "question": "발가락이 붓게 붓고 가려운 동창은 기온이 영하로 내려가야만 생긴다",
@@ -951,12 +957,6 @@
           "question": "성인 여드름은 사춘기 여드름처럼 이마와 코(T존)에 주로 생긴다",
           "answer": "X (아니다)",
           "explanation": ""
-        },
-        {
-          "date": "2026-10-31",
-          "question": "철분제나 칼슘보충제도 변비의 원인이 될 수 있다",
-          "answer": "O (그렇다)",
-          "explanation": ""
         }
       ],
       "brandColor": "#0064FF"
@@ -971,9 +971,9 @@
       "rewardHint": "포인트 (실생활 사용 가능)",
       "participatePath": "닥터나우 앱 > 오늘의퀴즈",
       "appDeeplink": "https://doctornow.co.kr/?airbridge_referrer=airbridge%3Dtrue%26client_id%3D5a6aed34-939a-49dd-bbd2-7480847eaf46%26event_uuid%3De963a510-4387-42bc-96d1-7b094cb869fa%26referrer_timestamp%3D1789571243366%26short_id%3Dswsyvt%26channel%3Dreferralcode%26campaign%3Dfriends_share%26tracking_template_id%3D5ff2f57436318159ed923f96e5fa68e8%26ad_creative%3D4075201%26og_tag_id%3D821554216%26routing_short_id%3Dswsyvt&utm_source=referralcode&utm_campaign=friends_share",
-      "updatedAt": "2026-11-14",
+      "updatedAt": "2026-11-15",
       "today": {
-        "date": "2026-11-14",
+        "date": "2026-11-15",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -983,6 +983,12 @@
         "explanation": ""
       },
       "history": [
+        {
+          "date": "2026-11-14",
+          "question": "아다팔렌은 트레티노인보다 피부자극이 적은 레티노이드다",
+          "answer": "O (그렇다)",
+          "explanation": ""
+        },
         {
           "date": "2026-11-13",
           "question": "스마일프로 시력교정술은 모든 난시에 적용할 수 있다",
@@ -1060,12 +1066,6 @@
           "question": "금연 후 금단증상은 24-27시간 사이에 가장 심하다",
           "answer": "O (그렇다)",
           "explanation": ""
-        },
-        {
-          "date": "2026-10-27",
-          "question": "아세트아미노펜 해열제는 생후 4개월부터 먹일 수 있다.",
-          "answer": "O (그렇다)",
-          "explanation": ""
         }
       ],
       "brandColor": "#00C2B3"
@@ -1080,9 +1080,9 @@
       "rewardHint": "모니머니로 전환되는 젤리",
       "participatePath": "monimo 앱 > 모니스쿨",
       "appDeeplink": "https://www.monimo.co.kr/",
-      "updatedAt": "2026-11-14",
+      "updatedAt": "2026-11-15",
       "today": {
-        "date": "2026-11-14",
+        "date": "2026-11-15",
         "imageUrl": "",
         "question": "1천만원을 연 5% 복리로 20년을 굴리면 이자가 원금보다 많아진다. 맞는 말일까요? (* 수수료 및 세금 제외)",
         "choices": [],
@@ -1091,6 +1091,12 @@
         "pendingMessage": "<p>⏰ 다음 퀴즈가 곧 열려요! (오전 10시 오픈 예정)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>"
       },
       "history": [
+        {
+          "date": "2026-11-14",
+          "question": "1천만원을 연 5% 복리로 20년을 굴리면 이자가 원금보다 많아진다. 맞는 말일까요? (* 수수료 및 세금 제외)",
+          "answer": "O (예)",
+          "explanation": "복리는 원금에 붙은 이자가 다시 원금에 더해지고, 다음 기간에는 그 합계에 다시 이자가 붙는 방식이므로 시간이 길어질수록 이자 증가 폭이 커지는 특징이 있습니다.<br /><br />• 문제 : 1천만원을 연 5% 복리로 20년을 굴리면 이자가 원금보다 많아진다. 맞는 말일까요? (* 수수료 및 세금 제외)<br />• 정답 : <mark>O (예)</mark><br /><br />연 5% 복리에서는 매년 원금과 지금까지 붙은 이자를 합한 금액에 다시 5%의 이자가 적용됩니다. 1천만원을 20년 동안 연 5% 복리로 운용하면 최종 금액은 약 2,653만원이 됩니다. 이 가운데 처음 넣은 원금 1천만원을 제외한 이자는 약 1,653만원이므로 원금보다 약 653만원 많습니다. 따라서 수수료와 세금을 제외한다는 문제의 조건에서는 ‘이자가 원금보다 많아진다’는 설명이 맞습니다.<br /><br />단리와 비교하면 차이가 더 분명합니다. 단리는 처음 원금에 대해서만 계속 이자가 붙기 때문에 같은 조건에서 20년간 이자는 정확히 1천만원이지만, 복리는 이전에 받은 이자에도 다시 이자가 붙어 총이자가 더 커집니다. 이런 효과를 복리효과라고 하며 운용 기간이 길수록 차이가 커집니다. 다만 실제 금융상품에서는 세금과 수수료, 금리 변동 여부 등에 따라 실제 수령액이 달라질 수 있으므로 상품 조건을 함께 확인해야 합니다."
+        },
         {
           "date": "2026-11-13",
           "question": "1천만원을 연 5% 복리로 20년을 굴리면 이자가 원금보다 많아진다. 맞는 말일까요? (* 수수료 및 세금 제외)",
@@ -1168,12 +1174,6 @@
           "question": "신용카드 결제를 취소하면, 취소한 금액만큼 카드 이용한도가 실시간으로 \"무조건\" 복원된다.",
           "answer": "X (아니요)",
           "explanation": "신용카드 결제 취소는 승인 취소 정보가 카드사에 정상적으로 접수·처리된 뒤 이용한도에 반영되므로, 취소와 동시에 언제나 한도가 복원되는 것은 아닙니다.<br /><br />• 문제 : 신용카드 결제를 취소하면, 취소한 금액만큼 카드 이용한도가 실시간으로 \"무조건\" 복원된다.<br />• 정답 : <mark>X (아니요)</mark><br /><br />신용카드 결제를 취소하면 일반적으로 취소 금액이 반영된 후 사용 가능한 이용한도가 다시 늘어납니다. 하지만 가맹점에서 취소한 시점과 카드사가 취소 정보를 접수해 처리하는 시점에는 차이가 생길 수 있습니다. 특히 매입이 이미 완료된 거래나 일부 온라인·해외 결제 등은 취소 처리 과정에 시간이 걸릴 수 있어 즉시 한도가 돌아오지 않을 수 있습니다. 따라서 문제처럼 ‘실시간으로 무조건 복원된다’고 단정한 설명은 맞지 않으며 정답은 X입니다.<br /><br />카드 이용한도는 카드사가 회원에게 부여한 신용공여 한도에서 사용한 금액을 반영해 관리됩니다. 정상적으로 취소가 완료되면 해당 금액이 한도에 다시 반영되지만, 처리 시점은 거래 상태와 가맹점의 취소 전표 접수, 카드사 업무 절차 등에 따라 달라질 수 있습니다. 일부 카드 상품의 할인한도 역시 결제 취소 후 복원까지 며칠이 걸릴 수 있으므로 이용한도와 할인한도는 구분해야 합니다. 급하게 한도를 사용해야 한다면 카드 앱의 취소 내역과 현재 이용 가능 한도를 직접 확인하는 것이 가장 정확합니다."
-        },
-        {
-          "date": "2026-10-30",
-          "question": "신용카드 결제를 취소하면, 취소한 금액만큼 카드 이용한도가 실시간으로 \"무조건\" 복원된다.",
-          "answer": "X (아니요)",
-          "explanation": "신용카드 결제 취소는 승인 취소 정보가 카드사에 정상적으로 접수·처리된 뒤 이용한도에 반영되므로, 취소와 동시에 언제나 한도가 복원되는 것은 아닙니다.<br /><br />• 문제 : 신용카드 결제를 취소하면, 취소한 금액만큼 카드 이용한도가 실시간으로 \"무조건\" 복원된다.<br />• 정답 : <mark>X (아니요)</mark><br /><br />신용카드 결제를 취소하면 일반적으로 취소 금액이 반영된 후 사용 가능한 이용한도가 다시 늘어납니다. 하지만 가맹점에서 취소한 시점과 카드사가 취소 정보를 접수해 처리하는 시점에는 차이가 생길 수 있습니다. 특히 매입이 이미 완료된 거래나 일부 온라인·해외 결제 등은 취소 처리 과정에 시간이 걸릴 수 있어 즉시 한도가 돌아오지 않을 수 있습니다. 따라서 문제처럼 ‘실시간으로 무조건 복원된다’고 단정한 설명은 맞지 않으며 정답은 X입니다.<br /><br />카드 이용한도는 카드사가 회원에게 부여한 신용공여 한도에서 사용한 금액을 반영해 관리됩니다. 정상적으로 취소가 완료되면 해당 금액이 한도에 다시 반영되지만, 처리 시점은 거래 상태와 가맹점의 취소 전표 접수, 카드사 업무 절차 등에 따라 달라질 수 있습니다. 일부 카드 상품의 할인한도 역시 결제 취소 후 복원까지 며칠이 걸릴 수 있으므로 이용한도와 할인한도는 구분해야 합니다. 급하게 한도를 사용해야 한다면 카드 앱의 취소 내역과 현재 이용 가능 한도를 직접 확인하는 것이 가장 정확합니다."
         }
       ],
       "brandColor": "#1428A0",
@@ -1189,9 +1189,9 @@
       "rewardHint": "참여자 전원 최대 1,000원 랜덤 캐시",
       "participatePath": "카카오뱅크 앱 > 하단 혜택 > 바로 받아요",
       "appDeeplink": "https://s.ppomppu.co.kr/?idno=coupon_105474&target=aHR0cHM6Ly9rYWthb2Jhbmsub25lbGluay5tZS8wcU1pL3lzeGtxYnVk&encode=on",
-      "updatedAt": "2026-11-14",
+      "updatedAt": "2026-11-15",
       "today": {
-        "date": "2026-11-14",
+        "date": "2026-11-15",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -1201,6 +1201,12 @@
         "explanation": ""
       },
       "history": [
+        {
+          "date": "2026-11-14",
+          "question": "배우자가 알바하면 연말정산 때 공제 못 받는다.",
+          "answer": "X (아니다)",
+          "explanation": ""
+        },
         {
           "date": "2026-11-13",
           "question": "카카드에 서명 안 하면 도난 피해 못 돌려받을 수 있다.",
@@ -1278,12 +1284,6 @@
           "question": "매일 용돈 받기 서비스에서는 모두 같은 금액의 용돈을 준다.",
           "answer": "X (아니다)",
           "explanation": ""
-        },
-        {
-          "date": "2026-10-31",
-          "question": "매일 용돈 받기 출석체크를 놓친 일자가 있다면 보너스 용돈을 받을 수 없다.",
-          "answer": "X (아니다)",
-          "explanation": ""
         }
       ],
       "brandColor": "#E8C700"
@@ -1298,9 +1298,9 @@
       "rewardHint": "하나머니 랜덤 캐시",
       "participatePath": "하나원큐 앱 > 혜택 > 슬기로운 금융생활 OX 게임",
       "appDeeplink": "https://oqf.hanabank.com/oqf/oneqfirst.jsp?screenId=LFNB0102005001&query=%7B%22pageType%22:%22oxQuiz%22%7D",
-      "updatedAt": "2026-11-14",
+      "updatedAt": "2026-11-15",
       "today": {
-        "date": "2026-11-14",
+        "date": "2026-11-15",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -1310,6 +1310,12 @@
         "explanation": ""
       },
       "history": [
+        {
+          "date": "2026-11-14",
+          "question": "통장이나 카드가 없으면 영업점에서 현금을 인출할 수 없다.",
+          "answer": "X (아니다)",
+          "explanation": ""
+        },
         {
           "date": "2026-11-13",
           "question": "이벤트 기간 내 하나나라사랑카드(체크)를 신규 발급하면 쿠팡 와우 멤버십 최대 3개월 캐시백 받을 수 있다.",
@@ -1387,12 +1393,6 @@
           "question": "하나원큐 첫 화면에서 보이는 계좌는 고정되어 변경할 수 없다.",
           "answer": "X (아니다)",
           "explanation": ""
-        },
-        {
-          "date": "2026-10-31",
-          "question": "타행 OTP를 하나은행에서 사용하려면 영업점에 방문해서 등록을 신청해야 한다.",
-          "answer": "X (아니다)",
-          "explanation": ""
         }
       ],
       "brandColor": "#009490"
@@ -1407,9 +1407,9 @@
       "rewardHint": "토스포인트 (현금처럼 사용/출금)",
       "participatePath": "토스 앱 > 혜택 > 퀴즈타임",
       "appDeeplink": "https://toss.im/",
-      "updatedAt": "2026-11-14",
+      "updatedAt": "2026-11-15",
       "today": {
-        "date": "2026-11-14",
+        "date": "2026-11-15",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -1516,9 +1516,9 @@
       "rewardHint": "포인트리",
       "participatePath": "KB Pay 앱 > 혜택 > 오늘의 퀴즈",
       "appDeeplink": "https://play.google.com/store/apps/details?id=com.kbcard.cxh.appcard&pcampaignid=web_share",
-      "updatedAt": "2026-11-14",
+      "updatedAt": "2026-11-15",
       "today": {
-        "date": "2026-11-14",
+        "date": "2026-11-15",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -1625,9 +1625,9 @@
       "rewardHint": "스타포인트",
       "participatePath": "KB스타뱅킹 앱 > 혜택 > 도전미션 스타퀴즈",
       "appDeeplink": "https://play.google.com/store/apps/details?id=com.kbstar.kbbank&pcampaignid=web_share",
-      "updatedAt": "2026-11-14",
+      "updatedAt": "2026-11-15",
       "today": {
-        "date": "2026-11-14",
+        "date": "2026-11-15",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -1637,6 +1637,12 @@
         "explanation": ""
       },
       "history": [
+        {
+          "date": "2026-11-14",
+          "question": "보험 해지환급금은 가입한 보험을 OO에 해지했을 때 보험사로부터 돌려받는 금액이다",
+          "answer": "② 중도",
+          "explanation": ""
+        },
         {
           "date": "2026-11-13",
           "question": "반려 목적으로 기르는 O개월령 이상의 개는 동물 등록 의무 대상이다",
@@ -1714,12 +1720,6 @@
           "question": "통장 분실 시 수령할 수 있는 방법이 아닌 것은 무엇일까요?",
           "answer": "④ ATM 수령",
           "explanation": ""
-        },
-        {
-          "date": "2026-10-31",
-          "question": "상속 업무 위임 시 영업점 방문이 어려울 때, KB스타뱅킹으로 간편하게 위임장을 제출할 수 있다",
-          "answer": "O (그렇다)",
-          "explanation": ""
         }
       ],
       "brandColor": "#FFBC00"
@@ -1734,9 +1734,9 @@
       "rewardHint": "스타포인트",
       "participatePath": "KB스타뱅킹 앱 > 혜택 > 한국사 매일 퀴즈",
       "appDeeplink": "https://www.kbstar.com/",
-      "updatedAt": "2026-11-14",
+      "updatedAt": "2026-11-15",
       "today": {
-        "date": "2026-11-14",
+        "date": "2026-11-15",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -1746,6 +1746,12 @@
         "explanation": ""
       },
       "history": [
+        {
+          "date": "2026-11-14",
+          "question": "빈칸에 들어갈 제도를 쓰시오,",
+          "answer": "과전법",
+          "explanation": ""
+        },
         {
           "date": "2026-11-13",
           "question": "상 인터뷰의 (가)에 들어갈 기구로 옳은 것은?",
@@ -1823,12 +1829,6 @@
           "question": "빈칸에 들어갈 알맞은 말을 쓰시오.",
           "answer": "민며느리",
           "explanation": ""
-        },
-        {
-          "date": "2026-10-31",
-          "question": "(가)!(라)는 강화도 문화유산이다. 이에 대한 설명으로 옳지 않은 것은?",
-          "answer": "① {가}",
-          "explanation": ""
         }
       ],
       "brandColor": "#FFBC00"
@@ -1843,9 +1843,9 @@
       "rewardHint": "현금 혜택 (누적 상금제)",
       "participatePath": "케이뱅크 앱 > 혜택 > AI 퀴즈 챌린지",
       "appDeeplink": "https://www.kbanknow.com/web/web-home/home/main",
-      "updatedAt": "2026-11-14",
+      "updatedAt": "2026-11-15",
       "today": {
-        "date": "2026-11-14",
+        "date": "2026-11-15",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -1856,6 +1856,12 @@
         "pendingMessage": "<p> 8.19(수) 오후 12:30에 시작되는 AI 퀴즈 챌린지의 라이브 퀴즈 우승 총 상금 <br><b><mark>1,000만원</mark></b><br><br>2026년 8월 19일 수요일에 진행되는 <b><mark>AI 퀴즈 챌린지</mark></b>의 역대급 보상. 이미지 중앙에 명시된 바와 같이, 라이브 퀴즈 우승자들에게 수여되는 총 상금은 <b><mark>1,000만원</mark></b>입니다. <b>AI 퀴즈 챌린지</b>는 인공지능 관련 지식이나 일반 상식을 실시간 라이브를 통해 풀어보는 참여형 이벤트로, 많은 참가자가 동시에 경쟁하며 정답을 맞힌 우승자들이 상금을 나누어 갖는 방식으로 운영됩니다. 고액의 상금이 걸린 만큼 라이브 시작 전 알림 설정을 통해 시간을 엄수하는 것이 중요하며, 한 문제만 틀려도 부활권을 사용할 수 있는 등의 추가 규칙을 미리 확인해두는 것이 유리합니다. 이처럼 대규모 상금 혜택이 주어지는 퀴즈 이벤트에 참여하여 실력을 발휘하는 것은 지적 즐거움과 함께 실질적인 <b><mark>자산</mark></b>을 형성하는 <b>앱테크</b>의 매우 매력적인 기회가 됩니다. </p>"
       },
       "history": [
+        {
+          "date": "2026-11-14",
+          "question": "교통체증 등 특정 조건에서 차량이 스스로 주행하지만, 요청 시 운전자가 운전해야 하는 자율주행 단계는?",
+          "answer": "③ SAE 레벨 3",
+          "explanation": ""
+        },
         {
           "date": "2026-11-13",
           "question": "매년 11월 13일, 서로를 배려하고 친절을 실천하는 의미를 되새기는 기념일은?",
@@ -1933,12 +1939,6 @@
           "question": "육류와 생선은 먹지 않고 달걀과 유제품은 먹는 채식 유형은?",
           "answer": "④ 락토오보",
           "explanation": ""
-        },
-        {
-          "date": "2026-10-31",
-          "question": "할로윈 밤에 아이들이 집집마다 돌며 외치는 말은?",
-          "answer": "③ Trick or Treat",
-          "explanation": ""
         }
       ],
       "brandColor": "#FF1E6C"
@@ -1953,9 +1953,9 @@
       "rewardHint": "H.포인트",
       "participatePath": "H.Point 앱 > 오늘의 QUIZ",
       "appDeeplink": "https://www.h-point.co.kr/cma/invite.nhd?scheme=quizMain",
-      "updatedAt": "2026-11-14",
+      "updatedAt": "2026-11-15",
       "today": {
-        "date": "2026-11-14",
+        "date": "2026-11-15",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -1965,6 +1965,12 @@
         "explanation": ""
       },
       "history": [
+        {
+          "date": "2026-11-14",
+          "question": "현대출쇼핑에서 신선 식품, 리빙 필수 템 등을 알뜰하게 구매할 수 있는 현대톡 마트 행사가 11월 10일화]부터 11월 16일 (월]까지 진행됩니I다!\r\n다음 보기 중, 행사에서 찾아볼 수없 는 상품은 무엇일까요?",
+          "answer": "④ 핸드백",
+          "explanation": ""
+        },
         {
           "date": "2026-11-13",
           "question": "리바트 가구쉼터에서는 리바트에서 엄선한 소파&매트리스 케어서비스를 만나볼 수 있습니다. 11월 한달 동안 프리미엄 케어서비스 0% 할인 프로모션을 진행하는데요. 가구쉼터 케어서비스 할인율은 몇% 일까요?",
@@ -2042,12 +2048,6 @@
           "question": "클럽 세이푸디에서는 매월 현대식품관의 다양한 상품을 할인가로 소개하는 코너를 운영하고 있습니다.\n1.1~ 1.15 기간 클럽 세이푸디 테마행사 코너가 아닌 것은 무엇일까요?",
           "answer": "② 스낵ㆍ간식 코너",
           "explanation": ""
-        },
-        {
-          "date": "2026-10-31",
-          "question": "[ CHRISTMAS IN NEW YORK [11..~1.31]\n잠들지 않는 뉴욕의 크리스마스, 2026년 현대백화점의 특별한 크리스마 스 빌리지엔 산타와 000들이 도시 곳곳 을 누비는데요, \n이때 000는 무엇일까요?",
-          "answer": "② 고양이",
-          "explanation": ""
         }
       ],
       "brandColor": "#C8102E"
@@ -2062,9 +2062,9 @@
       "rewardHint": "코인 (실제 가상자산 교환 가능)",
       "participatePath": "비트버니 앱 > 혜택 > 오늘의 상식 퀴즈",
       "appDeeplink": "https://www.bitbunny.io/",
-      "updatedAt": "2026-11-14",
+      "updatedAt": "2026-11-15",
       "today": {
-        "date": "2026-11-14",
+        "date": "2026-11-15",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -2074,6 +2074,12 @@
         "explanation": ""
       },
       "history": [
+        {
+          "date": "2026-11-14",
+          "question": "OOOOOO란, 어떤 경제활동이 진짜 친환경 활동인지 정부가 기준을 정해 분류해 둔 체계로, 녹색 위장을 걸러 내는 잣대가 돼요.",
+          "answer": "녹색분류체계",
+          "explanation": ""
+        },
         {
           "date": "2026-11-13",
           "question": "OOOOOO이란, 자녀를 낳은 국민연금 가입자에게 실제로 보험료를 내지 않은 기간까지 가입 기간으로 더 인정해 주는 제도예요.",
@@ -2151,12 +2157,6 @@
           "question": "OOOOO이란, 천연자원 수출로 외화가 몰려 자국 통화 가치가 오르면서 오히려 제조업 경쟁력이 약해지는 현상이에요.",
           "answer": "네덜란드병",
           "explanation": ""
-        },
-        {
-          "date": "2026-10-31",
-          "question": "OOO란, 한쪽 값이 오르면 대신 찾게 되는 서로 바꿔 쓸 수 있는 재화예요.",
-          "answer": "대체재",
-          "explanation": ""
         }
       ],
       "brandColor": "#7C4DFF"
@@ -2171,9 +2171,9 @@
       "rewardHint": "코인 (실제 가상자산 교환 가능)",
       "participatePath": "비트버니 앱 > 혜택 > 오늘의 OX 퀴즈",
       "appDeeplink": "https://www.bitbunny.io/",
-      "updatedAt": "2026-11-14",
+      "updatedAt": "2026-11-15",
       "today": {
-        "date": "2026-11-14",
+        "date": "2026-11-15",
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
@@ -2185,6 +2185,12 @@
         "promoBlurb": "X (아니에요)"
       },
       "history": [
+        {
+          "date": "2026-11-14",
+          "question": "주택담보대출의 만기일시상환 방식은 만기 때 원금을 한꺼번에 갚고 그전까지는 이자만 내는 방식이에요.",
+          "answer": "O (맞아요)",
+          "explanation": ""
+        },
         {
           "date": "2026-11-13",
           "question": "최저임금은 지역에 따라 다르게 적용돼요.",
@@ -2261,12 +2267,6 @@
           "date": "2026-11-01",
           "question": "월급 명세서에서 실수령액은 세금과 4대보험료를 공제하기 전 금액이에요.",
           "answer": "X (아니에요)",
-          "explanation": ""
-        },
-        {
-          "date": "2026-10-31",
-          "question": "편의점 ATM에서 현금을 인출하면 은행 영업점 ATM보다 수수료가 더 비쌀 수 있어요.",
-          "answer": "O (그렇다)",
           "explanation": ""
         }
       ],
