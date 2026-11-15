@@ -210,9 +210,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "",
+        "question": "신한 슈퍼SOL에서는 AI를 활용한 컨텐츠인 \"AI PB\"를 통해 대화형으로 투자 궁금증을 물어볼 수 있다.",
         "choices": [],
-        "answer": "",
+        "answer": "어그",
         "explanation": "",
         "pendingMessage": "<p>⏰ 다음 퀴즈가 곧 열려요! (오전 10시 오픈 예정)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>"
       },
@@ -321,9 +321,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "",
+        "question": "신한 슈퍼SOL에서는 AI를 활용한 컨텐츠인 \"AI PB\"를 통해 대화형으로 투자 궁금증을 물어볼 수 있다.",
         "choices": [],
-        "answer": "",
+        "answer": "O (그렇다)",
         "explanation": "",
         "pendingMessage": "<p>⏰ 다음 퀴즈가 곧 열려요! (오전 03시 오픈 예정)<br /> 오늘의 달콤한 리워드, 확실하게 챙기셨나요? <b>내일도 어김없이 돈이 되는 새로운 퀴즈</b>가 여러분을 찾아옵니다.<br />정답을 찾느라 귀한 시간을 낭비하지 마세요. <b>[구독 추가]</b>와 <b>[즐겨찾기]</b>를 꾹 눌러두시면, 내일도 <b>가장 빠르고 정확한 1초 정답</b>을 내 지갑으로 배달해 드립니다!</p>"
       },
@@ -1522,9 +1522,9 @@
         "imageUrl": "assets/img/coming-soon.webp",
         "imageWidth": 300,
         "imageHeight": 300,
-        "question": "",
+        "question": "고교 과목과 이수 학점 등의 정보를 담은 내일교육 '예비고1 50주 플랜 기획전'에서 증정하는 특별 단행본의 주제는",
         "choices": [],
-        "answer": "",
+        "answer": "① 교육과정 편성표",
         "explanation": ""
       },
       "history": [
